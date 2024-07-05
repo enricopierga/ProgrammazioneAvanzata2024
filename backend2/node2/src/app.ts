@@ -1,7 +1,7 @@
 import express from 'express';
 import sequelize from './config/database';
-import utenteRoutes from './routes/utenteRoutes';
-import pagamentoRoutes from './routes/pagamentoRoutes';
+import utenteRoutes from './routes/UserRoutes';
+import pagamentoRoutes from './routes/PaymentRoutes';
 import dotenv from 'dotenv';
 import { errorHandler } from './middleware/errorHandler';
 
