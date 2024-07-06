@@ -1,18 +1,76 @@
-version: '3.8'
+version: "3.8"
 
 services:
-  backend1:
-    build: ./backend1
-    volumes:
-      - ./backend1:/app
-      - ./data:/app/data
-    ports:
-      - "3000:3000"
+    postgres:
+        image: postgres:13
+        container_name: postgres
+        environment:
+            POSTGRES_USER: dbUser
+            POSTGRES_PASSWORD: mySecretPassword
+            POSTGRES_DB: defaultDb
+        networks:
+            - application-network
+        healthcheck:
+            test: ["CMD-SHELL", "pg_isready -U dbUser"]
+            interval: 30s
+            timeout: 10s
+            retries: 5
+        restart: always
 
-  backend2:
-    build: ./backend2
-    volumes:
-      - ./backend2:/app
-      - ./data:/app/data
-    ports:
-      - "3001:3001"
+    transiti:
+        build:
+            context: ../src/transiti
+        container_name: transiti
+        environment:
+            - DB_HOST=postgres
+            - DB_USER=dbUser
+            - DB_PASSWORD=mySecretPassword
+            - DB_NAME=defaultDb
+        networks:
+            - application-network
+        ports:
+            - "3000:3000"
+        depends_on:
+            postgres:
+                condition: service_healthy
+        healthcheck:
+            test:
+                [
+                    "CMD-SHELL",
+                    "curl -f http://localhost:3000/healthcheck || exit 1",
+                ]
+            interval: 30s
+            timeout: 10s
+            retries: 5
+        restart: always
+
+    pagamenti:
+        build:
+            context: ../src/pagamenti
+        container_name: pagamenti
+        environment:
+            - DB_HOST=postgres
+            - DB_USER=dbUser
+            - DB_PASSWORD=mySecretPassword
+            - DB_NAME=defaultDb
+        networks:
+            - application-network
+        ports:
+            - "3001:3001"
+        depends_on:
+            postgres:
+                condition: service_healthy
+        healthcheck:
+            test:
+                [
+                    "CMD-SHELL",
+                    "curl -f http://localhost:3001/healthcheck || exit 1",
+                ]
+            interval: 30s
+            timeout: 10s
+            retries: 5
+        restart: always
+
+networks:
+    application-network:
+        driver: bridge
