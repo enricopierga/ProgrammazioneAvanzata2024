@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { effettuaPagamento } from "../controllers/paymentController";
+import { effettuaPagamento } from "../controllers/PaymentController";
 import { authenticateJWT, authorizeAutomobilista } from "../middleware/roles";
 
 const router = Router();

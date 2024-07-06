@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { ricaricaCredito, getCredito } from "../controllers/userController";
+import { ricaricaCredito, getCredito } from "../controllers/UserController";
 import {
 	authenticateJWT,
 	authorizeOperatore,
