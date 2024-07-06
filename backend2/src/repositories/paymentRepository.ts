@@ -1,4 +1,4 @@
-import Pagamento from '../models/PaymentModel';
+import Pagamento from '../models/Payment';
 
 class PagamentoRepository {
   public async createPagamento(uuidPagamento: string, importo: number, utenteId: number): Promise<Pagamento> {

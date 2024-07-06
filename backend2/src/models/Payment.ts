@@ -1,6 +1,6 @@
 import { DataTypes, Model } from "sequelize";
 import sequelize from "../config/database";
-import Utente from "./UserModel";
+import Utente from "./User";
 
 // Definizione del modello Pagamento
 class Pagamento extends Model {

@@ -1,4 +1,4 @@
-import Utente from '../models/UserModel';
+import Utente from '../models/User';
 
 class UtenteRepository {
   public async findById(utenteId: number): Promise<Utente | null> {
