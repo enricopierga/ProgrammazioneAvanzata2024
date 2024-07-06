@@ -17,7 +17,7 @@ services:
 
     transits:
         build:
-            context: ./backend2/src
+            context: ./backend2
         container_name: transits
         environment:
             - DB_HOST=postgres
@@ -44,7 +44,7 @@ services:
 
     payments:
         build:
-            context: ./backend2/src
+            context: ./backend2
         container_name: pagamenti
         environment:
             - DB_HOST=postgres
