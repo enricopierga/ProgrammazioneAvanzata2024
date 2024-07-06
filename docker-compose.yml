@@ -1,0 +1,74 @@
+services:
+    postgres:
+        image: postgres:13
+        container_name: postgres
+        environment:
+            POSTGRES_USER: dbUser
+            POSTGRES_PASSWORD: mySecretPassword
+            POSTGRES_DB: defaultDb
+        networks:
+            - application-network
+        healthcheck:
+            test: ["CMD-SHELL", "pg_isready -U dbUser"]
+            interval: 30s
+            timeout: 10s
+            retries: 5
+        restart: always
+
+    transits:
+        build:
+            context: ./backend2/src
+        container_name: transits
+        environment:
+            - DB_HOST=postgres
+            - DB_USER=dbUser
+            - DB_PASSWORD=mySecretPassword
+            - DB_NAME=defaultDb
+        networks:
+            - application-network
+        ports:
+            - "3000:3000"
+        depends_on:
+            postgres:
+                condition: service_healthy
+        healthcheck:
+            test:
+                [
+                    "CMD-SHELL",
+                    "curl -f http://localhost:3000/healthcheck || exit 1",
+                ]
+            interval: 30s
+            timeout: 10s
+            retries: 5
+        restart: always
+
+    payments:
+        build:
+            context: ./backend2/src
+        container_name: pagamenti
+        environment:
+            - DB_HOST=postgres
+            - DB_USER=dbUser
+            - DB_PASSWORD=mySecretPassword
+            - DB_NAME=defaultDb
+        networks:
+            - application-network
+        ports:
+            - "3001:3001"
+        depends_on:
+            postgres:
+                condition: service_healthy
+        healthcheck:
+            test:
+                [
+                    "CMD-SHELL",
+                    "curl -f http://localhost:3001/healthcheck || exit 1",
+                ]
+            interval: 30s
+            timeout: 10s
+            retries: 5
+        restart: always
+
+networks:
+    application-network:
+        driver: bridge
