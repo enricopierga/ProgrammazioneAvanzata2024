@@ -1,4 +1,4 @@
-import Infraction from "../models/Infractions";
+import Infraction from "../models/InfractionsModel";
 
 class InfractionRepository {
 	async create(data: any): Promise<Infraction> {
