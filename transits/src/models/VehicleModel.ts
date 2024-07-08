@@ -4,7 +4,7 @@ import sequelize from "../config/database";
 interface VehicleAttributes {
 	id: number;
 	licensePlate: string;
-	type: "Truck" | "Car";
+	type: "truck" | "car";
 	userId: number;
 }
 
@@ -16,7 +16,7 @@ class Vehicle
 {
 	public id!: number;
 	public licensePlate!: string;
-	public type!: "Truck" | "Car";
+	public type!: "truck" | "car";
 	public userId!: number;
 
 	public readonly createdAt!: Date;
@@ -35,7 +35,7 @@ Vehicle.init(
 			allowNull: false,
 		},
 		type: {
-			type: DataTypes.ENUM("Truck", "Car"),
+			type: DataTypes.ENUM("truck", "car"),
 			allowNull: false,
 		},
 		userId: {

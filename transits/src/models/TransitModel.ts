@@ -8,7 +8,7 @@ interface TransitAttributes {
 	vehicleId: number;
 	gateId: number;
 	timestamp: Date;
-	weather: string;
+	weather: "rainy" | "clear";
 }
 
 interface TransitCreationAttributes extends Optional<TransitAttributes, "id"> {}
@@ -21,7 +21,7 @@ class Transit
 	public vehicleId!: number;
 	public gateId!: number;
 	public timestamp!: Date;
-	public weather!: string;
+	public weather!: "rainy" | "clear";
 
 	public readonly createdAt!: Date;
 	public readonly updatedAt!: Date;
@@ -56,7 +56,7 @@ Transit.init(
 			defaultValue: DataTypes.NOW,
 		},
 		weather: {
-			type: DataTypes.STRING,
+			type: DataTypes.ENUM("rainy", "clear"), 
 			allowNull: false,
 		},
 	},

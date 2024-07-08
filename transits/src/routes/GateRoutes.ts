@@ -1,6 +1,6 @@
 // src/routes/gateRoutes.ts
 import { Router } from 'express';
-import GateController from '../controllers/GateController';
+import GateController from '../controllers/gateController';
 
 const router = Router();
 
