@@ -15,9 +15,9 @@ services:
             retries: 5
         restart: always
 
-    transits:
+    transiti:
         build:
-            context: ./backend2
+            context: ./transits
         container_name: transits
         environment:
             - DB_HOST=postgres
@@ -42,10 +42,10 @@ services:
             retries: 5
         restart: always
 
-    payments:
+    pagamenti:
         build:
-            context: ./backend2
-        container_name: pagamenti
+            context: ./payments
+        container_name: payments
         environment:
             - DB_HOST=postgres
             - DB_USER=dbUser
