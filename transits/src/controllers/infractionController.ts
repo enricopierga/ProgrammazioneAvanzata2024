@@ -83,6 +83,8 @@ class InfractionController {
 		// );
 		// res.status(200).json(infractions);
 	}
+
+	
 }
 
 export default new InfractionController();
