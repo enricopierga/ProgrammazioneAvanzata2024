@@ -82,6 +82,7 @@ Infraction.init(
 	},
 	{
 		tableName: "infractions",
+		modelName: 'infraction',
 		sequelize,
 	}
 );

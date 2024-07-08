@@ -1,6 +1,6 @@
 import User from "../models/UserModel";
 
-class UtenteRepository {
+class UserRepository {
 	public async getById(utenteId: number): Promise<User | null> {
 		return User.findByPk(utenteId);
 	}
@@ -26,4 +26,4 @@ class UtenteRepository {
 	}
 }
 
-export default new UtenteRepository();
+export default new UserRepository();
