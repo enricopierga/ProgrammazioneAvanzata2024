@@ -1,66 +1,36 @@
 import Payment from '../models/PaymentModel';
-import { getUserById, updateUserCredits } from '../models/UserModel';
-import { getMultaById } from '../models/InfractionsModel';
 
 class PaymentRepository {
-  // Creazione di un nuovo pagamento e scalare i crediti dell'utente
-  async createPayment(userId: string, infractionId: string): Promise<Payment | string> {
-    const user = await getUserById(userId);
-    const multa = await getMultaById(infractionId);
-
-    if (!user) {
-      throw new Error('Utente non trovato');
-    }
-
-    if (!multa) {
-      throw new Error('Multa non trovata');
-    }
-
-    if (user.credits < multa.amount) {
-      throw new Error('Crediti insufficienti');
-    }
-
-    // Scala i crediti dell'utente
-    await updateUserCredits(userId, user.credits - multa.amount);
-
-    // Crea un nuovo pagamento
-    const payment = await Payment.create({
-      userId,
-      infractionId,
-      amount: multa.amount,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    });
-
+  // Creazione di un nuovo pagamento
+  async createPayment(data: Partial<Payment>): Promise<Payment> {
+    const payment = await Payment.create(data);
     return payment;
   }
 
-  // Ottenere un pagamento per ID
+  // Recupero di un pagamento tramite ID
   async getPaymentById(id: number): Promise<Payment | null> {
     const payment = await Payment.findByPk(id);
     return payment;
   }
 
-  // Ottenere tutti i pagamenti di un utente
-  async getPaymentsByUserId(userId: string): Promise<Payment[]> {
+  // Recupero di tutti i pagamenti di un utente
+  async getPaymentsByUserId(userId: number): Promise<Payment[]> {
     const payments = await Payment.findAll({
-      where: {
-        userId,
-      },
+      where: { userId },
     });
     return payments;
   }
 
-  // Aggiornare un pagamento
-  async updatePayment(id: number, updates: Partial<Payment>): Promise<[number, Payment[]]> {
-    const [numberOfAffectedRows, affectedRows] = await Payment.update(updates, {
+  // Aggiornamento di un pagamento
+  async updatePayment(id: number, data: Partial<Payment>): Promise<[number, Payment[]]> {
+    const [numberOfAffectedRows, affectedRows] = await Payment.update(data, {
       where: { id },
       returning: true,
     });
     return [numberOfAffectedRows, affectedRows];
   }
 
-  // Eliminare un pagamento
+  // Eliminazione di un pagamento
   async deletePayment(id: number): Promise<number> {
     const numberOfDeletedRows = await Payment.destroy({
       where: { id },
@@ -69,4 +39,4 @@ class PaymentRepository {
   }
 }
 
-export default PaymentRepository;
+export default new PaymentRepository();

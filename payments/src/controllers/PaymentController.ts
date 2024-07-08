@@ -1,27 +1,38 @@
-/*
+import { Request, Response } from "express";
+// import pagamentoRepository from "../repositories/pagamentoRepository";
+import UserRepository from "../repositories/UserRepository";
+import PaymentRepository from "../repositories/PaymentRepository";
+
+/**
  * Controller per effettuare un pagamento.
  */
-import { Request, Response } from 'express';
-import PaymentRepository from '../repositories/PaymentRepository';
-import Infraction from '../models/InfractionsModel';
+export const createPayment = async (req: Request, res: Response) => {
+	const { utenteId, uuidPagamento, importo } = req.body;
 
+	const utente = await UserRepository.getById(utenteId);
 
-const paymentRepository = new PaymentRepository();
+	if (!utente) {
+		return res.status(404).json({ message: "Utente non trovato" });
+	}
 
-// ????????????????????? ha senso ????????????????????
+	if (utente.credit < importo) {
+		return res.status(400).json({ message: "Credito insufficiente" });
+	}
 
-export const effettuaPagamento = async (req: Request, res: Response) => {
-  const { userId, infractionId } = req.body;
+	utente.credit -= importo;
 
-  try {
-    const payment = await paymentRepository.createPayment(userId, infractionId);
-    res.send(`Pagamento effettuato con successo, ID pagamento: ${payment.id}`);
-  } catch (error) {
-    console.error('Errore nel pagamento:', error);
-    res.status(400).send(`Errore nel pagamento: ${error.message}`);
-  }
+	await utente.save();
+
+	/*
+        TODO: Da collegare il repo quando verrà creato
+		const pagamento = await pagamentoRepository.createPagamento(
+			uuidPagamento,
+			importo,
+			utenteId
+		);
+		res.status(200).json({ message: "Pagamento effettuato", pagamento });
+        */
+
+	res.status(200).json({ message: "Pagamento effettuato" });
 };
-
-
-
 
