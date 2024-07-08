@@ -1,12 +1,12 @@
 import { DataTypes, Model, Optional } from "sequelize";
 import sequelize from "../config/database";
 import Vehicle from "./VehicleModel";
-import Gate from "./GateModel";
+import Route from "./RouteModel";
 
 interface TransitAttributes {
 	id: number;
 	vehicleId: number;
-	gateId: number;
+	routeId: number;
 	timestamp: Date;
 	weather: "rainy" | "clear";
 }
@@ -19,7 +19,7 @@ class Transit
 {
 	public id!: number;
 	public vehicleId!: number;
-	public gateId!: number;
+	public routeId!: number;
 	public timestamp!: Date;
 	public weather!: "rainy" | "clear";
 
@@ -42,11 +42,11 @@ Transit.init(
 				key: "id",
 			},
 		},
-		gateId: {
+		routeId: {
 			type: DataTypes.INTEGER,
 			allowNull: false,
 			references: {
-				model: Gate,
+				model: Route,
 				key: "id",
 			},
 		},

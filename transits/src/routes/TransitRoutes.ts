@@ -1,6 +1,6 @@
 // src/routes/transitRoutes.ts
 import { Router } from 'express';
-import TransitController from '../controllers/transitController';
+import TransitController from '../controllers/TransitController';
 
 const router = Router();
 

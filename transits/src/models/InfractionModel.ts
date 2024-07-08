@@ -10,7 +10,7 @@ interface InfractionAttributes {
 	routeId: number;
 	speed: number;
 	limit: number;
-	weather: string;
+	weather: "rainy" | "clear";
 	amount: number;
 	timestamp: Date;
 }
@@ -27,7 +27,7 @@ class Infraction
 	public routeId!: number;
 	public speed!: number;
 	public limit!: number;
-	public weather!: string;
+	public weather!: "rainy" | "clear";
 	public amount!: number;
 	public timestamp!: Date;
 
@@ -67,7 +67,7 @@ Infraction.init(
 			allowNull: false,
 		},
 		weather: {
-			type: DataTypes.STRING,
+			type: DataTypes.ENUM("rainy", "clear"),
 			allowNull: false,
 		},
 		amount: {
