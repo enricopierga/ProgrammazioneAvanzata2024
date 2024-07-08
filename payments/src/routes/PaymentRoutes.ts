@@ -15,15 +15,5 @@ router.post(
 export default router;
 
 
-// Rotta per scaricare il bollettino di pagamento in formato PDF
-router.post(
-    '/bollettino',
-    authenticateJWT,
-    authorizeAutomobilista,
-    generaBollettino
-);
-
-export default router;
-
 
 

@@ -54,7 +54,7 @@ export const addCredit = async (req: Request, res: Response) => {
 };
 
 /**
- * Controller per ottenere il credito di un utente.
+ * Controller per recuperare il credito di un utente.
  */
 export const getCredit = async (req: Request, res: Response) => {
 	const { utenteId } = req.params;
