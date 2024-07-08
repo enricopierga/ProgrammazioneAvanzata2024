@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { effettuaPagamento } from "../controllers/PaymentController";
-import { authenticateJWT, authorizeAutomobilista } from "../middleware/roles";
+import { authenticateJWT, authorizeAutomobilista, authorizeOperatore } from "../middleware/roles";
 
 const router = Router();
 
@@ -13,3 +13,17 @@ router.post(
 );
 
 export default router;
+
+
+// Rotta per scaricare il bollettino di pagamento in formato PDF
+router.post(
+    '/bollettino',
+    authenticateJWT,
+    authorizeAutomobilista,
+    generaBollettino
+);
+
+export default router;
+
+
+

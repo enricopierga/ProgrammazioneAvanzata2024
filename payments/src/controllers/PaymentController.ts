@@ -1,6 +1,11 @@
 import { Request, Response } from "express";
 // import pagamentoRepository from "../repositories/pagamentoRepository";
 import utenteRepository from "../repositories/UserRepository";
+import PDFDocument from 'pdfkit';
+import qr from 'qrcode';
+import { v4 as uuidv4 } from 'uuid';
+import { getbyId } from '../transits/controllers/InfractionController';
+import { getUserById } from '../models/UserModel';
 
 /**
  * Controller per effettuare un pagamento.
@@ -33,3 +38,5 @@ export const effettuaPagamento = async (req: Request, res: Response) => {
 		res.status(500).json({ message: "Errore nel pagamento", error });
 	}
 };
+
+
