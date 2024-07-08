@@ -1,5 +1,5 @@
 import { Router } from "express";
-import * as userController from "../controllers/UserController";
+import * as userController from "../controllers/userController";
 import {
 	authenticateJWT,
 	authorizeOperatore,
