@@ -1,6 +1,6 @@
 import { Router } from "express";
-import payInfractionById from "../controllers/paymentController";
-import { authenticateJWT, authorizeAutomobilista, authorizeOperatore } from "../middleware/roles";
+import PaymentController from "../controllers/PaymentController";
+import { authenticateJWT, authorizeAutomobilista } from "../middleware/roles";
 
 const router = Router();
 
@@ -9,11 +9,7 @@ router.post(
 	"/paga",
 	authenticateJWT,
 	authorizeAutomobilista,
-	payInfractionById
+	PaymentController.payInfractionById
 );
 
 export default router;
-
-
-
-

@@ -12,7 +12,9 @@ interface InfractionAttributes {
 	limit: number;
 	weather: string;
 	amount: number;
+	fineId: string;
 	timestamp: Date;
+	paid: boolean;
 }
 
 interface InfractionCreationAttributes
@@ -29,7 +31,9 @@ class Infraction
 	public limit!: number;
 	public weather!: string;
 	public amount!: number;
+	public fineId!: string;
 	public timestamp!: Date;
+	public paid!: boolean;
 
 	public readonly createdAt!: Date;
 	public readonly updatedAt!: Date;
@@ -79,10 +83,21 @@ Infraction.init(
 			allowNull: false,
 			defaultValue: DataTypes.NOW,
 		},
+		fineId: {
+			type: DataTypes.STRING(128),
+			allowNull: false,
+			unique: true,
+		},
+
+		paid: {
+			type: DataTypes.BOOLEAN,
+			allowNull: false,
+			defaultValue: false,
+		},
 	},
 	{
 		tableName: "infractions",
-		modelName: 'infraction',
+		modelName: "infraction",
 		sequelize,
 	}
 );

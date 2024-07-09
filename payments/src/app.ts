@@ -15,6 +15,7 @@ import { setupSwagger } from "./config/swagger";
 import userRoutes from "./routes/UserRoutes";
 import paymentRoutes from "./routes/PaymentRoutes";
 import User from "./models/UserModel";
+import { seed as dbSeed } from "./utils/dbSeed";
 
 // Initialize Express application
 const app = express();
@@ -39,14 +40,7 @@ const initializeDb = process.env.CLEAN_DB === "true";
 sequelize
 	.sync({ force: initializeDb }) // Usa force: true solo in sviluppo, cancella e ricrea le tabelle
 	.then(() => {
-		if (initializeDb)
-			User.create({
-				id: 1,
-				username: "pangolino",
-				email: "kikopierga@gmail.com",
-				password: "12345",
-				credit: 100,
-			});
+		dbSeed();
 
 		console.log("Database synced");
 		app.listen(port, () => {

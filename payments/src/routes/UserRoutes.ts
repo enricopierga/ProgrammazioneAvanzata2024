@@ -1,5 +1,5 @@
 import { Router } from "express";
-import * as userController from "../controllers/userController";
+import UserController from "../controllers/UserController";
 import {
 	authenticateJWT,
 	authorizeOperatore,
@@ -7,56 +7,6 @@ import {
 } from "../middleware/roles";
 
 const router = Router();
-
-/**
- * @swagger
- * tags:
- *   name: Users
- *   description: User management
- */
-
-/**
- * @swagger
- * /user:
- *   get:
- *     summary: Retrieve the list of users
- *     tags: [Users]
- *     responses:
- *       200:
- *         description: List of users
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/User'
- */
-router.get("/", userController.getUsers);
-
-/**
- * @swagger
- * /user/{id}:
- *   get:
- *     summary: Retrieve a user by ID
- *     tags: [Users]
- *     parameters:
- *       - in: path
- *         name: id
- *         schema:
- *           type: integer
- *         required: true
- *         description: User ID
- *     responses:
- *       200:
- *         description: User found
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/User'
- *       404:
- *         description: User not found
- */
-router.get("/:id", userController.getUser);
 
 /**
  * @swagger
@@ -79,11 +29,11 @@ router.get("/:id", userController.getUser);
  *       403:
  *         description: Forbidden
  */
-router.post(
+router.patch(
 	"/:id/credit",
 	authenticateJWT,
 	authorizeOperatore,
-	userController.addCredit
+	UserController.addCredit
 );
 
 /**
@@ -120,9 +70,7 @@ router.get(
 	"/:id/credit",
 	authenticateJWT,
 	authorizeAutomobilista,
-	userController.getCredit
+	UserController.getCredit
 );
 
 export default router;
-
-// Rotta che consente 
