@@ -8,75 +8,23 @@ class InfractionController {
     res.status(201).json(infraction);
   }
 
-  async getAll(req: Request, res: Response): Promise<void> {
-    const infractions = await InfractionRepository.getAll();
+  async getInfractionsByPlatesAndPeriod(req: Request, res: Response): Promise<void> {
+    const { plates, startDate, endDate } = req.body;
+    const isOperator = true; // DA TOGLIEREE!!!!!!! <<<-----------
+    const userId = 1234; // DA TOGLIEREE!!!!!!! <<<<----------
+    
+    if (!plates || !startDate || !endDate) {
+      res.status(400).json({ message: "Missing plates or date range" });
+      return;
+    }
+
+    const infractions = await InfractionRepository.getInfractionsByPlatesAndPeriod(plates, startDate, endDate, isOperator, userId);
     res.status(200).json(infractions);
-  }
-
-  async getById(req: Request, res: Response): Promise<void> {
-    const infractionId = Number(req.params.id);
-
-    if (isNaN(infractionId)) {
-      res.status(400).json({ message: "Invalid ID format" });
-      return;
-    }
-
-    const infraction = await InfractionRepository.getById(infractionId);
-    if (infraction) {
-      res.status(200).json(infraction);
-    } else {
-      res.status(404).json({ message: "Infraction not found" });
-    }
-  }
-
-  async update(req: Request, res: Response): Promise<void> {
-    const infractionId = Number(req.params.id);
-
-    if (isNaN(infractionId)) {
-      res.status(400).json({ message: "Invalid ID format" });
-      return;
-    }
-
-    const updated = await InfractionRepository.update(infractionId, req.body);
-    if (updated) {
-      res.status(200).json({ message: "Infraction updated successfully" });
-    } else {
-      res.status(404).json({ message: "Infraction not found" });
-    }
-  }
-
-  async delete(req: Request, res: Response): Promise<void> {
-    const infractionId = Number(req.params.id);
-
-    if (isNaN(infractionId)) {
-      res.status(400).json({ message: "Invalid ID format" });
-      return;
-    }
-
-    const deleted = await InfractionRepository.delete(infractionId);
-    if (deleted) {
-      res.status(200).json({ message: "Infraction deleted successfully" });
-    } else {
-      res.status(404).json({ message: "Infraction not found" });
-    }
   }
 }
 
 export default new InfractionController();
 
-	/*async getByVehicleAndPeriod(req: Request, res: Response): Promise<void> {
-	  try {
-		const { vehicleId, startDate, endDate } = req.query;
-		const infractions = await InfractionRepository.getByVehicleAndPeriod(
-		  Number(vehicleId),
-		  new Date(startDate as string),
-		  new Date(endDate as string)
-		);
-		res.status(200).json(infractions);
-	  } catch (error) {
-		res.status(500).json({ error: error.message });
-	  }
-	} */
   
 
 /*

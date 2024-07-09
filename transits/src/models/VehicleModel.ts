@@ -1,5 +1,6 @@
 import { DataTypes, Model, Optional } from "sequelize";
 import sequelize from "../config/database";
+import User from './UserModel';
 
 interface VehicleAttributes {
 	id: number;

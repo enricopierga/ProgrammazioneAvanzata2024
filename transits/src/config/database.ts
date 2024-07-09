@@ -1,5 +1,10 @@
 // config/database.ts
 import { Sequelize } from "sequelize";
+import Gate from '../models/GateModel';
+import Route from '../models/RouteModel';
+import Vehicle from '../models/VehicleModel';
+import Infraction from '../models/InfractionModel';
+import User from '../models/UserModel';
 import dotenv from "dotenv";
 
 dotenv.config();
