@@ -1,13 +1,10 @@
 import Infraction from "../models/InfractionModel";
-<<<<<<< HEAD
 import { Op } from 'sequelize';
 import Vehicle from '../models/VehicleModel';
 import Route from '../models/RouteModel';
 import Gate from '../models/GateModel';
-
-=======
 import {v4 as UUIDV4} from 'uuid';
->>>>>>> 0616968ceb6797e609542755261d97857cfd9d82
+
 
 class InfractionRepository {
 	async create(data: any): Promise<Infraction> {
@@ -63,8 +60,6 @@ class InfractionRepository {
 		*/
 	}
 
-<<<<<<< HEAD
-=======
 	async getById(id: number): Promise<Infraction | null> {
 		return await Infraction.findByPk(id);
 	}
@@ -86,7 +81,7 @@ class InfractionRepository {
 		});
 		return deleted;
 	}
->>>>>>> 0616968ceb6797e609542755261d97857cfd9d82
+
 }
 
 export default new InfractionRepository();
