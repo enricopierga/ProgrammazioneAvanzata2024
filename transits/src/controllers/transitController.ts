@@ -2,33 +2,62 @@
 import { Request, Response } from "express";
 import Transit from "../models/TransitModel";
 import TransitRepository from "../repositories/TransitRepository";
+import VehicleRepository from "../repositories/VehicleRepository";
+import RouteRepository from "../repositories/RouteRepository";
 import InfractionController from "./InfractionController";
+import Vehicle from "../models/VehicleModel";
+
 
 class TransitController {
-	//Funzione per determinare se creare una multa o no
-	private shouldCreateInfraction(transit: Transit): boolean {
-		const speedLimitRainy = 110; // Soglia di velocità con pioggia
-		const speedLimitClear = 130; // Soglia di velocità senza pioggia
+	//Funzione per determinare la velocità limite a seconda del meteo e del tipo di veicolo
+	private getSpeedLimit(transit: Transit, vehicle: Vehicle): number {
+		const speedLimitRainyCar = 110; // Soglia di velocità con pioggia in macchina
+		const speedLimitClearCar = 130; // Soglia di velocità senza pioggia in macchina
+		const speedLimitRainyTruck = 80; // Soglia di velocità con pioggia in camion
+		const speedLimitClearTruck = 100; // Soglia di velocità senza pioggia in camion
 	
-		return ((transit.weather === 'rainy' && transit.speed > speedLimitRainy) ||
-		  (transit.weather === 'clear' && transit.speed > speedLimitClear));
+		if (vehicle.type === 'car') {
+			return transit.weather === 'rainy' ? speedLimitRainyCar : speedLimitClearCar;
+		  }
+	  
+		if (vehicle.type === 'truck') {
+			return transit.weather === 'rainy' ? speedLimitRainyTruck : speedLimitClearTruck;
+		  }
+	  
+		return 0;
 	}
 	
 	// Creazione di un Transit e creazione automatica di un'Infraction
 	// se vengono soddisfatte delle condizioni
 	async create(req: Request, res: Response): Promise<void> {
-	    const transit = await TransitRepository.create(req.body);
+	    const transit = await TransitRepository.create(req.body); // crea il transito
 		res.status(201).json(transit);
+		
+		const vehicle = await VehicleRepository.getById(transit.vehicleId)
+		const route = await RouteRepository.getById(transit.routeId);
+
+		if (!vehicle) {
+			res.status(404).json({ message: 'Vehicle not found' });
+			return;
+		  }
+
+		if (!route) {
+			res.status(404).json({ message: 'Route not found' });
+			return;
+		  }
+		
+		const speed = (route.distance / transit.travelTime)*3.6; // Calcola la velocità in km/h
+	    const speedLimit = this.getSpeedLimit(transit, vehicle);
 	
-		if (this.shouldCreateInfraction(transit)) {
+		if (speed > speedLimit) {
 			// Costruisce i dati per l'infrazione
 		    const infractionData = {
 			  vehicleId: transit.vehicleId,
 			  routeId: req.body.routeId, 
-			  speed: req.body.speed,
-			  limit: transit.weather === 'rainy' ? 110 : 130,
+			  speed: speed,
+			  limit: speedLimit,
 			  weather: transit.weather,
-			  amount: 150, // Importo fisso per la multa (a prescindere se è rainy o clear)
+			  amount: 150, // Importo fisso per la multa (a prescindere dal meteo e dal tipo di veicolo)
 			  timestamp: new Date(),
 			};
 

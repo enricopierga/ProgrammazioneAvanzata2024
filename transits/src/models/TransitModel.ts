@@ -7,7 +7,7 @@ interface TransitAttributes {
 	id: number;
 	vehicleId: number;
 	routeId: number;
-	timestamp: Date;
+	travelTime: number; // Tempo in secondi per percorrere la rotta
 	weather: "rainy" | "clear";
 }
 
@@ -20,7 +20,7 @@ class Transit
 	public id!: number;
 	public vehicleId!: number;
 	public routeId!: number;
-	public timestamp!: Date;
+	public travelTime!: number; // Tempo in secondi per percorrere la rotta
 	public weather!: "rainy" | "clear";
 
 	public readonly createdAt!: Date;
@@ -50,10 +50,9 @@ Transit.init(
 				key: "id",
 			},
 		},
-		timestamp: {
-			type: DataTypes.DATE,
+		travelTime: {
+			type: DataTypes.INTEGER, 
 			allowNull: false,
-			defaultValue: DataTypes.NOW,
 		},
 		weather: {
 			type: DataTypes.ENUM("rainy", "clear"), 
