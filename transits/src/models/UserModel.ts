@@ -7,6 +7,7 @@ interface UserAttributes {
 	password: string;
 	email: string;
 	credit: number;
+	role: "Automobilista" | "Varco" | "Operatore";
 }
 
 interface UserCreationAttributes extends Optional<UserAttributes, "id"> {}
@@ -20,6 +21,7 @@ class User
 	public password!: string;
 	public email!: string;
 	public credit!: number;
+	public role!: "Automobilista" | "Varco" | "Operatore";
 
 	public readonly createdAt!: Date;
 	public readonly updatedAt!: Date;
@@ -49,7 +51,13 @@ User.init(
 			allowNull: true,
 			defaultValue: 0,
 		},
+		
+		role: {
+			type: DataTypes.ENUM("Automobilista", "Varco", "Operatore"),
+			allowNull: false,
+        }
 	},
+	
 	{
 		tableName: "users",
 		modelName: "user",

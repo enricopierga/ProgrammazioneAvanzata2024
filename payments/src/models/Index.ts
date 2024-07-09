@@ -1,5 +1,5 @@
 import Gate from "./GateModel";
-import Infraction from "./InfractionsModel";
+import Infraction from "./InfractionModel";
 import Payment from "./PaymentModel";
 import Route from "./RouteModel";
 import Transit from "./TransitModel";

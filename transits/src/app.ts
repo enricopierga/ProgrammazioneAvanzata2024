@@ -20,7 +20,7 @@ import User from "./models/UserModel";
 
 // Initialize Express application
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3001;
 
 // Setup Swagger API documentation
 setupSwagger(app, port);
@@ -50,6 +50,7 @@ sequelize
 				email: "kikopierga@gmail.com",
 				password: "12345",
 				credit: 100,
+				role: "Operatore"
 			});
 
 		console.log("Database synced");

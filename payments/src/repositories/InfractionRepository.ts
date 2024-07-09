@@ -1,4 +1,4 @@
-import Infraction from "../models/InfractionsModel";
+import Infraction from "../models/InfractionModel";
 import { v4 as UUIDV4 } from "uuid";
 
 class InfractionRepository {
