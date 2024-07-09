@@ -1,7 +1,9 @@
 import Infraction from "../models/InfractionModel";
+import {v4 as UUIDV4} from 'uuid';
 
 class InfractionRepository {
 	async create(data: any): Promise<Infraction> {
+		data.uuid = UUIDV4();
 		return await Infraction.create(data);
 	}
 
@@ -12,6 +14,10 @@ class InfractionRepository {
 	async getById(id: number): Promise<Infraction | null> {
 		return await Infraction.findByPk(id);
 	}
+
+	async getByUuid(uuid: string): Promise<Infraction | null> {
+        return await Infraction.findOne({ where: { uuid } });
+    }
 
 	async update(id: number, data: any): Promise<number> {
 		const [updated] = await Infraction.update(data, {

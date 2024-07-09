@@ -56,7 +56,7 @@ Payment.init(
   },
   {
 
-    tableName: 'payments',
+  tableName: 'payments',
 	modelName: 'payment',
     sequelize,
   }
