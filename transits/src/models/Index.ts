@@ -6,16 +6,18 @@ import Transit from "./TransitModel";
 import User from "./UserModel";
 import Vehicle from "./VehicleModel";
 
-// Definisci le relazioni
-User.hasMany(Vehicle, {
-	foreignKey: "ownerId",
-	as: "vehicles",
-});
+// Route <-> Gate
+Route.belongsTo(Gate, { as: 'startGate', foreignKey: 'startGateId', targetKey: "id",});
+Route.belongsTo(Gate, { as: 'endGate', foreignKey: 'endGateId', targetKey: "id",});
 
-Vehicle.belongsTo(User, {
-	foreignKey: "userId",
-	targetKey: "id",
-	as: "user",
-});
+// Infraction <-> Vehicle
+Infraction.belongsTo(Vehicle, { as: 'vehicle', foreignKey: 'vehicleId', targetKey: "id",});
+
+// Infraction <-> Route
+Infraction.belongsTo(Route, { as: 'route', foreignKey: 'routeId', targetKey: "id",});
+
+// Vehicle <-> User
+Vehicle.belongsTo(User, { as: 'owner', foreignKey: 'ownerId', targetKey: "id",});
+User.hasMany(Vehicle, { as: "vehicles", foreignKey: "ownerId",});
 
 export { Gate, Infraction, Payment, Route, Transit, User, Vehicle };

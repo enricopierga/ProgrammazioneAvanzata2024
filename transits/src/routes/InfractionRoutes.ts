@@ -8,11 +8,11 @@ import { authenticateJWT, authorizeAutomobilista, authorizeOperatore } from "../
 const router = Router();
 
 router.post('/infractions', InfractionController.create);
-router.get('/infractions', InfractionController.getAll);
-router.get('/infractions/:id', InfractionController.getById);
-router.put('/infractions/:id', InfractionController.update);
-router.delete('/infractions/:id', InfractionController.delete);
-//router.get('/infractions/vehicle-period', InfractionController.getByVehicleAndPeriod);
+//router.get('/infractions', InfractionController.getAll);
+//router.get('/infractions/:id', InfractionController.getById);
+//router.put('/infractions/:id', InfractionController.update);
+//router.delete('/infractions/:id', InfractionController.delete);
+router.get('/infractions/by-plates-and-period', InfractionController.getInfractionsByPlatesAndPeriod);
 
 
 // Rotta per scaricare il bollettino di pagamento della multa in formato PDF

@@ -11,8 +11,17 @@ class InfractionController {
     res.status(201).json(infraction);
   }
 
-  async getAll(req: Request, res: Response): Promise<void> {
-    const infractions = await InfractionRepository.getAll();
+  async getInfractionsByPlatesAndPeriod(req: Request, res: Response): Promise<void> {
+    const { plates, startDate, endDate } = req.body;
+    const isOperator = true; // DA TOGLIEREE!!!!!!! <<<-----------
+    const userId = 1234; // DA TOGLIEREE!!!!!!! <<<<----------
+    
+    if (!plates || !startDate || !endDate) {
+      res.status(400).json({ message: "Missing plates or date range" });
+      return;
+    }
+
+    const infractions = await InfractionRepository.getInfractionsByPlatesAndPeriod(plates, startDate, endDate, isOperator, userId);
     res.status(200).json(infractions);
   }
 
@@ -134,19 +143,6 @@ class InfractionController {
 
 export default new InfractionController();
 
-	/*async getByVehicleAndPeriod(req: Request, res: Response): Promise<void> {
-	  try {
-		const { vehicleId, startDate, endDate } = req.query;
-		const infractions = await InfractionRepository.getByVehicleAndPeriod(
-		  Number(vehicleId),
-		  new Date(startDate as string),
-		  new Date(endDate as string)
-		);
-		res.status(200).json(infractions);
-	  } catch (error) {
-		res.status(500).json({ error: error.message });
-	  }
-	} */
   
 
 

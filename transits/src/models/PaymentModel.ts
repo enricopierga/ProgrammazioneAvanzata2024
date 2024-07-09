@@ -52,6 +52,4 @@ Payment.init(
 	}
 );
 
-Payment.belongsTo(User, { foreignKey: "utenteId" });
-
 export default Payment;
