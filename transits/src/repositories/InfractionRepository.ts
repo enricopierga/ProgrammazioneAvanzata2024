@@ -1,4 +1,3 @@
-import Infraction from "../models/InfractionModel";
 import { Op } from 'sequelize';
 import Infraction from "../models/InfractionModel";
 import Vehicle from '../models/VehicleModel';
