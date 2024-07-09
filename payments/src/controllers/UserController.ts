@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import utenteRepository from "../repositories/UserRepository";
 import UserRepository from "../repositories/UserRepository";
 import { generateJwt } from "../security/JWTservice";
-import { NONE } from "sequelize";
 
 class UserController {
 
