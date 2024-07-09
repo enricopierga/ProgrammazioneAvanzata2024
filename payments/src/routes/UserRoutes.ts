@@ -73,4 +73,10 @@ router.get(
 	UserController.getCredit
 );
 
+router.post(
+	"/login",
+	UserController.login
+);
+
+
 export default router;

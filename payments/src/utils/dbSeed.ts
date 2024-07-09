@@ -9,5 +9,7 @@ export function seed() {
 		email: "kikopierga@gmail.com",
 		password: "12345",
 		credit: 100,
+		role: "Operatore",
 	});
 }
+
