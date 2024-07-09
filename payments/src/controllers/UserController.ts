@@ -3,38 +3,6 @@ import utenteRepository from "../repositories/userRepository";
 
 
 class UserController {
-
-
-	export const getUsers = async (req: Request, res: Response) => {
-		res.json([
-			{
-				id: 1,
-				name: "Mario Rossi",
-				email: "mario.rossi@example.com",
-			},
-			{
-				id: 2,
-				name: "Enrico Piergallini",
-				email: "enrico.piergallini@gamil.com",
-			},
-		]);
-	};
-
-	export const getUser = async (req: Request, res: Response) => {
-		const user = {
-			id: 1,
-			name: "Mario Rossi",
-			email: "mario.rossi@example.com",
-			credito: 0,
-		};
-
-		if (parseInt(req.params.id, 10) === user.id) {
-			res.json(user);
-		} else {
-			res.status(404).send("User not found");
-		}
-	};
-
 /**
  * Controller per ricaricare il credito di un utente.
  */
