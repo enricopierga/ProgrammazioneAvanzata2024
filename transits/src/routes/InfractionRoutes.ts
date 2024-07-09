@@ -12,15 +12,15 @@ router.get('/infractions', InfractionController.getAll);
 router.get('/infractions/:id', InfractionController.getById);
 router.put('/infractions/:id', InfractionController.update);
 router.delete('/infractions/:id', InfractionController.delete);
-router.get('/infractions/vehicle-period', InfractionController.getByVehicleAndPeriod);
+//router.get('/infractions/vehicle-period', InfractionController.getByVehicleAndPeriod);
 
 
 // Rotta per scaricare il bollettino di pagamento della multa in formato PDF
-router.post(
+/*router.post(
     '/infractions/bollettino',
     authenticateJWT,
     authorizeAutomobilista,
     InfractionController.generaBollettino
-);
+);*/
 
 export default router;

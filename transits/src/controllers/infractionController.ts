@@ -14,29 +14,50 @@ class InfractionController {
   }
 
   async getById(req: Request, res: Response): Promise<void> {
-    const infraction = await InfractionRepository.getById(req.params.id);
+    const infractionId = Number(req.params.id);
+
+    if (isNaN(infractionId)) {
+      res.status(400).json({ message: "Invalid ID format" });
+      return;
+    }
+
+    const infraction = await InfractionRepository.getById(infractionId);
     if (infraction) {
       res.status(200).json(infraction);
     } else {
-      res.status(404).json({ message: 'Infraction not found' });
+      res.status(404).json({ message: "Infraction not found" });
     }
   }
 
   async update(req: Request, res: Response): Promise<void> {
-    const updated = await InfractionRepository.update(req.params.id, req.body);
+    const infractionId = Number(req.params.id);
+
+    if (isNaN(infractionId)) {
+      res.status(400).json({ message: "Invalid ID format" });
+      return;
+    }
+
+    const updated = await InfractionRepository.update(infractionId, req.body);
     if (updated) {
-      res.status(200).json({ message: 'Infraction updated successfully' });
+      res.status(200).json({ message: "Infraction updated successfully" });
     } else {
-      res.status(404).json({ message: 'Infraction not found' });
+      res.status(404).json({ message: "Infraction not found" });
     }
   }
 
   async delete(req: Request, res: Response): Promise<void> {
-    const deleted = await InfractionRepository.delete(req.params.id);
+    const infractionId = Number(req.params.id);
+
+    if (isNaN(infractionId)) {
+      res.status(400).json({ message: "Invalid ID format" });
+      return;
+    }
+
+    const deleted = await InfractionRepository.delete(infractionId);
     if (deleted) {
-      res.status(200).json({ message: 'Infraction deleted successfully' });
+      res.status(200).json({ message: "Infraction deleted successfully" });
     } else {
-      res.status(404).json({ message: 'Infraction not found' });
+      res.status(404).json({ message: "Infraction not found" });
     }
   }
 }
