@@ -1,38 +1,38 @@
 import { Request, Response } from "express";
-// import pagamentoRepository from "../repositories/pagamentoRepository";
-import UserRepository from "../repositories/UserRepository";
-import PaymentRepository from "../repositories/PaymentRepository";
+import InfractionRepository from "../repositories/InfractionRepository";
 
-/**
- * Controller per effettuare un pagamento.
- */
-export const createPayment = async (req: Request, res: Response) => {
-	const { utenteId, uuidPagamento, importo } = req.body;
+class PaymentController {
+	async payInfractionById(req: Request, res: Response): Promise<void> {
+		try {
+			const { uuidPayment } = req.body;
 
-	const utente = await UserRepository.getById(utenteId);
+			// Trova l'infrazione associata tramite UUID
+			const infraction = await InfractionRepository.getByUuid(
+				uuidPayment
+			);
+			if (!infraction) {
+				res.status(404).json({ message: "Infraction not found" });
+				return;
+			}
 
-	if (!utente) {
-		return res.status(404).json({ message: "Utente non trovato" });
+			// Assicurarsi che l'infrazione non sia già stata pagata
+			if (infraction.paid) {
+				res.status(400).json({ message: "Fine already paid" });
+				return;
+			}
+
+			// Aggiorna lo stato dell'infrazione come pagata
+			infraction.paid = true;
+			await InfractionRepository.update(infraction.id, infraction);
+
+			res.status(200).json({
+				message: "Fine paid successfully",
+				infraction,
+			});
+		} catch (error) {
+			res.status(500).json({ message: "Internal server error", error });
+		}
 	}
+}
 
-	if (utente.credit < importo) {
-		return res.status(400).json({ message: "Credito insufficiente" });
-	}
-
-	utente.credit -= importo;
-
-	await utente.save();
-
-	/*
-        TODO: Da collegare il repo quando verrà creato
-		const pagamento = await pagamentoRepository.createPagamento(
-			uuidPagamento,
-			importo,
-			utenteId
-		);
-		res.status(200).json({ message: "Pagamento effettuato", pagamento });
-        */
-
-	res.status(200).json({ message: "Pagamento effettuato" });
-};
-
+export default new PaymentController();

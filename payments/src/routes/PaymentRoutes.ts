@@ -1,19 +1,15 @@
 import { Router } from "express";
-import { effettuaPagamento } from "../controllers/paymentController";
-import { authenticateJWT, authorizeAutomobilista, authorizeOperatore } from "../middleware/roles";
+import PaymentController from "../controllers/PaymentController";
+import { authenticateJWT, authorizeAutomobilista } from "../middleware/roles";
 
 const router = Router();
 
-// Rotta per effettuare un pagamento, accessibile solo agli automobilisti
+// Rotta per effettuare un pagamento di una multa, accessibile solo agli automobilisti
 router.post(
 	"/paga",
 	authenticateJWT,
 	authorizeAutomobilista,
-	effettuaPagamento
+	PaymentController.payInfractionById
 );
 
 export default router;
-
-
-
-

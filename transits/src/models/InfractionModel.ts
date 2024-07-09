@@ -13,6 +13,8 @@ interface InfractionAttributes {
 	weather: "rainy" | "clear";
 	amount: number;
 	timestamp: Date;
+	uuid: string; //uuid generato in automatico ed associato alla multa
+	paid: boolean;
 }
 
 interface InfractionCreationAttributes
@@ -22,6 +24,7 @@ class Infraction
 	extends Model<InfractionAttributes, InfractionCreationAttributes>
 	implements InfractionAttributes
 {
+	
 	public id!: number;
 	public vehicleId!: number;
 	public routeId!: number;
@@ -30,6 +33,8 @@ class Infraction
 	public weather!: "rainy" | "clear";
 	public amount!: number;
 	public timestamp!: Date;
+	public uuid!: string;
+	public paid!: boolean;
 
 	public readonly createdAt!: Date;
 	public readonly updatedAt!: Date;
@@ -79,9 +84,21 @@ Infraction.init(
 			allowNull: false,
 			defaultValue: DataTypes.NOW,
 		},
-	},
-	{
+		uuid: {
+			type: DataTypes.STRING(128),
+			allowNull: false,
+			unique: true,
+		},
+	
+		paid: {
+			type: DataTypes.BOOLEAN,
+			allowNull: false,
+			defaultValue: false,
+		},
+},
+    {
 		tableName: "infractions",
+		modelName: "infraction",
 		sequelize,
 	}
 );
