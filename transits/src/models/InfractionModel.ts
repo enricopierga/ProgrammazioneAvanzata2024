@@ -14,6 +14,7 @@ interface InfractionAttributes {
 	amount: number;
 	timestamp: Date;
 	uuid: string; //uuid generato in automatico ed associato alla multa
+	paid: boolean;
 }
 
 interface InfractionCreationAttributes
