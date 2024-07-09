@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+import Infraction from "../models/InfractionModel";
+>>>>>>> d9de5136b9372bca619c7a3b0d1a00f185758ffa
 import { Op } from 'sequelize';
 import Infraction from "../models/InfractionModel";
 import Vehicle from '../models/VehicleModel';
@@ -81,6 +85,10 @@ class InfractionRepository {
 		});
 		return deleted;
 	}
+<<<<<<< HEAD
+=======
+
+>>>>>>> d9de5136b9372bca619c7a3b0d1a00f185758ffa
 }
 
 export default new InfractionRepository();
