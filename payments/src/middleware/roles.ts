@@ -1,59 +1,44 @@
 import { Request, Response, NextFunction } from "express";
-import jwt from "jsonwebtoken";
-import dotenv from "dotenv";
-
-// Carica le variabili d'ambiente
-dotenv.config();
+import { JwtPayload } from "jsonwebtoken";
+import { decodeJwt } from "../security/JWTservice";
 
 /**
- * Middleware per autenticare l'utente tramite JWT.
+ * Middleware to validate JWT and optionally check for specific user role.
+ *
+ * @param requiredRole - The required user role to access the route (optional).
+ * @returns The middleware function.
  */
-export const authenticateJWT = (
-	req: Request,
-	res: Response,
-	next: NextFunction
-) => {
-	// Estrae il token dall'intestazione della richiesta
-	const token = req.header("Authorization")?.split(" ")[1];
+export function requireAuthentication(
+	requiredRole?: "Operatore" | "Automobilista" | "Varco"
+) {
+	return (
+		req: Request & { user?: JwtPayload },
+		res: Response,
+		next: NextFunction
+	) => {
+		const authorizationHeader = req.headers.authorization;
 
-	if (!token) {
-		return res
-			.status(403)
-			.json({ message: "Access denied. No token provided." });
-	}
+		if (!authorizationHeader) {
+			return res
+				.status(401)
+				.json({ message: "Authorization header missing" });
+		}
 
-	try {
-		const secret = process.env.JWT_SECRET as string;
-		// Verifica il token JWT
-		const decoded = jwt.verify(token, secret);
-		// Aggiunge l'utente decodificato all'oggetto richiesta
-		(req as any).user = decoded;
-		next();
-	} catch (ex) {
-		res.status(400).json({ message: "Invalid token." });
-	}
-};
+		try {
+			const decodedToken = decodeJwt(authorizationHeader);
+			req.user = decodedToken;
 
-/**
- * Middleware per autorizzare l'automobilitsta
- */
-export const authorizeAutomobilista = (
-	req: Request,
-	res: Response,
-	next: NextFunction
-) => {
-	// TODO: Per ora non faccio nulla, da capire l'implementazione
-	next();
-};
+			if (requiredRole && decodedToken.role !== requiredRole) {
+				return res
+					.status(403)
+					.json({ message: "Forbidden: Insufficient role" });
+			}
 
-/**
- * Middleware per autorizzare l'operatore
- */
-export const authorizeOperatore = (
-	req: Request,
-	res: Response,
-	next: NextFunction
-) => {
-	// TODO: Per ora non faccio nulla, da capire l'implementazione
-	next();
-};
+			next();
+		} catch (error) {
+			return res
+				.status(401)
+				.json({ message: "Invalid or expired token" });
+		}
+	};
+}

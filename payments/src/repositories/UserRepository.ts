@@ -12,17 +12,17 @@ class UserRepository {
 	}
 
 	public async addCredit(
-		utenteId: number,
+		userId: number,
 		importo: number
 	): Promise<User | null> {
-		const utente = await this.getById(utenteId);
+		const user = await this.getById(userId);
 
-		if (utente) {
-			utente.credit += importo;
-			await utente.save();
+		if (user) {
+			user.credit += importo;
+			await user.save();
 		}
 
-		return utente;
+		return user;
 	}
 
 	public async getCredit(utenteId: number): Promise<number | null> {

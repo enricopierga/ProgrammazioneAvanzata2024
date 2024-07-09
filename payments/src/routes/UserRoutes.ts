@@ -1,9 +1,8 @@
 import { Router } from "express";
 import UserController from "../controllers/UserController";
 import {
-	authenticateJWT,
-	authorizeOperatore,
-	authorizeAutomobilista,
+	
+requireAuthentication,
 } from "../middleware/roles";
 
 const router = Router();
@@ -31,8 +30,7 @@ const router = Router();
  */
 router.patch(
 	"/:id/credit",
-	authenticateJWT,
-	authorizeOperatore,
+	requireAuthentication("Operatore"),
 	UserController.addCredit
 );
 
@@ -68,9 +66,8 @@ router.patch(
  */
 router.get(
 	"/:id/credit",
-	authenticateJWT,
-	authorizeAutomobilista,
-	UserController.getCredit
+	requireAuthentication("Automobilista"),
+    UserController.getCredit
 );
 
 router.post(
