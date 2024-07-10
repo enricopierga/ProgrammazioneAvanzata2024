@@ -1,9 +1,6 @@
 import { Router } from "express";
 import UserController from "../controllers/UserController";
-import {
-	
-requireAuthentication,
-} from "../middleware/roles";
+import { requireAuthentication } from "../middleware/roles";
 
 const router = Router();
 
@@ -66,6 +63,7 @@ router.patch(
  */
 router.get(
 	"/:id/credit",
+	requireAuthentication("Operatore"),
 	requireAuthentication("Automobilista"),
     UserController.getCredit
 );

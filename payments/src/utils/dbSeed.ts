@@ -11,5 +11,14 @@ export function seed() {
 		credit: 100,
 		role: "Operatore",
 	});
+
+	User.create({
+        id: 2,
+        username: "filippo",
+        email: "filippochampagne@gmail.com",
+        password: "poveri",
+        credit: 1000,
+        role: "Automobilista",
+    });
 }
 
