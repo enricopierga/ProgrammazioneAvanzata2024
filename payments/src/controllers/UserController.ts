@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import utenteRepository from "../repositories/UserRepository";
 import UserRepository from "../repositories/UserRepository";
 import { generateJwt } from "../security/JWTservice";
+import { isString } from "util";
 
 class UserController {
 
@@ -36,9 +37,10 @@ class UserController {
 			res.status(400).json({ message: "Invalid ID format" });
 			return;
 		}
+
 		const { amount } = req.body;
 
-		if (amount == undefined || isNaN(amount)) {
+		if (amount == undefined || isNaN(amount) || isString(amount)) {
 			return res.status(400).json({ message: "Missing or wrong amount value" })
 		}
 
@@ -66,7 +68,7 @@ class UserController {
 
 		const credito = await utenteRepository.getCredit(Number(utenteId));
 		if (credito === null) {
-			return res.status(404).json({ message: "Utente non trovato" });
+			return res.status(404).json({ message: "User not found" });
 		}
 		res.status(200).json({ credito });
 	};
