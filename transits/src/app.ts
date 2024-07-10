@@ -17,6 +17,9 @@ import infractionRoutes from "./routes/InfractionRoutes";
 import routeRoutes from "./routes/RouteRoutes";
 import transitRoutes from "./routes/TransitRoutes";
 import User from "./models/UserModel";
+import { seed as dbSeed } from "./utils/dbSeed";
+import userRoutes from "./routes/UserRoutes";
+
 
 // Initialize Express application
 const app = express();
@@ -36,6 +39,8 @@ app.use("/gate", gatRoutes); // Gat-related routes
 app.use("/infraction", infractionRoutes); // Infraction-related routes
 app.use("/route", routeRoutes); // Route-related routes
 app.use("/transit", transitRoutes); // Transit-related routes
+app.use("/user", userRoutes); // User-related routes
+
 
 const initializeDb = process.env.CLEAN_DB === "true";
 
