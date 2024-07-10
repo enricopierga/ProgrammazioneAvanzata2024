@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import utenteRepository from "../repositories/UserRepository";
 import UserRepository from "../repositories/UserRepository";
 import { generateJwt } from "../security/JWTservice";
+import { isString } from "util";
 
 class UserController {
 
@@ -38,7 +39,7 @@ class UserController {
 		}
 		const { amount } = req.body;
 
-		if (amount == undefined || isNaN(amount)) {
+		if (amount == undefined || isNaN(amount) || isString(amount)) {
 			return res.status(400).json({ message: "Missing or wrong amount value" })
 		}
 
