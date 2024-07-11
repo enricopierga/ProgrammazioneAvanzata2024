@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
-//import InfractionRepository from "../repositories/InfractionRepository";
+import InfractionRepository from "../repositories/InfractionRepository";
 
 class PaymentController {
-	async payInfractionById(req: Request, res: Response): Promise<void> {
+	async payInfractionByUuid(req: Request, res: Response): Promise<void> {
 		try {
 			const { uuidPayment } = req.body;
 

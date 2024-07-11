@@ -8,7 +8,7 @@ const router = Router();
 router.post(
 	"/paga",
 	requireAuthentication("Automobilista"),
-	PaymentController.payInfractionById
+	PaymentController.payInfractionByUuid
 );
 
 export default router;
