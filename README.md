@@ -23,4 +23,4 @@ Il progetto ha l'obiettivo di realizzare un sistema per la gestione del calcolo 
 
 ## Test del progetto
 
-(Inserire le istruzioni per testare il progetto con Postman/Newman)
+(Inserire le istruzioni per testare il progetto con Postman)
