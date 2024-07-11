@@ -6,9 +6,9 @@ import InfractionRepository from '../repositories/InfractionRepository';
 import VehicleRepository from '../repositories/VehicleRepository';
 
 class InfractionController {
-  async create(req: Request, res: Response): Promise<void> {
+  async create(req: Request, res: Response): Promise<any> {
     const infraction = await InfractionRepository.create(req.body);
-    res.status(201).json(infraction);
+    return infraction;
   }
 
   async getInfractionsByPlatesAndPeriod(req: Request, res: Response): Promise<void> {

@@ -9,31 +9,11 @@ import Vehicle from "../models/VehicleModel";
 
 
 class TransitController {
-	//Funzione per determinare la velocità limite a seconda del meteo e del tipo di veicolo
-	private getSpeedLimit(transit: Transit, vehicle: Vehicle): number {
-		const speedLimitRainyCar = 110; // Soglia di velocità con pioggia in macchina
-		const speedLimitClearCar = 130; // Soglia di velocità senza pioggia in macchina
-		const speedLimitRainyTruck = 80; // Soglia di velocità con pioggia in camion
-		const speedLimitClearTruck = 100; // Soglia di velocità senza pioggia in camion
-	
-		if (vehicle.type === 'car') {
-			return Number(transit.weather === 'rainy' ? speedLimitRainyCar : speedLimitClearCar);
-			
-		  }
-	  
-		if (vehicle.type === 'truck') {
-			return Number(transit.weather === 'rainy' ? speedLimitRainyTruck : speedLimitClearTruck);		
-		  }
-		
-		return 0;
-	}
-
-	
-	
 	// Creazione di un Transit e creazione automatica di un'Infraction
 	// se vengono soddisfatte delle condizioni
+
 	async create(req: Request, res: Response): Promise<void> {
-		//try  {
+
 	        const transit = await TransitRepository.create(req.body); // crea il transito
 		    const vehicle = await VehicleRepository.getById(transit.vehicleId)
 		    const route = await RouteRepository.getById(transit.routeId);
@@ -73,14 +53,12 @@ class TransitController {
 			    };
 
 				console.log(`Sei in multa per ${speed - speedLimit} km/h`);
-
-			    await InfractionController.create({ body: infractionData } as Request, res);			
+			    const newInfraction = await InfractionController.create({ body: infractionData } as Request, res);
+				res.status(201).json({ transit: transit, infraction: newInfraction });
+                return;
 		    } else {
 				res.status(201).json(transit);
 			}
-
-	   // } catch(error) {
-		//	res.status(500).json({ error: "Fuck you" });
 		
 	}
 

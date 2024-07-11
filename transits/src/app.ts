@@ -18,7 +18,7 @@ import routeRoutes from "./routes/RouteRoutes";
 import transitRoutes from "./routes/TransitRoutes";
 import vehicleRoutes from "./routes/VehicleRoutes"
 import User from "./models/UserModel";
-import { seed as dbSeed } from "./utils/dbSeed";
+import { seed as dbSeed, seed } from "./utils/dbTransitSeed";
 import userRoutes from "./routes/UserRoutes";
 
 
@@ -53,14 +53,7 @@ sequelize
 	.sync({ force: initializeDb }) // Usa force: true solo in sviluppo, cancella e ricrea le tabelle
 	.then(() => {
 		if (initializeDb)
-			User.create({
-				id: 1,
-				username: "pangolino",
-				email: "kikopierga@gmail.com",
-				password: "12345",
-				credit: 100,
-				role: "Operatore"
-			});
+			seed();
 
 		console.log("Database synced");
 		app.listen(port, () => {
