@@ -1,40 +1,23 @@
 import { Request, Response } from "express";
 import InfractionRepository from "../repositories/InfractionRepository";
+import UserRepository from "../repositories/UserRepository";
+import User from "../models/UserModel";
+import Infraction from "../models/InfractionModel";
+import VehicleRepository from "../repositories/VehicleRepository";
+import Vehicle from "../models/VehicleModel";
 
 class PaymentController {
 
-	async getInfraction(req: Request, res: Response): Promise<void> {
-
-		if(req.query.infractionId){
-			const infractionId = Number(req.query.infractionId);
-
-		    if (isNaN(infractionId)) {
-			    res.status(400).json({ message: "Invalid ID format" });
-			    return;
-		    }
-
-		    const transit = await InfractionRepository.getById(infractionId);
-		    if (transit) {
-			    res.status(200).json(transit);
-		    } else {
-			    res.status(404).json({ message: "Transit not found" });
-	     	}
-		}
-
-		else {
-			const infractions = await InfractionRepository.getAll();
-		    res.status(200).json(infractions);
-		}
-		
-	}
 	async payInfractionByUuid(req: Request, res: Response): Promise<void> {
 		try {
-			const { uuidPayment } = req.body;
-
+			const { uuid } = req.body;
+			console.log(uuid);
 			// Trova l'infrazione associata tramite UUID
+
 			const infraction = await InfractionRepository.getByUuid(
-				uuidPayment
+				uuid
 			);
+
 			if (!infraction) {
 				res.status(404).json({ message: "Infraction not found" });
 				return;
@@ -48,17 +31,36 @@ class PaymentController {
 
 			// Aggiorna lo stato dell'infrazione come pagata
 			infraction.paid = true;
-			await InfractionRepository.update(infraction.id, infraction);
 
-			res.status(200).json({
-				message: "Fine paid successfully",
-				infraction,
-			});
+			//Provo a trovare il veicolo associato alla multa
+			const fineVehicle = await VehicleRepository.getById(infraction.vehicleId);
+
+			//Trovo lo userId associato al veicolo in multa
+			if (fineVehicle) {
+				const fineUserId = fineVehicle.userId;
+
+				const fineAmount = infraction.amount;
+				await InfractionRepository.update(infraction.id, infraction);
+				await UserRepository.updateUserCredit(fineUserId, fineAmount);
+
+				res.status(200).json({
+					message: "Fine paid successfully",
+					infraction,
+				});
+			}
+			else res.status(404).json({ message: "Vehicle not found" })
+
+
+
+
+
+
 		} catch (error) {
 			res.status(500).json({ message: "Internal server error", error });
 		}
 	}
-	
+
+
 }
 
 export default new PaymentController();

@@ -1,6 +1,9 @@
 import Payment from '../models/PaymentModel';
 
 class PaymentRepository {
+
+
+  
   // Creazione di un nuovo pagamento
   async createPayment(data: Partial<Payment>): Promise<Payment> {
     const payment = await Payment.create(data);

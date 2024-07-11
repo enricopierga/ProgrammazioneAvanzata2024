@@ -1,10 +1,12 @@
 import { Router } from "express";
 import PaymentController from "../controllers/PaymentController";
 import { requireAuthentication } from "../middleware/roles";
+import UserController from "../controllers/UserController";
 
 const router = Router();
 
-//router.get("/getInfractions", requireAuthentication("Automobilista"), PaymentController.payInfractionByUuid);
-router.get("/:id/:infractionId", requireAuthentication("Operatore"), PaymentController.getInfraction);
+router.post("/:id", requireAuthentication("Automobilista"), PaymentController.payInfractionByUuid);
+
+router.get("/:id", requireAuthentication("Operatore"), UserController.getMyInfractions);
 
 export default router;

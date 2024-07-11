@@ -4,7 +4,7 @@ import User from "../models/UserModel";
 class UserRepository {
 
 	public async getByCredentials(username: string, password: string): Promise<User | null> {
-		return await User.findOne({where: {username: username, password: password}})
+		return await User.findOne({ where: { username: username, password: password } })
 	}
 
 	public async getById(utenteId: number): Promise<User | null> {
@@ -30,6 +30,32 @@ class UserRepository {
 
 		return utente ? utente.credit : null;
 	}
+
+	public async updateUserCredit(userId: number, amount: number): Promise<User | null> {
+		try {
+			// Trova l'utente per ID
+			const user = await User.findByPk(userId);
+
+			if (!user) {
+				throw new Error('User not found');
+			}
+
+			// Aggiorna il credito
+			user.credit -= amount;
+			await user.save();
+
+			return user;
+		} catch (error) {
+			console.error('Error updating user credit:', error);
+			throw error;
+		}
+
+
+
+
+	}
+
 }
+
 
 export default new UserRepository();
