@@ -1,13 +1,13 @@
 // src/routes/infractionRoutes.ts
 import { Router } from 'express';
-import InfractionController from '../controllers/InfractionController';
+import InfractionController from '../controllers/infractionController';
 //import { authenticateJWT, authorizeAutomobilista, authorizeOperatore } from "../middleware/roles";
 
 
 
 const router = Router();
 
-router.post('/infractions', InfractionController.create);
+router.post('/:id', InfractionController.create);
 //router.get('/infractions', InfractionController.getAll);
 //router.get('/infractions/:id', InfractionController.getById);
 //router.put('/infractions/:id', InfractionController.update);

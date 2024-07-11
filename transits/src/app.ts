@@ -12,10 +12,11 @@ import { errorHandler } from "./middleware/errorHandler";
 import { setupSwagger } from "./config/swagger";
 
 // Routes
-import gatRoutes from "./routes/GateRoutes";
+import gateRoutes from "./routes/GateRoutes";
 import infractionRoutes from "./routes/InfractionRoutes";
 import routeRoutes from "./routes/RouteRoutes";
 import transitRoutes from "./routes/TransitRoutes";
+import vehicleRoutes from "./routes/VehicleRoutes"
 import User from "./models/UserModel";
 import { seed as dbSeed } from "./utils/dbSeed";
 import userRoutes from "./routes/UserRoutes";
@@ -35,10 +36,13 @@ app.use(express.json());
 app.use(errorHandler);
 
 // Define routes
-app.use("/gate", gatRoutes); // Gat-related routes
-app.use("/infraction", infractionRoutes); // Infraction-related routes
+app.use("/gate", gateRoutes); // Gate-related routes
 app.use("/route", routeRoutes); // Route-related routes
+app.use("/vehicle", vehicleRoutes); // Transit-related routes
 app.use("/transit", transitRoutes); // Transit-related routes
+app.use("/infraction", infractionRoutes); // Infraction-related routes
+
+
 app.use("/user", userRoutes); // User-related routes
 
 

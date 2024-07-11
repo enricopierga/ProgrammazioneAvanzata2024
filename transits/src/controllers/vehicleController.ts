@@ -8,29 +8,34 @@ class VehicleController {
 		res.status(201).json(vehicle);
 	}
 
-	async getAll(req: Request, res: Response): Promise<void> {
-		const vehicles = await VehicleRepository.getAll();
-		res.status(200).json(vehicles);
-	}
+	async getVehicle(req: Request, res: Response): Promise<void> {
 
-	async getById(req: Request, res: Response): Promise<void> {
-		const vehicleId = Number(req.params.id);
+		if(req.query.vehicleId){
+			const vehicleId = Number(req.query.vehicleId);
 
-		if (isNaN(vehicleId)) {
-			res.status(400).json({ message: "Invalid ID format" });
-			return;
+		    if (isNaN(vehicleId)) {
+			    res.status(400).json({ message: "Invalid ID format" });
+			    return;
+	    	}
+
+		    const vehicle = await VehicleRepository.getById(vehicleId);
+		    if (vehicle) {
+			    res.status(200).json(vehicle);
+			    return;
+		    } 
+		
+		    res.status(404).json({ message: "Vehicle not found" });
 		}
 
-		const vehicle = await VehicleRepository.getById(vehicleId);
-		if (vehicle) {
-			res.status(200).json(vehicle);
-		} else {
-			res.status(404).json({ message: "Vehicle not found" });
+		else {
+			const vehicles = await VehicleRepository.getAll();
+		    res.status(200).json(vehicles);
 		}
-	}
+		
+	}	
 
 	async update(req: Request, res: Response): Promise<void> {
-		const vehicleId = Number(req.params.id);
+		const vehicleId = Number(req.params.vehicleId);
 
 		if (isNaN(vehicleId)) {
 			res.status(400).json({ message: "Invalid ID format" });
@@ -38,6 +43,7 @@ class VehicleController {
 		}
 
 		const updated = await VehicleRepository.update(vehicleId, req.body);
+
 		if (updated) {
 			res.status(200).json({ message: "Vehicle updated successfully" });
 		} else {
@@ -46,7 +52,7 @@ class VehicleController {
 	}
 
 	async delete(req: Request, res: Response): Promise<void> {
-		const vehicleId = Number(req.params.id);
+		const vehicleId = Number(req.params.vehicleId);
 
 		if (isNaN(vehicleId)) {
 			res.status(400).json({ message: "Invalid ID format" });
@@ -54,6 +60,7 @@ class VehicleController {
 		}
 
 		const deleted = await VehicleRepository.delete(vehicleId);
+
 		if (deleted) {
 			res.status(200).json({ message: "Vehicle deleted successfully" });
 		} else {

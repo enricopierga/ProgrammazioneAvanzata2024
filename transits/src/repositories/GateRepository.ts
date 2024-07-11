@@ -9,8 +9,8 @@ class GateRepository {
 		return await Gate.findAll();
 	}
 
-	async getById(id: number): Promise<Gate | null> {
-		return await Gate.findByPk(id);
+	async getById(gateId: number): Promise<Gate | null> {
+		return await Gate.findByPk(gateId);
 	}
 
 	async update(id: number, data: any): Promise<number> {
