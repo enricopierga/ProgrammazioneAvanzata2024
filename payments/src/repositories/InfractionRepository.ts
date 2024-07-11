@@ -12,6 +12,8 @@ class InfractionRepository {
 		return await Infraction.create(data);
 	}
 
+
+
 	async getInfractionsByPlatesAndPeriod(plates: string[], startDate: string, endDate: string, isOperator: boolean, userId: number): Promise<any> {
 		const whereClause: any = {
 		  plate: { [Op.in]: plates }, // equivale in SQL a WHERE plate IN ('plate1', 'plate2', 'plate3', ...)
@@ -58,6 +60,10 @@ class InfractionRepository {
 			weather: infraction.weather,
 		})) ;
 		*/
+	}
+
+	async getAll(): Promise<Infraction[]> {
+		return await Infraction.findAll();
 	}
 
 	async getById(id: number): Promise<Infraction | null> {
