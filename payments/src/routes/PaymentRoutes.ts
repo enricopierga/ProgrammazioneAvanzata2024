@@ -4,6 +4,16 @@ import { requireAuthentication } from "../middleware/roles";
 
 const router = Router();
 
+router.get(
+	"/getInfractions",
+	requireAuthentication("Automobilista"),
+	PaymentController.payInfractionByUuid
+);
+
+export default router;
+
+
+
 // Rotta per effettuare un pagamento di una multa, accessibile solo agli automobilisti
 router.post(
 	"/paga",

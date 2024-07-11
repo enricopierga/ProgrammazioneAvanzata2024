@@ -72,6 +72,8 @@ class UserController {
 		}
 		res.status(200).json({ credito });
 	};
+
+	
 }
 
 export default new UserController();

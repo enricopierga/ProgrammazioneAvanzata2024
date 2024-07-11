@@ -33,6 +33,7 @@ class PaymentController {
 			res.status(500).json({ message: "Internal server error", error });
 		}
 	}
+	
 }
 
 export default new PaymentController();

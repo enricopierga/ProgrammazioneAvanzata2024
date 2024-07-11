@@ -15,7 +15,7 @@ import { setupSwagger } from "./config/swagger";
 import userRoutes from "./routes/UserRoutes";
 import paymentRoutes from "./routes/PaymentRoutes";
 import User from "./models/UserModel";
-import { seed as dbSeed } from "./utils/dbSeed";
+import { seed as dbSeed } from "./utils/dbPaymentsSeed";
 
 // Initialize Express application
 const app = express();

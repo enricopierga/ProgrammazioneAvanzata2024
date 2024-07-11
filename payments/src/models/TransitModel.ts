@@ -1,14 +1,14 @@
 import { DataTypes, Model, Optional } from "sequelize";
 import sequelize from "../config/database";
 import Vehicle from "./VehicleModel";
-import Gate from "./GateModel";
+import Route from "./RouteModel";
 
 interface TransitAttributes {
 	id: number;
 	vehicleId: number;
-	gateId: number;
-	timestamp: Date;
-	weather: string;
+	routeId: number;
+	travelTime: number; // Tempo in secondi per percorrere la rotta
+	weather: "rainy" | "clear";
 }
 
 interface TransitCreationAttributes extends Optional<TransitAttributes, "id"> {}
@@ -19,9 +19,9 @@ class Transit
 {
 	public id!: number;
 	public vehicleId!: number;
-	public gateId!: number;
-	public timestamp!: Date;
-	public weather!: string;
+	public routeId!: number;
+	public travelTime!: number; // Tempo in secondi per percorrere la rotta
+	public weather!: "rainy" | "clear";
 
 	public readonly createdAt!: Date;
 	public readonly updatedAt!: Date;
@@ -42,21 +42,20 @@ Transit.init(
 				key: "id",
 			},
 		},
-		gateId: {
+		routeId: {
 			type: DataTypes.INTEGER,
 			allowNull: false,
 			references: {
-				model: Gate,
+				model: Route,
 				key: "id",
 			},
 		},
-		timestamp: {
-			type: DataTypes.DATE,
+		travelTime: {
+			type: DataTypes.INTEGER, 
 			allowNull: false,
-			defaultValue: DataTypes.NOW,
 		},
 		weather: {
-			type: DataTypes.STRING,
+			type: DataTypes.ENUM("rainy", "clear"), 
 			allowNull: false,
 		},
 	},
