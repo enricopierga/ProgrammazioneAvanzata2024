@@ -10,7 +10,7 @@ Il progetto ha l'obiettivo di sviluppare un sistema backend per la gestione dell
 
 ### Funzionalità Principali
 
-1. **Gestione dei Varchi:** CRUD (Create, Read, Update, Delete) per aggiungere, visualizzare, modificare e rimuovere varchi autostradali.
+1. **Gestione dei Varchi:** CRUD per aggiungere, visualizzare, modificare e rimuovere varchi autostradali.
 2. **Gestione delle Tratte:** CRUD per gestire tratte che collegano due varchi, includendo la distanza tra essi.
 3. **Gestione dei Veicoli:** CRUD per gestire le informazioni sui veicoli, inclusa la loro targa e tipologia.
 4. **Registrazione dei Transiti:** Inserimento dei transiti con informazioni su data, ora, targa del veicolo, tratta percorsa e condizioni meteorologiche (pioggia o sereno).
