@@ -35,7 +35,7 @@ class UserController {
 	 * Controller per ricaricare il credito di un utente.
 	 */
 	addCredit = async (req: Request, res: Response) => {
-		const userId = Number(req.params.id);
+		const userId = parseInt(req.params.id, 10);
 
 		if (isNaN(userId)) {
 			res.status(400).json({ message: "Invalid ID format" });
@@ -49,7 +49,7 @@ class UserController {
 		}
 
 
-		const utente = await utenteRepository.addCredit(userId, amount);
+		const utente = await utenteRepository.increaseCredit(userId, amount);
 
 		if (!utente) {
 			return res.status(404).json({ message: "User not found" });
@@ -63,14 +63,14 @@ class UserController {
 	 * Controller per recuperare il credito di un utente.
 	 */
 	getCredit = async (req: Request, res: Response) => {
-		const utenteId = Number(req.params.id);
+		const userId = parseInt(req.params.id, 10);
 
-		if (isNaN(utenteId)) {
+		if (isNaN(userId)) {
 			res.status(400).json({ message: "Invalid ID format" });
 			return;
 		}
 
-		const credito = await utenteRepository.getCredit(Number(utenteId));
+		const credito = await utenteRepository.getCredit(userId);
 		if (credito === null) {
 			return res.status(404).json({ message: "User not found" });
 		}
@@ -80,12 +80,7 @@ class UserController {
 
 
 	getMyInfractions = async (req: Request, res: Response) => {
-
-		const userVehicles = await VehicleRepository.getByUserId(Number(req.user!.userId));
-		const vehicleIds = userVehicles.map(vehicle => vehicle.id)
-		console.log("veicoli trovati:", vehicleIds)
-
-		const userInfractions = await InfractionRepository.getByVehicleIds(vehicleIds)
+		const userInfractions = await InfractionRepository.getInfractionsByUserId(req.user!.userId)
 
 		return res.status(200).json(userInfractions);
 	}

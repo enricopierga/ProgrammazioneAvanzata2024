@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 
 interface JwtPayload {
-	userId: Number;
+	userId: number;
 	role: "Operatore" | "Automobilista" | "Varco";
 }
 

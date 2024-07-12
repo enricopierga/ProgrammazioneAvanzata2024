@@ -26,7 +26,7 @@ class PaymentRepository {
 
   // Aggiornamento di un pagamento
   async updatePayment(id: number, data: Partial<Payment>): Promise<[number, Payment[]]> {
-    const [numberOfAffectedRows, affectedRows] = await Payment.update(data, {
+    const [numberOfAffectedRows, affectedRows] = await Payment..update(data, {
       where: { id },
       returning: true,
     });

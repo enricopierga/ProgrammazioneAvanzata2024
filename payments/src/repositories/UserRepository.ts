@@ -11,7 +11,7 @@ class UserRepository {
 		return User.findByPk(utenteId);
 	}
 
-	public async addCredit(
+	public async increaseCredit(
 		userId: number,
 		importo: number
 	): Promise<User | null> {
@@ -31,7 +31,7 @@ class UserRepository {
 		return utente ? utente.credit : null;
 	}
 
-	public async updateUserCredit(userId: number, amount: number): Promise<User | null> {
+	public async decreaseCredit(userId: number, amount: number): Promise<User | null> {
 		try {
 			// Trova l'utente per ID
 			const user = await User.findByPk(userId);
