@@ -172,7 +172,6 @@ Il sistema supporta tre ruoli distinti:
     ```json
     {
       "paymentUuid": "6836178f-0c79-4c10-88ec-75bae54fd6a4",
-      "amount": 150
     }
     ```
 
