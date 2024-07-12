@@ -1,6 +1,15 @@
 import Vehicle from "../models/VehicleModel";
 
 class VehicleRepository {
+
+	async getByUserId(userId: number): Promise<Vehicle[]> {
+
+		return await Vehicle.findAll({
+			where: {
+				userId: userId
+			}
+		});
+	}
 	async create(data: any): Promise<Vehicle> {
 		return await Vehicle.create(data);
 	}

@@ -62,6 +62,17 @@ class InfractionRepository {
 		*/
 	}
 
+	async getByVehicleIds(vehicleIds: number[]): Promise<Infraction[]> {
+		return await Infraction.findAll({
+			where: {
+				vehicleId: {
+					[Op.in]: vehicleIds
+				}
+			}
+		});
+
+	}
+
 	async getAll(): Promise<Infraction[]> {
 		return await Infraction.findAll();
 	}

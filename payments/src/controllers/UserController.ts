@@ -1,9 +1,12 @@
 import { Request, Response } from "express";
 import utenteRepository from "../repositories/UserRepository";
+import Vehicle from "../models/VehicleModel";
+import VehicleRepository from "../repositories/VehicleRepository";
 import UserRepository from "../repositories/UserRepository";
 import InfractionRepository from "../repositories/InfractionRepository";
 import { generateJwt } from "../security/JWTservice";
 import { isString } from "util";
+
 
 class UserController {
 
@@ -73,33 +76,20 @@ class UserController {
 		}
 		res.status(200).json({ credito });
 	};
-    
-	async getMyInfractions(req: Request, res: Response): Promise<void> {
 
-		if(req.query.infractionId){
-			const infractionId = Number(req.query.infractionId);
 
-		    if (isNaN(infractionId)) {
-			    res.status(400).json({ message: "Invalid ID format" });
-			    return;
-		    }
 
-		    const transit = await InfractionRepository.getById(infractionId);
-		    if (transit) {
-			    res.status(200).json(transit);
-		    } else {
-			    res.status(404).json({ message: "Transit not found" });
-	     	}
-		}
+	getMyInfractions = async (req: Request, res: Response) => {
 
-		else {
-			const infractions = await InfractionRepository.getAll();
-		    res.status(200).json(infractions);
-		}
-		
-	};
-	
+		const userVehicles = await VehicleRepository.getByUserId(Number(req.user!.userId));
+		const vehicleIds = userVehicles.map(vehicle => vehicle.id)
+		console.log("veicoli trovati:", vehicleIds)
+
+		const userInfractions = await InfractionRepository.getByVehicleIds(vehicleIds)
+
+		return res.status(200).json(userInfractions);
+	}
+
 }
 
 export default new UserController();
-

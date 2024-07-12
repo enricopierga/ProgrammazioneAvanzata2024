@@ -106,7 +106,7 @@ export function seed() {
 	Infraction.create({
 		paid: false,
 		id: 1,
-		vehicleId: 1,
+		vehicleId: 2,
 		routeId: 2,
 		speed: 198,
 		limit: 80,
@@ -119,7 +119,7 @@ export function seed() {
 	Infraction.create({
 		paid: false,
 		id: 2,
-		vehicleId: 1,
+		vehicleId: 2,
 		routeId: 2,
 		speed: 198,
 		limit: 80,

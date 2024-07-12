@@ -23,6 +23,7 @@ class PaymentController {
 				return;
 			}
 
+			//TODO: recuperare le targhe e verificare che sia associata a chi la sta andando a pagare (METTERE USERID NEL MODEL)
 			// Assicurarsi che l'infrazione non sia già stata pagata
 			if (infraction.paid) {
 				res.status(400).json({ message: "Fine already paid" });
@@ -54,7 +55,9 @@ class PaymentController {
 		} catch (error) {
 			res.status(500).json({ message: "Internal server error", error });
 		}
-	}
+	};
+
+
 
 
 }

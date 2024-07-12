@@ -63,9 +63,11 @@ router.patch(
  */
 router.get(
 	"/:id/credit",
-	requireAuthentication(["Operatore", "Automobilista"]),
-    UserController.getCredit
+	requireAuthentication(["Automobilista"]),
+	UserController.getCredit
 );
+
+router.get("/:id", requireAuthentication(["Automobilista"]), UserController.getMyInfractions);
 
 router.post(
 	"/login",
