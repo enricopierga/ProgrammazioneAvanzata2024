@@ -13,9 +13,8 @@ class InfractionRepository {
 	}
 
 	async getByPlatesAndPeriod(plates: string[], startDate: string, endDate: string, isOperator: boolean, userId: number): Promise<any> {
-		const whereClause: any = {timestamp: {[Op.between]: [new Date(startDate), new Date(endDate)]}}; // equivale in SQL in WHERE timestamp BETWEEN '2024-01-01' AND '2024-12-31'
+		const whereClause: any = {timestamp: {[Op.between]: [new Date(startDate), new Date(endDate)]}}; // = WHERE timestamp BETWEEN '2024-01-01' AND '2024-12-31'
 		
-		// Se l'utente non è un operatore, viene aggiunta una clausola alla condizione whereClause per filtrare i risultati in base allo userId.
 		if (!isOperator) {
 		  whereClause.userId = userId;
 		}

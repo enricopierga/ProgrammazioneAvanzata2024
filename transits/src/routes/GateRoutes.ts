@@ -1,6 +1,6 @@
 // src/routes/gateRoutes.ts
 import { Router } from 'express';
-import GateController from '../controllers/gateController';
+import GateController from '../controllers/GateController';
 import {requireAuthentication} from "../middleware/roles";
 
 const router = Router();
