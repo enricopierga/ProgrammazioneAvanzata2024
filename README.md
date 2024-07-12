@@ -53,7 +53,7 @@ Il sistema supporta tre ruoli distinti:
 
 1. Clonare il repository:
     ```
-    git clone https://github.com/username/repository.git](https://github.com/enricopierga/ProgrammazioneAvanzata2024
+    git clone https://github.com/enricopierga/ProgrammazioneAvanzata2024
     cd ProgrammazioneAvanzata2024
     ```
 
