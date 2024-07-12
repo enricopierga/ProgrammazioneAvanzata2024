@@ -1,23 +1,19 @@
 import { Request, Response } from "express";
 import InfractionRepository from "../repositories/InfractionRepository";
 import UserRepository from "../repositories/UserRepository";
-import User from "../models/UserModel";
-import Infraction from "../models/InfractionModel";
-import VehicleRepository from "../repositories/VehicleRepository";
-import Vehicle from "../models/VehicleModel";
 
 class PaymentController {
 
 	async payInfractionByUuid(req: Request, res: Response): Promise<void> {
 
 		const { uuid } = req.body;
-		console.log(uuid);
-		// Trova l'infrazione associata tramite UUID
+		const regex = /^[0-9a-f]{8}-[0-9a-f]{4}-[4][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+        if (!regex.test(uuid)) {
+			res.status(400).json({ message: 'Invalid UUID format' });
+			return;
+		  }
 
-		//TODO: check uuid format in order to prevent user's query
-		const infraction = await InfractionRepository.getByUuid(
-			uuid
-		);
+		const infraction = await InfractionRepository.getByUuid(uuid);
 
 		if (!infraction) {
 			res.status(404).json({ message: "Infraction not found" });
@@ -44,14 +40,8 @@ class PaymentController {
 
 		await UserRepository.decreaseCredit(req.user!.userId, fineAmount);
 
-		res.status(200).json({
-			message: "Fine paid successfully",
-			infraction,
-		});
+		res.status(200).json({message: "Fine paid successfully", infraction});
 	}
-
-
 };
-
 
 export default new PaymentController();
