@@ -1,6 +1,7 @@
 import { Router } from "express";
 import UserController from "../controllers/UserController";
 import { requireAuthentication } from "../middleware/roles";
+import pdfController from "../controllers/pdfController";
 
 const router = Router();
 
@@ -74,5 +75,35 @@ router.post(
 	UserController.login
 );
 
+router.get("/infraction/:id", requireAuthentication(["Automobilista"])), 
+pdfController.generatePdf
+
+
+/*
+// Endpoint per generare il PDF della multa
+app.get('/generate-ticket', async (req: Request, res: Response) => {
+	const ticketData: TicketData = {
+	  firstName: 'John',
+	  lastName: 'Doe',
+	  amount: 150,
+	  entryLocation: 'Main St',
+	  exitLocation: 'Broadway',
+	  expectedSpeed: 60,
+	  actualSpeed: 80,
+	  date: '2023-07-15',
+	  paymentId: '123456789',
+	  ticketId: '987654321',
+	  plateNumber: 'ABC1234',
+	};
+  
+	try {
+	  const pdfBytes = await generateTicketPdf(ticketData);
+	  res.setHeader('Content-Type', 'application/pdf');
+	  res.setHeader('Content-Disposition', 'attachment; filename=ticket.pdf');
+	  res.send(Buffer.from(pdfBytes));
+	} catch (error) {
+	  res.status(500).send('Errore durante la generazione del PDF');
+	}
+*/
 
 export default router;

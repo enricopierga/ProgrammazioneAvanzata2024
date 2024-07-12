@@ -114,4 +114,6 @@ Infraction.init(
 	}
 );
 
+Infraction.belongsTo(User, {foreignKey: 'userId'});
+
 export default Infraction;

@@ -4,6 +4,7 @@ import Vehicle from '../models/VehicleModel';
 import Route from '../models/RouteModel';
 import Gate from '../models/GateModel';
 import { v4 as UUIDV4 } from 'uuid';
+import User from '../models/UserModel';
 
 
 class InfractionRepository {
@@ -72,7 +73,12 @@ class InfractionRepository {
 	}
 
 	async getById(id: number): Promise<Infraction | null> {
-		return await Infraction.findByPk(id);
+		return await Infraction.findByPk(id, {
+			include: [{
+			  model: User,
+			  required: true, // Inner join, se vuoi un left join usa false
+			}],
+		  });
 	}
 
 	async getByUuid(uuid: string): Promise<Infraction | null> {
