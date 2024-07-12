@@ -2,7 +2,28 @@
 
 ## Obiettivo del Progetto
 
-Questo progetto ha l'obiettivo di realizzare un sistema backend per la gestione del calcolo di eventuali multe a seguito del passaggio di autoveicoli tra diversi varchi autostradali, implementando diverse classi di veicoli con limiti di velocità differenti. Il sistema permette di modellare le tipologie di veicolo, i varchi con posizione geografica nota, e le tratte con distanze specifiche. Inoltre, il sistema genera automaticamente infrazioni per il superamento della velocità media tra due varchi limitrofi.
+Il progetto ha l'obiettivo di sviluppare un sistema backend per la gestione delle multe derivanti dal superamento dei limiti di velocità su tratte autostradali. Questo sistema modella diverse entità chiave:
+
+- **Tipologie di Veicoli:** Ogni tipologia di veicolo ha limiti di velocità differenti (es. auto, camion).
+- **Varchi Autostradali:** Punti di controllo con posizione geografica nota.
+- **Tratte:** Percorsi definiti tra un varco di inizio e un varco di fine con una distanza specifica.
+
+### Funzionalità Principali
+
+1. **Gestione dei Varchi:** CRUD (Create, Read, Update, Delete) per aggiungere, visualizzare, modificare e rimuovere varchi autostradali.
+2. **Gestione delle Tratte:** CRUD per gestire tratte che collegano due varchi, includendo la distanza tra essi.
+3. **Gestione dei Veicoli:** CRUD per gestire le informazioni sui veicoli, inclusa la loro targa e tipologia.
+4. **Registrazione dei Transiti:** Inserimento dei transiti con informazioni su data, ora, targa del veicolo, tratta percorsa e condizioni meteorologiche (pioggia o sereno).
+5. **Generazione Automatica delle Multe:** Calcolo automatico delle infrazioni basato sulla velocità media del veicolo tra due varchi e le condizioni meteorologiche.
+6. **Query sulle Multe:** Recupero delle multe in base a targa e periodo, con dettagli sul varco di inizio, varco di fine, velocità media, differenza rispetto al limite, e condizioni meteorologiche.
+7. **Generazione di Bollettini di Pagamento:** Creazione di bollettini di pagamento in formato PDF, includendo un QR-code con informazioni dettagliate sulla multa.
+8. **Gestione dei Pagamenti:** Gestione dei crediti degli utenti e pagamento delle multe attraverso un backend separato, con funzioni per ricaricare i crediti e verificare il saldo.
+
+Il sistema supporta tre ruoli distinti:
+
+- **Operatore:** Ha pieno accesso alle operazioni di CRUD per varchi, tratte e veicoli, e può registrare transiti.
+- **Varco:** Può registrare transiti.
+- **Automobilista:** Può visualizzare solo le multe associate ai propri veicoli.
 
 ## Progettazione
 
