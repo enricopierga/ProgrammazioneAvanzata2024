@@ -13,7 +13,7 @@ Il progetto ha l'obiettivo di sviluppare un sistema backend per la gestione dell
 1. **Gestione dei Varchi:** CRUD per aggiungere, visualizzare, modificare e rimuovere varchi autostradali.
 2. **Gestione delle Tratte:** CRUD per gestire tratte che collegano due varchi, includendo la distanza tra essi.
 3. **Gestione dei Veicoli:** CRUD per gestire le informazioni sui veicoli, inclusa la loro targa e tipologia.
-4. **Registrazione dei Transiti:** Inserimento dei transiti con informazioni su data, ora, targa del veicolo, tratta percorsa e condizioni meteorologiche (pioggia o sereno).
+4. **Registrazione dei Transiti:** Inserimento dei transiti con informazioni sul veicolo, tratta percorsa, tempo impiegato per percorrerla e condizioni meteorologiche (pioggia o sereno).
 5. **Generazione Automatica delle Multe:** Calcolo automatico delle infrazioni basato sulla velocità media del veicolo tra due varchi e le condizioni meteorologiche.
 6. **Query sulle Multe:** Recupero delle multe in base a targa e periodo, con dettagli sul varco di inizio, varco di fine, velocità media, differenza rispetto al limite, e condizioni meteorologiche.
 7. **Generazione di Bollettini di Pagamento:** Creazione di bollettini di pagamento in formato PDF, includendo un QR-code con informazioni dettagliate sulla multa.
