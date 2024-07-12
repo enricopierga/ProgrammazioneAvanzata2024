@@ -155,12 +155,12 @@ Il sistema supporta tre ruoli distinti:
     ```
 
 #### Richiesta Multe per Targa e Periodo
-- **POST /infractions/query**
+- **POST /infractions/plates-and-period**
     ```json
     {
       "plates": ["AB123CD", "EF456GH"],
-      "startDate": "2023-01-01",
-      "endDate": "2023-12-31"
+      "startDate": "2024-01-01",
+      "endDate": "2024-07-21"
     }
     ```
 
