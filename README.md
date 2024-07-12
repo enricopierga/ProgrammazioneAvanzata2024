@@ -39,37 +39,31 @@ Il sistema supporta tre ruoli distinti:
 
 ### Pattern Utilizzati
 
-#### MVC (Model-View-Controller)
-Il pattern MVC è stato scelto per separare la logica di business dalla presentazione e dalla gestione delle richieste. Questo permette di mantenere il codice modulare e facilmente manutenibile. La struttura del progetto è suddivisa in tre componenti principali:
-- **Model:** Gestisce la logica dei dati e l'interazione con il database tramite Sequelize.
-- **View:** (Non applicabile in questo backend puro)
-- **Controller:** Gestisce la logica di controllo e risponde alle richieste HTTP.
-
-#### Repository Pattern
-Il Repository Pattern è stato utilizzato per astrarre la logica di accesso ai dati, fornendo una chiara separazione tra la logica di business e la logica di accesso ai dati. Questo rende il codice più testabile e manutenibile.
+- **MVC (Model-View-Controller)**: Il pattern MVC è stato scelto per separare la logica di business dalla presentazione e dalla gestione delle richieste. Questo permette di mantenere il codice modulare e facilmente manutenibile. Occore tuttavia fare una precisazione: ai fini del progetto la componente **View** non viene applicata non essendoci una vista vera e propria.
+- **Repository Pattern**: Il Repository Pattern è stato utilizzato per astrarre la logica di accesso ai dati, fornendo una chiara separazione tra la logica di business e la logica di accesso ai dati. Questo rende il codice più testabile e manutenibile. L'interazione con il database avviene tramite Sequelize.
 
 ## Avviare il Progetto
 
 ### Prerequisiti
 
 - Docker
-- Docker Compose
+- Docker-compose
 
 ### Istruzioni
 
 1. Clonare il repository:
     ```bash
-    git clone https://github.com/username/repository.git
-    cd repository
+    git clone https://github.com/username/repository.git](https://github.com/enricopierga/ProgrammazioneAvanzata2024
+    cd ProgrammazioneAvanzata2024
     ```
 
 2. Configurare le variabili d'ambiente:
     Creare un file `.env` nella radice del progetto e configurare le seguenti variabili:
     ```
-    DB_USER=myuser
-    DB_PASSWORD=mypassword
-    DB_NAME=mydatabase
-    DB_HOST=db
+    DB_NAME=defaultDb
+    DB_USER=dbUser
+    DB_PASS=mySecretPassword
+    DB_HOST=localhost
     DB_PORT=5432
     ```
 
