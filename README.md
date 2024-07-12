@@ -2,7 +2,7 @@
 
 ## Obiettivo del Progetto
 
-Il progetto ha l'obiettivo di sviluppare un sistema backend per la gestione delle multe derivanti dal superamento dei limiti di velocità su tratte autostradali, simile ai sistemi Tutor. Questo sistema modella diverse entità chiave:
+Il progetto ha l'obiettivo di sviluppare un sistema per la gestione delle multe derivanti dal superamento dei limiti di velocità su tratte autostradali, simile ai sistemi Tutor. Questo sistema modella diverse entità chiave:
 
 - **Tipologie di Veicoli:** Ogni tipologia di veicolo ha limiti di velocità differenti (es. auto, camion).
 - **Varchi Autostradali:** Punti di controllo con posizione geografica nota.
@@ -17,7 +17,7 @@ Il progetto ha l'obiettivo di sviluppare un sistema backend per la gestione dell
 5. **Generazione automatica delle multe:** Calcolo automatico delle infrazioni basato sulla velocità media del veicolo tra due varchi.
 6. **Query sulle multe:** Recupero delle multe in base a targa e periodo, fornendo i relativi dettagli.
 7. **Generazione di bollettini di pagamento:** Creazione di bollettini di pagamento in formato PDF, includendo un QR-code con informazioni dettagliate sulla multa.
-8. **Gestione dei pagamenti:** gestione dei crediti degli utenti e pagamento delle multe attraverso un backend separato, con funzioni per ricaricare i crediti e verificare il saldo.
+8. **Gestione dei pagamenti:** Gestione del credito degli utenti e pagamento delle multe attraverso un backend separato, con funzioni per verificare e/o verificare il creditoo.
 
 Il sistema supporta tre ruoli distinti:
 
