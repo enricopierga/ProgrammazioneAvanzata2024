@@ -52,7 +52,7 @@ Il sistema supporta tre ruoli distinti:
 ### Istruzioni
 
 1. Clonare il repository:
-    ```bash
+    ```
     git clone https://github.com/username/repository.git](https://github.com/enricopierga/ProgrammazioneAvanzata2024
     cd ProgrammazioneAvanzata2024
     ```
