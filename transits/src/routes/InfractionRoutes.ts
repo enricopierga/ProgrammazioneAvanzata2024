@@ -1,27 +1,10 @@
 // src/routes/infractionRoutes.ts
 import { Router } from 'express';
 import InfractionController from '../controllers/infractionController';
-//import { authenticateJWT, authorizeAutomobilista, authorizeOperatore } from "../middleware/roles";
-
-
+import { requireAuthentication } from '../middleware/roles';
 
 const router = Router();
 
-router.post('/:id', InfractionController.create);
-//router.get('/infractions', InfractionController.getAll);
-//router.get('/infractions/:id', InfractionController.getById);
-//router.put('/infractions/:id', InfractionController.update);
-//router.delete('/infractions/:id', InfractionController.delete);
-router.get('/infractions/by-plates-and-period', InfractionController.getInfractionsByPlatesAndPeriod);
-//router.get('/infractions/:id/download', InfractionController.generatePaymentSlip);
-
-
-// Rotta per scaricare il bollettino di pagamento della multa in formato PDF
-/*router.post(
-    '/infractions/bollettino',
-    authenticateJWT,
-    authorizeAutomobilista,
-    InfractionController.generaBollettino
-);*/
+router.get('/:id', requireAuthentication("Operatore" || "Automobilista"), InfractionController.getByPlatesAndPeriod);
 
 export default router;

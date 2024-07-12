@@ -11,7 +11,6 @@ interface PaymentAttributes {
 
 interface PaymentCreationAttributes extends Optional<PaymentAttributes, "id"> {}
 
-// Definizione del modello Pagamento
 class Payment
 	extends Model<PaymentAttributes, PaymentCreationAttributes>
 	implements PaymentAttributes

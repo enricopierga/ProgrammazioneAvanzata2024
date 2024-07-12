@@ -5,7 +5,7 @@ import {requireAuthentication} from "../middleware/roles";
 const router = Router();
 
 router.patch("/:id/credit", requireAuthentication("Operatore"), UserController.addCredit);
-router.get("/:id/credit", requireAuthentication("Operatore"), requireAuthentication("Automobilista"), UserController.getCredit);
+router.get("/:id/credit", requireAuthentication("Operatore" || "Automobilista"), UserController.getCredit);
 router.post("/login", UserController.login);
 
 

@@ -11,7 +11,7 @@ class RouteController {
 	async getRoute(req: Request, res: Response): Promise<void> {
 
 		if (req.query.routeId) {
-			const routeId = number(req.query.routeId);
+			const routeId = Number(req.query.routeId);
 
 			if (isNaN(routeId)) {
 				res.status(400).json({ message: "Invalid ID format" });
@@ -33,7 +33,7 @@ class RouteController {
 	}
 
 	async update(req: Request, res: Response): Promise<void> {
-		const routeId = number(req.params.routeId);
+		const routeId = Number(req.params.routeId);
 
 		if (isNaN(routeId)) {
 			res.status(400).json({ message: "Invalid ID format" });
@@ -52,7 +52,7 @@ class RouteController {
 	}
 
 	async delete(req: Request, res: Response): Promise<void> {
-		const routeId = number(req.params.routeId);
+		const routeId = Number(req.params.routeId);
 
 		if (isNaN(routeId)) {
 			res.status(400).json({ message: "Invalid ID format" });

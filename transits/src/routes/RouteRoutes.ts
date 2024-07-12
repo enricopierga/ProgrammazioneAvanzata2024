@@ -1,6 +1,6 @@
 // src/routes/routeRoutes.ts
 import { Router } from 'express';
-import RouteController from '../controllers/RouteController';
+import RouteController from '../controllers/routeController';
 import {requireAuthentication} from "../middleware/roles";
 
 const router = Router();

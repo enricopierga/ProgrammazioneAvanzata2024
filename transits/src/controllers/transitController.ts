@@ -1,19 +1,15 @@
 // src/controllers/TransitController.ts
 import { Request, Response } from "express";
-import Transit from "../models/TransitModel";
 import TransitRepository from "../repositories/TransitRepository";
 import VehicleRepository from "../repositories/VehicleRepository";
 import RouteRepository from "../repositories/RouteRepository";
-import InfractionController from "./infractionController";
-import Vehicle from "../models/VehicleModel";
-
+import InfractionRepository from "../repositories/InfractionRepository";
 
 class TransitController {
 	// Creazione di un Transit e creazione automatica di un'Infraction
 	// se vengono soddisfatte delle condizioni
 
 	async create(req: Request, res: Response): Promise<void> {
-
 		const transit = await TransitRepository.create(req.body); // crea il transito
 		const vehicle = await VehicleRepository.getById(transit.vehicleId)
 		const route = await RouteRepository.getById(transit.routeId);
@@ -29,7 +25,6 @@ class TransitController {
 		}
 
 		const speed = Math.floor((route.distance / transit.travelTime) * 3.6); // Calcola la velocità in km/h
-		console.log(`La velocità del veicolo è ${speed} km/h`);
 
 		let speedLimit: number = 130;
 		if (vehicle.type === 'car') {
@@ -37,8 +32,6 @@ class TransitController {
 		} else if (vehicle.type === 'truck') {
 			speedLimit = transit.weather === 'rainy' ? 80 : 100;
 		}
-
-		console.log(`La velocità limite è ${speedLimit} km/h`);
 
 		if (speed > speedLimit) {
 			// Costruisce i dati per l'infrazione
@@ -52,20 +45,18 @@ class TransitController {
 				timestamp: new Date(),
 			};
 
-			console.log(`Sei in multa per ${speed - speedLimit} km/h`);
-			const newInfraction = await InfractionController.create({ body: infractionData } as Request, res);
+			const newInfraction = await InfractionRepository.create(infractionData);
 			res.status(201).json({ transit: transit, infraction: newInfraction });
 			return;
 		} else {
 			res.status(201).json(transit);
 		}
-
 	}
 
 	async getTransit(req: Request, res: Response): Promise<void> {
 
 		if (req.query.transitId) {
-			const transitId = number(req.query.transitId);
+			const transitId = Number(req.query.transitId);
 
 			if (isNaN(transitId)) {
 				res.status(400).json({ message: "Invalid ID format" });
@@ -88,7 +79,7 @@ class TransitController {
 	}
 
 	async update(req: Request, res: Response): Promise<void> {
-		const transitId = number(req.params.transitId);
+		const transitId = Number(req.params.transitId);
 
 		if (isNaN(transitId)) {
 			res.status(400).json({ message: "Invalid ID format" });
@@ -104,7 +95,7 @@ class TransitController {
 	}
 
 	async delete(req: Request, res: Response): Promise<void> {
-		const transitId = number(req.params.transitId);
+		const transitId = Number(req.params.transitId);
 
 		if (isNaN(transitId)) {
 			res.status(400).json({ message: "Invalid ID format" });

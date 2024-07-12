@@ -11,7 +11,7 @@ class VehicleController {
 	async getVehicle(req: Request, res: Response): Promise<void> {
 
 		if (req.query.vehicleId) {
-			const vehicleId = number(req.query.vehicleId);
+			const vehicleId = Number(req.query.vehicleId);
 
 			if (isNaN(vehicleId)) {
 				res.status(400).json({ message: "Invalid ID format" });
@@ -35,7 +35,7 @@ class VehicleController {
 	}
 
 	async update(req: Request, res: Response): Promise<void> {
-		const vehicleId = number(req.params.vehicleId);
+		const vehicleId = Number(req.params.vehicleId);
 
 		if (isNaN(vehicleId)) {
 			res.status(400).json({ message: "Invalid ID format" });
@@ -52,7 +52,7 @@ class VehicleController {
 	}
 
 	async delete(req: Request, res: Response): Promise<void> {
-		const vehicleId = number(req.params.vehicleId);
+		const vehicleId = Number(req.params.vehicleId);
 
 		if (isNaN(vehicleId)) {
 			res.status(400).json({ message: "Invalid ID format" });

@@ -11,7 +11,7 @@ class GateController {
 	async getGate(req: Request, res: Response): Promise<void> {
 
 		if (req.query.gateId) {
-			const gateId = number(req.query.gateId);
+			const gateId = Number(req.query.gateId);
 			if (isNaN(gateId)) {
 				res.status(400).json({ message: "Invalid ID format" });
 				return;
@@ -34,7 +34,7 @@ class GateController {
 	}
 
 	async update(req: Request, res: Response): Promise<void> {
-		const gateId = number(req.params.gateId);
+		const gateId = Number(req.params.gateId);
 
 		if (isNaN(gateId)) {
 			res.status(400).json({ message: "Invalid ID format" });
@@ -52,7 +52,7 @@ class GateController {
 	}
 
 	async delete(req: Request, res: Response): Promise<void> {
-		const gateId = number(req.params.gateId);
+		const gateId = Number(req.params.gateId);
 
 		if (isNaN(gateId)) {
 			res.status(400).json({ message: "Invalid ID format" });
