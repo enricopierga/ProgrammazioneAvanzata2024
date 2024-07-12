@@ -89,7 +89,7 @@ export function seed() {
 
 	Transit.create({
 		id: 2,
-		vehicleId: 2,
+		vehicleId: 1,
 		routeId: 2,
 		travelTime: 150,
 		weather: "rainy",

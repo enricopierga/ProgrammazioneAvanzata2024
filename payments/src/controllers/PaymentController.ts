@@ -13,7 +13,7 @@ class PaymentController {
 			const { uuid } = req.body;
 			console.log(uuid);
 			// Trova l'infrazione associata tramite UUID
-
+			//TODO: check uuid format in order to prevent user's query
 			const infraction = await InfractionRepository.getByUuid(
 				uuid
 			);
@@ -31,6 +31,7 @@ class PaymentController {
 
 			// Aggiorna lo stato dell'infrazione come pagata
 			infraction.paid = true;
+			infraction.save();
 
 			//Provo a trovare il veicolo associato alla multa
 			const fineVehicle = await VehicleRepository.getById(infraction.vehicleId);
@@ -49,11 +50,6 @@ class PaymentController {
 				});
 			}
 			else res.status(404).json({ message: "Vehicle not found" })
-
-
-
-
-
 
 		} catch (error) {
 			res.status(500).json({ message: "Internal server error", error });

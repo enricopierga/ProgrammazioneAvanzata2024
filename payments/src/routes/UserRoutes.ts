@@ -27,7 +27,7 @@ const router = Router();
  */
 router.patch(
 	"/:id/credit",
-	requireAuthentication("Operatore"),
+	requireAuthentication(["Operatore"]),
 	UserController.addCredit
 );
 
@@ -63,8 +63,7 @@ router.patch(
  */
 router.get(
 	"/:id/credit",
-	requireAuthentication("Operatore"),
-	requireAuthentication("Automobilista"),
+	requireAuthentication(["Operatore", "Automobilista"]),
     UserController.getCredit
 );
 

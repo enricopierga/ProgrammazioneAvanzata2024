@@ -5,8 +5,9 @@ import UserController from "../controllers/UserController";
 
 const router = Router();
 
-router.post("/:id", requireAuthentication("Automobilista"), PaymentController.payInfractionByUuid);
 
-router.get("/:id", requireAuthentication("Operatore"), UserController.getMyInfractions);
+router.post("/:id", requireAuthentication(["Automobilista"]), PaymentController.payInfractionByUuid);
+
+router.get("/:id", requireAuthentication(["Operatore", "Automobilista"]), UserController.getMyInfractions);
 
 export default router;
