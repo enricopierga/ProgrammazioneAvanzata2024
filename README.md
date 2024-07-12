@@ -15,7 +15,7 @@ Il progetto ha l'obiettivo di sviluppare un sistema backend per la gestione dell
 3. **Gestione dei veicoli:** CRUD per gestire le informazioni sui veicoli, inclusa la loro targa e tipologia.
 4. **Registrazione dei transiti:** Inserimento dei transiti con informazioni sul veicolo, tratta percorsa, tempo impiegato per percorrerla e condizioni meteorologiche (pioggia o sereno).
 5. **Generazione automatica delle multe:** Calcolo automatico delle infrazioni basato sulla velocità media del veicolo tra due varchi.
-6. **Query sulle multe:** Recupero delle multe in base a targa e periodo, con dettagli sul varco di inizio, varco di fine, velocità media, differenza rispetto al limite, e condizioni meteorologiche.
+6. **Query sulle multe:** Recupero delle multe in base a targa e periodo, fornendo i relativi dettagli.
 7. **Generazione di bollettini di pagamento:** Creazione di bollettini di pagamento in formato PDF, includendo un QR-code con informazioni dettagliate sulla multa.
 8. **Gestione dei pagamenti:** gestione dei crediti degli utenti e pagamento delle multe attraverso un backend separato, con funzioni per ricaricare i crediti e verificare il saldo.
 
