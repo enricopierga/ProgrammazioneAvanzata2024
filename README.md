@@ -23,7 +23,7 @@ Il sistema supporta tre ruoli distinti:
 
 - **Operatore:** Ha pieno accesso alle operazioni di CRUD per varchi, tratte e veicoli, e può registrare transiti.
 - **Varco:** Può registrare transiti.
-- **Automobilista:** Può visualizzare solo le multe associate ai propri veicoli (e pagarle :)).
+- **Automobilista:** Può visualizzare (e pagare) solo le multe associate ai propri veicoli.
 
 ## Progettazione
 
