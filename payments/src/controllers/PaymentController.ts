@@ -11,7 +11,7 @@ class PaymentController {
 			res.status(400).json({ message: 'Invalid UUID format' });
 			return;
 		}
-
+//TODO:  Check abbastanza soldi UTENTE
 		const infraction = await InfractionRepository.getByUuid(uuid);
 
 		if (!infraction) {
