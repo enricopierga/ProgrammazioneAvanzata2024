@@ -64,7 +64,7 @@ router.patch(
  */
 router.get(
 	"/:id/credit",
-	requireAuthentication(["Automobilista"]),
+	requireAuthentication(["Automobilista", "Operatore"]),
 	UserController.getCredit
 );
 
@@ -75,8 +75,10 @@ router.post(
 	UserController.login
 );
 
-router.get("/infraction/:id", requireAuthentication(["Automobilista"])), 
-pdfController.generatePdf
+router.get("/:id/pdf", requireAuthentication(["Automobilista", "Operatore"]),pdfController.getPdf);
+
+
+
 
 
 /*
