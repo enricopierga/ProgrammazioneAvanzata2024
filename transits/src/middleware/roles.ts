@@ -8,9 +8,7 @@ import { decodeJwt } from "../security/JWTservice";
  * @param requiredRole - The required user role to access the route (optional).
  * @returns The middleware function.
  */
-export function requireAuthentication(
-	requiredRole?: "Operatore" | "Automobilista" | "Varco"
-) {
+export function requireAuthentication(requiredRole?: "Operatore" | "Automobilista" | "Varco") {
 	return (
 		req: Request & { user?: JwtPayload },
 		res: Response,

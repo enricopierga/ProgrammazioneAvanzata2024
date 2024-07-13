@@ -1,4 +1,6 @@
 import Gate from "../models/GateModel";
+import Route from "../models/RouteModel";
+
 
 class GateRepository {
 	async create(data: any): Promise<Gate> {
@@ -21,11 +23,16 @@ class GateRepository {
 	}
 
 	async delete(id: number): Promise<number> {
-		const deleted = await Gate.destroy({
-			where: { id },
-		});
-		return deleted;
-	}
+		// Check for dependencies in routes
+		const routeDependency = await Route.findOne({ where: { startGateId: id } }) 
+		                             || await Route.findOne({ where: { endGateId: id } });
+		if (routeDependency) {
+		  throw new Error('Cannot delete gate: it has associated routes.');
+		}
+	
+		// Delete the gate if no dependencies found
+		return await Gate.destroy({ where: { id: id } });
+	  }
 }
 
 export default new GateRepository();

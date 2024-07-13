@@ -1,6 +1,6 @@
 // src/routes/vehicleRoutes.ts c
 import { Router } from 'express';
-import VehicleController from '../controllers/VehicleController';
+import VehicleController from '../controllers/vehicleController';
 import {requireAuthentication} from "../middleware/roles";
 
 const router = Router();

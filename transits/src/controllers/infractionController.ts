@@ -1,9 +1,7 @@
 // src/controllers/InfractionController.ts
 import { Request, Response } from 'express';
-import { PDFDocument, StandardFonts, rgb } from 'pdf-lib';
-import QRCode from 'qrcode';
 import InfractionRepository from '../repositories/InfractionRepository';
-import VehicleRepository from '../repositories/VehicleRepository';
+import UserRepository from '../repositories/UserRepository';
 
 class InfractionController {
   async create(req: Request, res: Response): Promise<any> {
@@ -11,38 +9,28 @@ class InfractionController {
     return infraction;
   }
 
-  async getInfractionsByPlatesAndPeriod(req: Request, res: Response): Promise<void> {
+  async getByPlatesAndPeriod(req: Request, res: Response): Promise<void> {
     const { plates, startDate, endDate } = req.body;
-    const isOperator = true; // DA TOGLIEREE!!!!!!! <<<-----------
-    const userId = 1234; // DA TOGLIEREE!!!!!!! <<<<----------
+    const requestingUserId = Number(req.params.id)
+    const requestingUser = await UserRepository.getById(requestingUserId);
 
     if (!plates || !startDate || !endDate) {
       res.status(400).json({ message: "Missing plates or date range" });
       return;
     }
 
-    const infractions = await InfractionRepository.getInfractionsByPlatesAndPeriod(plates, startDate, endDate, isOperator, userId);
+    if(!requestingUser){
+      res.status(404).json({ message: "User not found" });
+      return;
+    } 
+    
+    const isOperator = requestingUser.role === "Operatore"; 
+    const infractions = await InfractionRepository.getByPlatesAndPeriod(plates, startDate, endDate, isOperator, requestingUserId);
     res.status(200).json(infractions);
   }
 
-  async getById(req: Request, res: Response): Promise<void> {
-    const infractionId = number(req.params.id);
-
-    if (isNaN(infractionId)) {
-      res.status(400).json({ message: "Invalid ID format" });
-      return;
-    }
-
-    const infraction = await InfractionRepository.getById(infractionId);
-    if (infraction) {
-      res.status(200).json(infraction);
-    } else {
-      res.status(404).json({ message: "Infraction not found" });
-    }
-  }
-
   async update(req: Request, res: Response): Promise<void> {
-    const infractionId = number(req.params.id);
+    const infractionId = Number(req.params.id);
 
     if (isNaN(infractionId)) {
       res.status(400).json({ message: "Invalid ID format" });
@@ -58,7 +46,7 @@ class InfractionController {
   }
 
   async delete(req: Request, res: Response): Promise<void> {
-    const infractionId = number(req.params.id);
+    const infractionId = Number(req.params.id);
 
     if (isNaN(infractionId)) {
       res.status(400).json({ message: "Invalid ID format" });
@@ -72,11 +60,11 @@ class InfractionController {
       res.status(404).json({ message: "Infraction not found" });
     }
   }
-
+  /*
   async generatePaymentSlip(req: Request, res: Response): Promise<void> {
     try {
       const id = req.params.id;
-      const infraction = await InfractionRepository.getById(number(id));
+      const infraction = await InfractionRepository.getById(Number(id));
 
       if (!infraction) {
         res.status(404).json({ message: 'Infraction not found' });
@@ -136,7 +124,7 @@ class InfractionController {
     } catch (error) {
       res.status(500).json({ message: 'Internal server error', error });
     }
-  }
+  }*/
 
 };
 

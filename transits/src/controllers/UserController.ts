@@ -31,7 +31,7 @@ class UserController {
 	 * Controller per ricaricare il credito di un utente.
 	 */
 	addCredit = async (req: Request, res: Response) => {
-		const userId = number(req.params.id);
+		const userId = Number(req.params.id);
 
 		if (isNaN(userId)) {
 			res.status(400).json({ message: "Invalid ID format" });
@@ -58,14 +58,14 @@ class UserController {
 	 * Controller per recuperare il credito di un utente.
 	 */
 	getCredit = async (req: Request, res: Response) => {
-		const utenteId = number(req.params.id);
+		const userId = Number(req.params.id);
 
-		if (isNaN(utenteId)) {
+		if (isNaN(userId)) {
 			res.status(400).json({ message: "Invalid ID format" });
 			return;
 		}
 
-		const credito = await utenteRepository.getCredit(number(utenteId));
+		const credito = await utenteRepository.getCredit(Number(userId));
 		if (credito === null) {
 			return res.status(404).json({ message: "Utente non trovato" });
 		}

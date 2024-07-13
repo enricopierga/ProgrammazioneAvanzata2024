@@ -1,26 +1,181 @@
+# Sistema di Gestione Multe Autostradali
 
-# Progetto Gestione Transiti
+## Obiettivo del Progetto
 
-## Obiettivo del progetto
+Il progetto ha l'obiettivo di sviluppare un sistema per la gestione delle multe derivanti dal superamento dei limiti di velocità su tratte autostradali, simile ai sistemi Tutor. Questo sistema modella diverse entità chiave:
 
-Il progetto ha l'obiettivo di realizzare un sistema per la gestione del calcolo di eventuali multe a seguito del passaggio di autoveicoli con classi differenti tra diversi varchi autostradali.
+- **Tipologie di Veicoli:** Ogni tipologia di veicolo ha limiti di velocità differenti (es. auto, camion).
+- **Varchi Autostradali:** Punti di controllo con posizione geografica nota.
+- **Tratte:** Percorsi definiti tra un varco di inizio e un varco di fine con una distanza specifica.
+
+### Funzionalità Principali
+
+1. **Gestione dei varchi:** CRUD per aggiungere, visualizzare, modificare e rimuovere varchi autostradali.
+2. **Gestione delle tratte:** CRUD per gestire tratte che collegano due varchi, includendo la distanza tra essi.
+3. **Gestione dei veicoli:** CRUD per gestire le informazioni sui veicoli, inclusa la loro targa e tipologia.
+4. **Registrazione dei transiti:** Inserimento dei transiti con informazioni sul veicolo, tratta percorsa, tempo impiegato per percorrerla e condizioni meteorologiche (pioggia o sereno).
+5. **Generazione automatica delle multe:** Calcolo automatico delle infrazioni basato sulla velocità media del veicolo tra due varchi.
+6. **Query sulle multe:** Recupero delle multe in base a targa e periodo, fornendo i relativi dettagli.
+7. **Generazione di bollettini di pagamento:** Creazione di bollettini di pagamento in formato PDF, includendo un QR-code con informazioni dettagliate sulla multa.
+8. **Gestione dei pagamenti:** Gestione del credito degli utenti e pagamento delle multe attraverso un backend separato, con funzioni per verificare e/o verificare il creditoo.
+
+Il sistema supporta tre ruoli distinti:
+
+- **Operatore:** Ha pieno accesso alle operazioni di CRUD per varchi, tratte e veicoli, e può registrare transiti.
+- **Varco:** Può registrare transiti.
+- **Automobilista:** Può visualizzare (e pagare) solo le multe associate ai propri veicoli.
 
 ## Progettazione
 
 ### Diagrammi UML
 
-(Inserire i diagrammi UML qui)
+#### Diagramma delle Classi
 
-### Design Pattern
+![Class Diagram](path_to_class_diagram.png)
 
-(Inserire la descrizione dei pattern utilizzati)
+#### Diagramma dei Casi d'Uso
 
-## Come avviare il progetto
+![Use Case Diagram](path_to_use_case_diagram.png)
 
-1. Clonare il repository.
-2. Eseguire `docker-compose up` per avviare i servizi.
-3. L'applicazione sarà disponibile su `http://localhost:3000`.
+### Pattern Utilizzati
 
-## Test del progetto
+- **MVC (Model-View-Controller)**: Il pattern MVC è stato scelto per separare la logica di business dalla presentazione e dalla gestione delle richieste. Questo permette di mantenere il codice modulare e facilmente manutenibile. Occore tuttavia fare una precisazione: ai fini del progetto la componente **View** non viene applicata non essendoci una vista vera e propria.
+- **Repository Pattern**: Il Repository Pattern è stato utilizzato per astrarre la logica di accesso ai dati, fornendo una chiara separazione tra la logica di business e la logica di accesso ai dati. Questo rende il codice più testabile e manutenibile. L'interazione con il database avviene tramite Sequelize.
 
-(Inserire le istruzioni per testare il progetto con Postman)
+## Avviare il Progetto
+
+### Prerequisiti
+
+- Docker
+- Docker-compose
+
+### Istruzioni
+
+1. Clonare il repository:
+    ```
+    git clone https://github.com/enricopierga/ProgrammazioneAvanzata2024
+    cd ProgrammazioneAvanzata2024
+    ```
+
+2. Configurare le variabili d'ambiente:
+    Creare un file `.env` nella radice del progetto e configurare le seguenti variabili:
+    ```
+    DB_NAME=defaultDb
+    DB_USER=dbUser
+    DB_PASS=mySecretPassword
+    DB_HOST=localhost
+    DB_PORT=5432
+    ```
+
+3. Avviare i servizi con Docker Compose:
+    ```bash
+    docker-compose up --build
+    ```
+
+4. Accedere ai servizi:
+    - Backend Transiti: `http://localhost:3000`
+    - Backend Pagamenti: `http://localhost:3001`
+
+## Test del Progetto
+
+### Postman
+
+È possibile testare il progetto utilizzando Postman. Forniamo una collection Postman che contiene tutte le richieste necessarie per testare le API. Importare la collection in Postman e seguire le istruzioni per testare le diverse rotte.
+
+[Scarica la Collection Postman](path_to_postman_collection.json)
+
+### Esempi di Richieste
+
+#### CRUD per la Gestione dei Varchi
+- **POST /gates**
+    ```json
+    {
+      "location": "Location 1"
+    }
+    ```
+- **GET /gates**
+- **GET /gates/:id**
+- **PUT /gates/:id**
+    ```json
+    {
+      "location": "New Location"
+    }
+    ```
+- **DELETE /gates/:id**
+
+#### CRUD per la Gestione delle Tratte
+- **POST /routes**
+    ```json
+    {
+      "startGateId": 1,
+      "endGateId": 2,
+      "distance": 50
+    }
+    ```
+- **GET /routes**
+- **GET /routes/:id**
+- **PUT /routes/:id**
+    ```json
+    {
+      "startGateId": 1,
+      "endGateId": 3,
+      "distance": 55
+    }
+    ```
+- **DELETE /routes/:id**
+
+#### CRUD per la Gestione dei Veicoli
+- **POST /vehicles**
+    ```json
+    {
+      "licensePlate": "AB123CD",
+      "type": "car",
+      "userId": 1
+    }
+    ```
+- **GET /vehicles**
+- **GET /vehicles/:id**
+- **PUT /vehicles/:id**
+    ```json
+    {
+      "licensePlate": "AB123CD",
+      "type": "truck"
+    }
+    ```
+- **DELETE /vehicles/:id**
+
+#### Inserimento Transiti e Generazione Multe
+- **POST /transits**
+    ```json
+    {
+      "vehicleId": 1,
+      "routeId": 1,
+      "travelTime": 3600,
+      "weather": "clear"
+    }
+    ```
+
+#### Richiesta Multe per Targa e Periodo
+- **POST /infractions/plates-and-period**
+    ```json
+    {
+      "plates": ["AB123CD", "EF456GH"],
+      "startDate": "2024-01-01",
+      "endDate": "2024-07-21"
+    }
+    ```
+
+#### Scaricare Bollettino di Pagamento
+- **GET /payments/:id/pdf**
+
+#### Effettuare un Pagamento
+- **POST /payments**
+    ```json
+    {
+      "paymentUuid": "6836178f-0c79-4c10-88ec-75bae54fd6a4",
+    }
+    ```
+
+### Conclusione
+
+Questo progetto implementa un sistema completo per la gestione delle multe autostradali con ruoli differenziati, utilizzando pattern architetturali solidi e tecnologie moderne. Seguire le istruzioni per avviare e testare il sistema e garantire la corretta configurazione delle variabili d'ambiente e dei servizi Docker.
