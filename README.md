@@ -2,7 +2,28 @@
 
 ## Obiettivo del Progetto
 
-Questo progetto ha l'obiettivo di realizzare un sistema backend per la gestione del calcolo di eventuali multe a seguito del passaggio di autoveicoli tra diversi varchi autostradali, implementando diverse classi di veicoli con limiti di velocità differenti. Il sistema permette di modellare le tipologie di veicolo, i varchi con posizione geografica nota, e le tratte con distanze specifiche. Inoltre, il sistema genera automaticamente infrazioni per il superamento della velocità media tra due varchi limitrofi.
+Il progetto ha l'obiettivo di sviluppare un sistema per la gestione delle multe derivanti dal superamento dei limiti di velocità su tratte autostradali, simile ai sistemi Tutor. Questo sistema modella diverse entità chiave:
+
+- **Tipologie di Veicoli:** Ogni tipologia di veicolo ha limiti di velocità differenti (es. auto, camion).
+- **Varchi Autostradali:** Punti di controllo con posizione geografica nota.
+- **Tratte:** Percorsi definiti tra un varco di inizio e un varco di fine con una distanza specifica.
+
+### Funzionalità Principali
+
+1. **Gestione dei varchi:** CRUD per aggiungere, visualizzare, modificare e rimuovere varchi autostradali.
+2. **Gestione delle tratte:** CRUD per gestire tratte che collegano due varchi, includendo la distanza tra essi.
+3. **Gestione dei veicoli:** CRUD per gestire le informazioni sui veicoli, inclusa la loro targa e tipologia.
+4. **Registrazione dei transiti:** Inserimento dei transiti con informazioni sul veicolo, tratta percorsa, tempo impiegato per percorrerla e condizioni meteorologiche (pioggia o sereno).
+5. **Generazione automatica delle multe:** Calcolo automatico delle infrazioni basato sulla velocità media del veicolo tra due varchi.
+6. **Query sulle multe:** Recupero delle multe in base a targa e periodo, fornendo i relativi dettagli.
+7. **Generazione di bollettini di pagamento:** Creazione di bollettini di pagamento in formato PDF, includendo un QR-code con informazioni dettagliate sulla multa.
+8. **Gestione dei pagamenti:** Gestione del credito degli utenti e pagamento delle multe attraverso un backend separato, con funzioni per verificare e/o verificare il creditoo.
+
+Il sistema supporta tre ruoli distinti:
+
+- **Operatore:** Ha pieno accesso alle operazioni di CRUD per varchi, tratte e veicoli, e può registrare transiti.
+- **Varco:** Può registrare transiti.
+- **Automobilista:** Può visualizzare (e pagare) solo le multe associate ai propri veicoli.
 
 ## Progettazione
 
@@ -18,37 +39,31 @@ Questo progetto ha l'obiettivo di realizzare un sistema backend per la gestione 
 
 ### Pattern Utilizzati
 
-#### MVC (Model-View-Controller)
-Il pattern MVC è stato scelto per separare la logica di business dalla presentazione e dalla gestione delle richieste. Questo permette di mantenere il codice modulare e facilmente manutenibile. La struttura del progetto è suddivisa in tre componenti principali:
-- **Model:** Gestisce la logica dei dati e l'interazione con il database tramite Sequelize.
-- **View:** (Non applicabile in questo backend puro)
-- **Controller:** Gestisce la logica di controllo e risponde alle richieste HTTP.
-
-#### Repository Pattern
-Il Repository Pattern è stato utilizzato per astrarre la logica di accesso ai dati, fornendo una chiara separazione tra la logica di business e la logica di accesso ai dati. Questo rende il codice più testabile e manutenibile.
+- **MVC (Model-View-Controller)**: Il pattern MVC è stato scelto per separare la logica di business dalla presentazione e dalla gestione delle richieste. Questo permette di mantenere il codice modulare e facilmente manutenibile. Occore tuttavia fare una precisazione: ai fini del progetto la componente **View** non viene applicata non essendoci una vista vera e propria.
+- **Repository Pattern**: Il Repository Pattern è stato utilizzato per astrarre la logica di accesso ai dati, fornendo una chiara separazione tra la logica di business e la logica di accesso ai dati. Questo rende il codice più testabile e manutenibile. L'interazione con il database avviene tramite Sequelize.
 
 ## Avviare il Progetto
 
 ### Prerequisiti
 
 - Docker
-- Docker Compose
+- Docker-compose
 
 ### Istruzioni
 
 1. Clonare il repository:
-    ```bash
-    git clone https://github.com/username/repository.git
-    cd repository
+    ```
+    git clone https://github.com/enricopierga/ProgrammazioneAvanzata2024
+    cd ProgrammazioneAvanzata2024
     ```
 
 2. Configurare le variabili d'ambiente:
     Creare un file `.env` nella radice del progetto e configurare le seguenti variabili:
     ```
-    DB_USER=myuser
-    DB_PASSWORD=mypassword
-    DB_NAME=mydatabase
-    DB_HOST=db
+    DB_NAME=defaultDb
+    DB_USER=dbUser
+    DB_PASS=mySecretPassword
+    DB_HOST=localhost
     DB_PORT=5432
     ```
 
@@ -114,7 +129,8 @@ Il Repository Pattern è stato utilizzato per astrarre la logica di accesso ai d
     ```json
     {
       "licensePlate": "AB123CD",
-      "type": "car"
+      "type": "car",
+      "userId": 1
     }
     ```
 - **GET /vehicles**
@@ -140,12 +156,12 @@ Il Repository Pattern è stato utilizzato per astrarre la logica di accesso ai d
     ```
 
 #### Richiesta Multe per Targa e Periodo
-- **POST /infractions/query**
+- **POST /infractions/plates-and-period**
     ```json
     {
       "plates": ["AB123CD", "EF456GH"],
-      "startDate": "2023-01-01",
-      "endDate": "2023-12-31"
+      "startDate": "2024-01-01",
+      "endDate": "2024-07-21"
     }
     ```
 
@@ -157,7 +173,6 @@ Il Repository Pattern è stato utilizzato per astrarre la logica di accesso ai d
     ```json
     {
       "paymentUuid": "6836178f-0c79-4c10-88ec-75bae54fd6a4",
-      "amount": 150
     }
     ```
 
