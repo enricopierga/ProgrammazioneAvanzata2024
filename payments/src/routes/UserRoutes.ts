@@ -66,7 +66,7 @@ router.get(
 	UserController.getCredit
 );
 
-router.get("/:id", requireAuthentication(["Automobilista"]), UserController.getMyInfractions);
+router.get("/:id", requireAuthentication(["Automobilista", "Operatore"]), UserController.getMyInfractions);
 
 router.post("/login", UserController.login);
 
