@@ -1,4 +1,4 @@
-import express, { Request, Response } from 'express';
+import { Request, Response } from 'express';
 import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
 import QRCode from 'qrcode';
 import fetch from 'node-fetch';
@@ -24,7 +24,7 @@ interface TicketData {
     plateNumber: string;
 }
 
-class pdfController {
+class PdfController {
 
     // Funzione per generare il QR code
     async generateQrCode(data: string): Promise<String> {
@@ -38,7 +38,6 @@ class pdfController {
         const user = await UserRepository.getById(req.user!.userId);
 
         const vehicle = await VehicleRepository.getById(infraction?.vehicleId!);
-        const plateFine = vehicle?.licensePlate;
 
         const route = await routeRepository.getById(infraction?.routeId!);
         const entryGateId = route?.startGateId;
@@ -50,12 +49,10 @@ class pdfController {
         if (isNaN(infractionId)) {
             return res.status(403).json({ message: "Invalid Format" })
         }
-        console.log("prima")
+
         if (user?.id !== infraction?.userId) {
             return res.status(404).json({ message: "Infraction not found" })
         }
-        console.log("dopo")
-
 
         const data: TicketData = {
             username: user!.username,
@@ -209,5 +206,8 @@ class pdfController {
         return pdfBytes;
 
     };
+
 }
-export default new pdfController();
+
+
+export default new PdfController();
