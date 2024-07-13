@@ -1,9 +1,12 @@
 import Payment from '../models/PaymentModel';
 
+
+
+//TODO: Per ogni operazione, creare un pagamento ed utilizzare questa tabella come log di transazioni
 class PaymentRepository {
 
 
-  
+
   // Creazione di un nuovo pagamento
   async createPayment(data: Partial<Payment>): Promise<Payment> {
     const payment = await Payment.create(data);
@@ -24,14 +27,6 @@ class PaymentRepository {
     return payments;
   }
 
-  // Aggiornamento di un pagamento
-  async updatePayment(id: number, data: Partial<Payment>): Promise<[number, Payment[]]> {
-    const [numberOfAffectedRows, affectedRows] = await Payment.update(data, {
-      where: { id },
-      returning: true,
-    });
-    return [numberOfAffectedRows, affectedRows];
-  }
 
   // Eliminazione di un pagamento
   async deletePayment(id: number): Promise<number> {
