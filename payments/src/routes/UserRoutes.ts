@@ -3,6 +3,7 @@ import { requireAuthentication } from "../middleware/roles";
 
 import UserController from "../controllers/UserController";
 import PdfController from "../controllers/FinePdfController";
+import FinePdfController from "../controllers/FinePdfController";
 
 const router = Router();
 
@@ -69,7 +70,7 @@ router.get("/:id", requireAuthentication(["Automobilista"]), UserController.getM
 
 router.post("/login", UserController.login);
 
-router.get("/:id/pdf", requireAuthentication(["Automobilista", "Operatore"]), PdfController.getPdf);
+router.get("/:id/pdf", requireAuthentication(["Automobilista", "Operatore"]), FinePdfController.getPdf);
 
 
 export default router;

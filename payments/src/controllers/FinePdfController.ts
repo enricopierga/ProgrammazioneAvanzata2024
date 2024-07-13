@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
 import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
 import QRCode from 'qrcode';
-import fetch from 'node-fetch';
 import InfractionRepository from '../repositories/InfractionRepository';
 import UserRepository from '../repositories/UserRepository';
 import VehicleRepository from '../repositories/VehicleRepository';
@@ -33,6 +32,7 @@ class PdfController {
 
     getPdf = async (req: Request, res: Response) => {
 
+        
         const infractionId = parseInt(req.params.id, 10);
         const infraction = await InfractionRepository.getById(infractionId);
         const user = await UserRepository.getById(req.user!.userId);
@@ -77,20 +77,17 @@ class PdfController {
 
         // Invia il PDF come risposta
         res.send(Buffer.from(pdf));
+        
     }
-
-
 
     // Funzione per generare il PDF della multa
     async generatePdf(infractionData: TicketData): Promise<Uint8Array> {
-
-
         const pdfDoc = await PDFDocument.create();
         const page = pdfDoc.addPage([800, 600]);
         const { width, height } = page.getSize();
         const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
 
-        page.drawText(`Infraction:`, {
+        page.drawText(`INFRACTION:`, {
             x: 50,
             y: height - 50,
             size: 30,
@@ -114,9 +111,6 @@ class PdfController {
             color: rgb(0, 0, 0),
         });
 
-
-
-
         page.drawText(`Amount: ${infractionData.amount.toString()}`, {
             x: 50,
             y: height - 200,
@@ -124,8 +118,6 @@ class PdfController {
             font: font,
             color: rgb(0, 0, 0),
         });
-
-
 
         page.drawText(`Entry Location: ${infractionData.entryLocation}`, {
             x: 50,
@@ -135,8 +127,6 @@ class PdfController {
             color: rgb(0, 0, 0),
         });
 
-
-
         page.drawText(`Exit Location: ${infractionData.exitLocation}`, {
             x: 50,
             y: height - 300,
@@ -144,8 +134,6 @@ class PdfController {
             font: font,
             color: rgb(0, 0, 0),
         });
-
-
 
         page.drawText(`Limit: ${infractionData.expectedSpeed.toString()} km/h`, {
             x: 50,
@@ -163,7 +151,6 @@ class PdfController {
             color: rgb(0, 0, 0),
         });
 
-
         page.drawText(`Payment Id: ${infractionData.paymentId}`, {
             x: 50,
             y: height - 450,
@@ -171,9 +158,6 @@ class PdfController {
             font: font,
             color: rgb(0, 0, 0),
         });
-
-
-
 
         page.drawText(`Date: ${infractionData.date.toString()}`, {
             x: 50,
@@ -183,20 +167,18 @@ class PdfController {
             color: rgb(0, 0, 0),
         });
 
-
-
         // Genera un QR code come immagine in formato Data URL
-        const qrCodeDataUrl = await QRCode.toDataURL(`<${infractionData.ticketId}> | <${infractionData.uuid}> | <${infractionData.plateNumber}> | <${infractionData.amount}>`);
+        const qrCodeDataUrl = await QRCode.toDataURL(`${infractionData.id} | ${infractionData.uuid} | ${infractionData.plateNumber} | ${infractionData.amount}`);
 
         // Decodifica l'immagine in formato Data URL
-        const qrCodeImageBytes = await fetch(qrCodeDataUrl).then((res) => res.arrayBuffer());
+        const qrCodeImageBytes = Buffer.from(qrCodeDataUrl.split(',')[1], 'base64');
         const qrCodeImage = await pdfDoc.embedPng(qrCodeImageBytes);
 
         // Aggiungi l'immagine del QR code al PDF
-        const qrCodeDims = qrCodeImage.scale(0.5);
+        const qrCodeDims = qrCodeImage.scale(0.8);
         page.drawImage(qrCodeImage, {
             x: 400,
-            y: height - 50,
+            y: height - 300,
             width: qrCodeDims.width,
             height: qrCodeDims.height,
         });
@@ -206,7 +188,6 @@ class PdfController {
         return pdfBytes;
 
     };
-
 }
 
 
