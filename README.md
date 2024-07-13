@@ -129,7 +129,8 @@ Il sistema supporta tre ruoli distinti:
     ```json
     {
       "licensePlate": "AB123CD",
-      "type": "car"
+      "type": "car",
+      "userId": 1
     }
     ```
 - **GET /vehicles**
