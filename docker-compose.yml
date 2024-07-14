@@ -15,10 +15,37 @@ services:
             retries: 5
         restart: always
 
-    transiti:
+    transits:
         build:
             context: ./transits
         container_name: transits
+        environment:
+            DB_HOST: localhost
+            DB_USER: dbUser
+            DB_PASS: mySecretPassword
+            DB_NAME: defaultDb
+        networks:
+            - application-network
+        ports:
+            - "3001:3001"
+        depends_on:
+            postgres:
+                condition: service_healthy
+        healthcheck:
+            test:
+                [
+                    "CMD-SHELL",
+                    "curl -f http://localhost:3001/healthcheck || exit 1",
+                ]
+            interval: 30s
+            timeout: 10s
+            retries: 5
+        restart: always
+
+    payments:
+        build:
+            context: ../src/payments
+        container_name: payments
         environment:
             DB_HOST: localhost
             DB_USER: dbUser
@@ -40,7 +67,7 @@ services:
             interval: 30s
             timeout: 10s
             retries: 5
-        restart: always
+        restart: always    
     
 
 networks:
