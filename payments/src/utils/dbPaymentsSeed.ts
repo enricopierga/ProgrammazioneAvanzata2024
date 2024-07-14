@@ -23,7 +23,7 @@ export function seed() {
 		username: "filippo",
 		email: "filippochampagne@gmail.com",
 		password: "poveri",
-		credit: 1000,
+		credit: 100,
 		role: "Automobilista",
 	});
 

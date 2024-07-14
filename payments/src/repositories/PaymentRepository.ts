@@ -13,28 +13,5 @@ class PaymentRepository {
     return payment;
   }
 
-  // Recupero di un pagamento tramite ID
-  async getPaymentById(id: number): Promise<Payment | null> {
-    const payment = await Payment.findByPk(id);
-    return payment;
-  }
-
-  // Recupero di tutti i pagamenti di un utente
-  async getPaymentsByUserId(userId: number): Promise<Payment[]> {
-    const payments = await Payment.findAll({
-      where: { userId },
-    });
-    return payments;
-  }
-
-
-  // Eliminazione di un pagamento
-  async deletePayment(id: number): Promise<number> {
-    const numberOfDeletedRows = await Payment.destroy({
-      where: { id },
-    });
-    return numberOfDeletedRows;
-  }
 }
-
 export default new PaymentRepository();

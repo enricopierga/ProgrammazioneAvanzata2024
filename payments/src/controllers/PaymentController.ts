@@ -11,7 +11,7 @@ class PaymentController {
 			res.status(400).json({ message: 'Invalid UUID format' });
 			return;
 		}
-//TODO:  Check abbastanza soldi UTENTE
+		//TODO:  Check abbastanza soldi UTENTE
 		const infraction = await InfractionRepository.getByUuid(uuid);
 
 		if (!infraction) {
@@ -29,7 +29,13 @@ class PaymentController {
 			return;
 		}
 
+		//Check user's balance
 		const fineAmount = infraction.amount;
+		const userCredit = await UserRepository.getCredit(infraction.userId);
+		if (userCredit! < fineAmount) {
+			res.status(400).json({ message: "Insufficient Balance" })
+			return;
+		}
 
 		const updated = await InfractionRepository.markAsPaid(infraction);
 		if (!updated) {
