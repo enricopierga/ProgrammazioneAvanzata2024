@@ -6,6 +6,7 @@ import UserRepository from '../repositories/UserRepository';
 import VehicleRepository from '../repositories/VehicleRepository';
 import routeRepository from '../repositories/RouteRepository'
 import GateRepository from '../repositories/GateRepository';
+import PaymentRepository from '../repositories/PaymentRepository';
 
 // Interfaccia per i dati della multa
 interface TicketData {
@@ -18,7 +19,6 @@ interface TicketData {
     expectedSpeed: number;
     actualSpeed: number;
     date: Date;
-    paymentId: string;
     ticketId: string;
     plateNumber: string;
 }
@@ -54,6 +54,7 @@ class PdfController {
             return res.status(404).json({ message: "Infraction not found" })
         }
 
+
         const data: TicketData = {
             username: user!.username,
             id: infraction!.id.toString(),
@@ -64,7 +65,6 @@ class PdfController {
             expectedSpeed: infraction?.limit!,
             actualSpeed: infraction?.speed!,
             date: infraction?.timestamp!,
-            paymentId: "Dobbiamo ancora collegare vai a fare in culo",
             ticketId: infraction?.uuid!,
             plateNumber: vehicle?.licensePlate!,
         }
@@ -83,7 +83,7 @@ class PdfController {
     // Funzione per generare il PDF della multa
     async generatePdf(infractionData: TicketData): Promise<Uint8Array> {
         const pdfDoc = await PDFDocument.create();
-        const page = pdfDoc.addPage([800, 600]);
+        const page = pdfDoc.addPage([800, 500]);
         const { width, height } = page.getSize();
         const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
 
@@ -111,7 +111,7 @@ class PdfController {
             color: rgb(0, 0, 0),
         });
 
-        page.drawText(`Amount: ${infractionData.amount.toString()}`, {
+        page.drawText(`Amount: ${infractionData.amount.toString()},00€`, {
             x: 50,
             y: height - 200,
             size: 20,
@@ -151,17 +151,9 @@ class PdfController {
             color: rgb(0, 0, 0),
         });
 
-        page.drawText(`Payment Id: ${infractionData.paymentId}`, {
-            x: 50,
-            y: height - 450,
-            size: 15,
-            font: font,
-            color: rgb(0, 0, 0),
-        });
-
         page.drawText(`Date: ${infractionData.date.toString()}`, {
             x: 50,
-            y: height - 500,
+            y: height - 450,
             size: 20,
             font: font,
             color: rgb(0, 0, 0),

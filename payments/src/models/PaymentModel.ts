@@ -15,7 +15,6 @@ interface PaymentAttributes {
   userId: number;
   fineId: number;
   createdAt?: Date;
-  updatedAt?: Date;
 }
 
 interface PaymentCreationAttributes extends Optional<PaymentAttributes, 'id'> { }
@@ -28,7 +27,6 @@ class Payment extends Model<PaymentAttributes, PaymentCreationAttributes> implem
   public userId!: number;
   public paymentType!: paymentTypes;
   public readonly createdAt!: Date;
-
 }
 
 Payment.init(
@@ -54,7 +52,7 @@ Payment.init(
     fineId: {
       type: DataTypes.INTEGER.UNSIGNED,
       allowNull: true,
-  },
+    },
     createdAt: {
       type: DataTypes.DATE,
       allowNull: false,
