@@ -49,11 +49,10 @@ class UserController {
 
 
 		const utente = await utenteRepository.increaseCredit(userId, amount);
-		// TODO: Scrivere riga dentro payments
 
 
+		//Creo oggetto Payment per salvare il pagamento all'interno della tabella payments
 		const paymentData = {
-
 			userId: userId,
 			amount: amount,
 			paymentType: paymentTypes.addBalance,

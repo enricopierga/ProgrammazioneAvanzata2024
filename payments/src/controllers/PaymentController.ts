@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
 import InfractionRepository from "../repositories/InfractionRepository";
 import UserRepository from "../repositories/UserRepository";
+import PaymentRepository from "../repositories/PaymentRepository";
+import { paymentTypes } from "../models/PaymentModel";
 
 class PaymentController {
 
@@ -11,7 +13,7 @@ class PaymentController {
 			res.status(400).json({ message: 'Invalid UUID format' });
 			return;
 		}
-		
+
 		const infraction = await InfractionRepository.getByUuid(uuid);
 
 		if (!infraction) {
@@ -45,7 +47,16 @@ class PaymentController {
 
 		infraction.paid = true;
 
+		const paymentData = {
+			userId: infraction.userId,
+			amount: -fineAmount,
+			paymentType: paymentTypes.finePayment,
+			fineId: infraction.id
+		}
+		const payment = await PaymentRepository.createPayment(paymentData);
+
 		await UserRepository.decreaseCredit(req.user!.userId, fineAmount);
+
 
 		res.status(200).json({ message: "Fine paid successfully", infraction });
 	}
