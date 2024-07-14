@@ -1,12 +1,11 @@
 import { Request, Response } from "express";
 import utenteRepository from "../repositories/UserRepository";
-import Vehicle from "../models/VehicleModel";
-import VehicleRepository from "../repositories/VehicleRepository";
+import PaymentRepository from "../repositories/PaymentRepository";
+import { paymentTypes } from "../models/PaymentModel";
 import UserRepository from "../repositories/UserRepository";
 import InfractionRepository from "../repositories/InfractionRepository";
 import { generateJwt } from "../security/JWTservice";
 import { isString } from "util";
-
 
 class UserController {
 
@@ -51,6 +50,18 @@ class UserController {
 
 		const utente = await utenteRepository.increaseCredit(userId, amount);
 		// TODO: Scrivere riga dentro payments
+
+
+		const paymentData = {
+
+			userId: userId,
+			amount: amount,
+			paymentType: paymentTypes.addBalance,
+		}
+
+
+		const payment = await PaymentRepository.createPayment(paymentData);
+
 
 		if (!utente) {
 			return res.status(404).json({ message: "User not found" });
