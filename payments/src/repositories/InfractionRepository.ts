@@ -12,6 +12,13 @@ class InfractionRepository {
 		return await Infraction.create(data);
 	}
 
+	async getInfractionsByUserId(userId: number): Promise<Infraction[]> {
+		return await Infraction.findAll({
+			where: { userId: userId }
+		});
+
+	}
+
 	async getByPlatesAndPeriod(plates: string[], startDate: string, endDate: string, isOperator: boolean, userId: number): Promise<any> {
 		const whereClause: any = {timestamp: {[Op.between]: [new Date(startDate), new Date(endDate)]}}; // = WHERE timestamp BETWEEN '2024-01-01' AND '2024-12-31'
 		
