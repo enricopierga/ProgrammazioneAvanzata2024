@@ -1,4 +1,4 @@
-# Sistema di Gestione Multe Autostradali
+# Sistema di Gestione delle Multe Autostradali
 
 ## Obiettivo del Progetto
 
