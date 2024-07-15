@@ -1,13 +1,15 @@
 // src/models/Infraction.ts
 import { DataTypes, Model, Optional } from "sequelize";
 import sequelize from "../config/database";
-import Vehicle from "./VehicleModel";
-import Route from "./RouteModel";
+import Vehicle from "../models/VehicleModel";
+import Route from "../models/RouteModel";
+import User from "./UserModel";
 
 interface InfractionAttributes {
 	id: number;
 	vehicleId: number;
 	routeId: number;
+	userId: number;
 	speed: number;
 	limit: number;
 	weather: "rainy" | "clear";
@@ -18,16 +20,16 @@ interface InfractionAttributes {
 }
 
 interface InfractionCreationAttributes
-	extends Optional<InfractionAttributes, "id"> {}
+	extends Optional<InfractionAttributes, "id"> { }
 
 class Infraction
 	extends Model<InfractionAttributes, InfractionCreationAttributes>
-	implements InfractionAttributes
-{
-	
+	implements InfractionAttributes {
+
 	public id!: number;
 	public vehicleId!: number;
 	public routeId!: number;
+	public userId!: number;
 	public speed!: number;
 	public limit!: number;
 	public weather!: "rainy" | "clear";
@@ -38,8 +40,6 @@ class Infraction
 
 	public readonly createdAt!: Date;
 	public readonly updatedAt!: Date;
-	vehicle: any;
-	route: any;
 }
 
 Infraction.init(
@@ -62,6 +62,15 @@ Infraction.init(
 			allowNull: false,
 			references: {
 				model: Route,
+				key: "id",
+			},
+		},
+		
+		userId: {
+			type: DataTypes.INTEGER,
+			allowNull: true,
+			references: {
+				model: User,
 				key: "id",
 			},
 		},
@@ -91,18 +100,20 @@ Infraction.init(
 			allowNull: false,
 			unique: true,
 		},
-	
+
 		paid: {
 			type: DataTypes.BOOLEAN,
 			allowNull: false,
 			defaultValue: false,
 		},
-},
-    {
+	},
+	{
 		tableName: "infractions",
 		modelName: "infraction",
 		sequelize,
 	}
 );
+
+
 
 export default Infraction;

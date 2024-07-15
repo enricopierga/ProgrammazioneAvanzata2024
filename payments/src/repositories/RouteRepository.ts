@@ -1,4 +1,5 @@
 import Route from "../models/RouteModel";
+import Transit from "../models/TransitModel";
 
 class RouteRepository {
 	async create(data: any): Promise<Route> {
@@ -21,10 +22,12 @@ class RouteRepository {
 	}
 
 	async delete(id: number): Promise<number> {
-		const deleted = await Route.destroy({
-			where: { id },
-		});
-		return deleted;
+		const transitDependency = await Transit.findOne({ where: { routeId: id } });
+		if (transitDependency) {
+			throw new Error(`Cannot delete route: it has associated transits.`);
+		}
+
+		return await Route.destroy({ where: { id: id } });
 	}
 }
 

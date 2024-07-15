@@ -1,3 +1,4 @@
+import Transit from "../models/TransitModel";
 import Vehicle from "../models/VehicleModel";
 
 class VehicleRepository {
@@ -30,10 +31,12 @@ class VehicleRepository {
 	}
 
 	async delete(id: number): Promise<number> {
-		const deleted = await Vehicle.destroy({
-			where: { id },
-		});
-		return deleted;
+		const transitDependency = await Transit.findOne({ where: { vehicleId: id } });
+		if (transitDependency) {
+			throw new Error(`Cannot delete vehicle: it has associated transits.`);
+		}
+
+		return await Vehicle.destroy({ where: { id: id } });
 	}
 }
 

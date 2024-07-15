@@ -7,17 +7,19 @@ import User from "./UserModel";
 import Vehicle from "./VehicleModel";
 
 // Route <-> Gate
-Route.belongsTo(Gate, { as: 'startGate', foreignKey: 'startGateId', targetKey: "id",});
-Route.belongsTo(Gate, { as: 'endGate', foreignKey: 'endGateId', targetKey: "id",});
+Route.belongsTo(Gate, { as: 'startGate', foreignKey: 'startGateId', targetKey: "id", });
+Route.belongsTo(Gate, { as: 'endGate', foreignKey: 'endGateId', targetKey: "id", });
 
 // Infraction <-> Vehicle
-Infraction.belongsTo(Vehicle, { as: 'vehicle', foreignKey: 'vehicleId', targetKey: "id",});
+Infraction.belongsTo(Vehicle, { as: 'vehicle', foreignKey: 'vehicleId', targetKey: "id", });
 
 // Infraction <-> Route
-Infraction.belongsTo(Route, { as: 'route', foreignKey: 'routeId', targetKey: "id",});
+Infraction.belongsTo(Route, { as: 'route', foreignKey: 'routeId', targetKey: "id", });
+// Infraction <-> User
+Infraction.belongsTo(User, {foreignKey: 'userId'});
 
 // Vehicle <-> User
-Vehicle.belongsTo(User, { as: 'owner', foreignKey: 'userId', targetKey: "id",});
-User.hasMany(Vehicle, { as: "vehicles", foreignKey: "userId",});
+Vehicle.belongsTo(User, { as: 'owner', foreignKey: 'userId', targetKey: "id", });
+User.hasMany(Vehicle, { as: "vehicles", foreignKey: "userId", });
 
 export { Gate, Infraction, Payment, Route, Transit, User, Vehicle };

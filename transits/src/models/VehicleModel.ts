@@ -1,11 +1,10 @@
 import { DataTypes, Model, Optional } from "sequelize";
 import sequelize from "../config/database";
-import User from './UserModel';
 
 interface VehicleAttributes {
 	id: number;
 	licensePlate: string;
-	type: "truck" | "car";
+	type: "Truck" | "Car";
 	userId: number;
 }
 
@@ -17,7 +16,7 @@ class Vehicle
 {
 	public id!: number;
 	public licensePlate!: string;
-	public type!: "truck" | "car";
+	public type!: "Truck" | "Car";
 	public userId!: number;
 
 	public readonly createdAt!: Date;
@@ -36,16 +35,12 @@ Vehicle.init(
 			allowNull: false,
 		},
 		type: {
-			type: DataTypes.ENUM("truck", "car"),
+			type: DataTypes.ENUM("Truck", "Car"),
 			allowNull: false,
 		},
 		userId: {
 			type: DataTypes.INTEGER,
 			allowNull: false,
-			references: {
-				model: User,
-				key: "id",
-			},
 		},
 	},
 	{
