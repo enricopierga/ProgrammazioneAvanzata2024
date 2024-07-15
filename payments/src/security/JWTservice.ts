@@ -2,11 +2,9 @@ import jwt from "jsonwebtoken";
 
 interface JwtPayload {
 	userId: number;
-	role: "Operatore" | "Automobilista" | "Varco";
+	role: "Admin" | "Operatore" | "Automobilista" | "Varco";
 }
-//TODO: rafforzare i controlli con ===
-//TODO: add Admin actor only for addCredit
-//TODO: Mittente: "Davide De Grazia", message: "devo andare a fare in culo"
+
 
 declare global {
 	namespace Express {

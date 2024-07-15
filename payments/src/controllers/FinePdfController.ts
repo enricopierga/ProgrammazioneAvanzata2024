@@ -7,6 +7,8 @@ import VehicleRepository from '../repositories/VehicleRepository';
 import routeRepository from '../repositories/RouteRepository'
 import GateRepository from '../repositories/GateRepository';
 import PaymentRepository from '../repositories/PaymentRepository';
+import { ReasonPhrases, StatusCodes } from 'http-status-codes';
+
 
 // Interfaccia per i dati della multa
 interface TicketData {
@@ -21,6 +23,7 @@ interface TicketData {
     date: Date;
     ticketId: string;
     plateNumber: string;
+    isPaid: boolean;
 }
 
 class PdfController {
@@ -47,11 +50,11 @@ class PdfController {
         const exitGate = await GateRepository.getById(exitGateId!);
 
         if (isNaN(infractionId)) {
-            return res.status(403).json({ message: "Invalid Format" })
+            return res.status(StatusCodes.FORBIDDEN).send( ReasonPhrases.FORBIDDEN )
         }
 
-        if (user?.id !== infraction?.userId) {
-            return res.status(404).json({ message: "Infraction not found" })
+        if (user?.id !== infraction!.userId) {
+            return res.status(StatusCodes.NOT_FOUND).send( ReasonPhrases.NOT_FOUND )
         }
 
 
@@ -67,6 +70,7 @@ class PdfController {
             date: infraction?.timestamp!,
             ticketId: infraction?.uuid!,
             plateNumber: vehicle?.licensePlate!,
+            isPaid: infraction!.paid,
         }
 
         const pdf = await this.generatePdf(data)
@@ -79,18 +83,14 @@ class PdfController {
         res.send(Buffer.from(pdf));
 
     }
-    
-    //TODO: non far generare PDF se la multa non è stata pagata
-    //TODO: status pending
-    //TODO: aggiungere stato multa sul bollettino: pending, payed...
-    //TODO: scomparire dalle rotte
 
     // Funzione per generare il PDF della multa
     async generatePdf(infractionData: TicketData): Promise<Uint8Array> {
         const pdfDoc = await PDFDocument.create();
-        const page = pdfDoc.addPage([800, 500]);
+        const page = pdfDoc.addPage([800, 550]);
         const { width, height } = page.getSize();
         const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
+        const fineStatus = infractionData.isPaid ? "Paid" : "Pending";
 
         page.drawText(`INFRACTION:`, {
             x: 50,
@@ -100,7 +100,7 @@ class PdfController {
             color: rgb(0, 0, 0),
         });
 
-        page.drawText(`Username: ${infractionData.username}`, {
+        page.drawText(`Status: ${fineStatus}`, {
             x: 50,
             y: height - 100,
             size: 20,
@@ -108,7 +108,8 @@ class PdfController {
             color: rgb(0, 0, 0),
         });
 
-        page.drawText(`Plate Number: ${infractionData.plateNumber}`, {
+
+        page.drawText(`Username: ${infractionData.username}`, {
             x: 50,
             y: height - 150,
             size: 20,
@@ -116,7 +117,7 @@ class PdfController {
             color: rgb(0, 0, 0),
         });
 
-        page.drawText(`Amount: ${infractionData.amount.toString()},00€`, {
+        page.drawText(`Plate Number: ${infractionData.plateNumber}`, {
             x: 50,
             y: height - 200,
             size: 20,
@@ -124,7 +125,7 @@ class PdfController {
             color: rgb(0, 0, 0),
         });
 
-        page.drawText(`Entry Location: ${infractionData.entryLocation}`, {
+        page.drawText(`Amount: ${infractionData.amount.toString()},00€`, {
             x: 50,
             y: height - 250,
             size: 20,
@@ -132,7 +133,7 @@ class PdfController {
             color: rgb(0, 0, 0),
         });
 
-        page.drawText(`Exit Location: ${infractionData.exitLocation}`, {
+        page.drawText(`Entry Location: ${infractionData.entryLocation}`, {
             x: 50,
             y: height - 300,
             size: 20,
@@ -140,7 +141,7 @@ class PdfController {
             color: rgb(0, 0, 0),
         });
 
-        page.drawText(`Limit: ${infractionData.expectedSpeed.toString()} km/h`, {
+        page.drawText(`Exit Location: ${infractionData.exitLocation}`, {
             x: 50,
             y: height - 350,
             size: 20,
@@ -148,7 +149,7 @@ class PdfController {
             color: rgb(0, 0, 0),
         });
 
-        page.drawText(`Misured Speed: ${infractionData.actualSpeed.toString()} km/h`, {
+        page.drawText(`Limit: ${infractionData.expectedSpeed.toString()} km/h`, {
             x: 50,
             y: height - 400,
             size: 20,
@@ -156,13 +157,23 @@ class PdfController {
             color: rgb(0, 0, 0),
         });
 
-        page.drawText(`Date: ${infractionData.date.toString()}`, {
+        page.drawText(`Misured Speed: ${infractionData.actualSpeed.toString()} km/h`, {
             x: 50,
             y: height - 450,
             size: 20,
             font: font,
             color: rgb(0, 0, 0),
         });
+
+        page.drawText(`Date: ${infractionData.date.toString()}`, {
+            x: 50,
+            y: height - 500,
+            size: 20,
+            font: font,
+            color: rgb(0, 0, 0),
+        });
+
+
 
         // Genera un QR code come immagine in formato Data URL
         const qrCodeDataUrl = await QRCode.toDataURL(`${infractionData.id} | ${infractionData.uuid} | ${infractionData.plateNumber} | ${infractionData.amount}`);

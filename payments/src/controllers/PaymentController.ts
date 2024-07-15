@@ -3,6 +3,8 @@ import InfractionRepository from "../repositories/InfractionRepository";
 import UserRepository from "../repositories/UserRepository";
 import PaymentRepository from "../repositories/PaymentRepository";
 import { paymentTypes } from "../models/PaymentModel";
+import { ReasonPhrases, StatusCodes } from 'http-status-codes';
+
 
 class PaymentController {
 
@@ -10,24 +12,24 @@ class PaymentController {
 		const { uuid } = req.body;
 		const regex = /^[0-9a-f]{8}-[0-9a-f]{4}-[4][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 		if (!regex.test(uuid)) {
-			res.status(400).json({ message: 'Invalid UUID format' });
+			res.status(StatusCodes.BAD_REQUEST).json({ message: "Invalid uuid format" });
 			return;
 		}
 
 		const infraction = await InfractionRepository.getByUuid(uuid);
 
 		if (!infraction) {
-			res.status(404).json({ message: "Infraction not found" });
+			res.status(StatusCodes.NOT_FOUND).send(ReasonPhrases.NOT_FOUND);
 			return;
 		}
 
 		if (infraction.userId !== req.user!.userId) {
-			res.status(404).json({ message: "Infraction not found" })
+			res.status(StatusCodes.NOT_FOUND).send(ReasonPhrases.NOT_FOUND);
 			return;
 		}
 
 		if (infraction.paid) {
-			res.status(400).json({ message: "Fine already paid" });
+			res.status(StatusCodes.CONFLICT).json({ message: "Fine already paid" });
 			return;
 		}
 
@@ -35,13 +37,13 @@ class PaymentController {
 		const fineAmount = infraction.amount;
 		const userCredit = await UserRepository.getCredit(infraction.userId);
 		if (userCredit! < fineAmount) {
-			res.status(400).json({ message: "Insufficient Balance" })
+			res.status(StatusCodes.PAYMENT_REQUIRED).json({ message: "Insufficient Balance" });
 			return;
 		}
 
 		const updated = await InfractionRepository.markAsPaid(infraction);
 		if (!updated) {
-			res.status(500).json({ message: "There was an error updating the infraction" })
+			res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(ReasonPhrases.INTERNAL_SERVER_ERROR)
 			return;
 		}
 
@@ -58,7 +60,7 @@ class PaymentController {
 		await UserRepository.decreaseCredit(req.user!.userId, fineAmount);
 
 
-		res.status(200).json({ message: "Fine paid successfully", infraction });
+		res.status(StatusCodes.OK).json( infraction );
 	}
 };
 

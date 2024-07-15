@@ -6,80 +6,89 @@ import Transit from "../models/TransitModel";
 import Infraction from "../models/InfractionModel";
 
 
-export function seed() {
+export async function seed() {
 	if (process.env.CLEAN_DB !== "true") return;
 
-	User.create({
+	await User.create({
 		id: 1,
 		username: "pangolino",
 		email: "kikopierga@gmail.com",
 		password: "12345",
-		credit: 100,
+		credit: 50,
 		role: "Operatore",
 	});
 
-	User.create({
+	await User.create({
 		id: 2,
 		username: "filippo",
 		email: "filippochampagne@gmail.com",
 		password: "12345",
-		credit: 100,
+		credit: 1500,
 		role: "Automobilista",
 	});
 
-	Gate.create({
+	await User.create({
+		id: 3,
+		username: "nevio",
+		email: "neviolostirato@gmail.com",
+		password: "stirato",
+		credit: 0,
+		role: "Admin",
+	});
+
+	await Gate.create({
 		id: 1,
 		location: "Location 1",
 		description: "descrizione 1"
 	});
 
-	Gate.create({
+	await Gate.create({
 		id: 2,
 		location: "Location 2",
 		description: "descrizione 2"
 	});
 
-	Gate.create({
+	await Gate.create({
 		id: 3,
 		location: "Location 3",
 		description: "descrizione 3"
 	});
 
-	Gate.create({
+	await Gate.create({
 		id: 4,
 		location: "Location 4",
 		description: "descrizione 4"
 	});
 
-	Route.create({
+	await Route.create({
 		id: 1,
 		startGateId: 1,
 		endGateId: 2,
 		distance: 2000,
 	});
 
-	Route.create({
+	await Route.create({
 		id: 2,
 		startGateId: 3,
 		endGateId: 4,
 		distance: 5000,
 	});
 
-	Vehicle.create({
+	await Vehicle.create({
 		id: 1,
 		licensePlate: "AA123BB",
 		type: "Car",
 		userId: 1,
 	});
 
-	Vehicle.create({
+	await Vehicle.create({
 		id: 2,
 		licensePlate: "BB123CC",
 		type: "Truck",
 		userId: 2,
 	});
 
-	Transit.create({
+	await Transit.create({
 		id: 1,
 		vehicleId: 1,
 		routeId: 2,
@@ -87,7 +96,7 @@ export function seed() {
 		weather: "clear",
 	});
 
-	Transit.create({
+	await Transit.create({
 		id: 2,
 		vehicleId: 1,
 		routeId: 2,
@@ -95,7 +104,7 @@ export function seed() {
 		weather: "rainy",
 	});
 
-	Transit.create({
+	await Transit.create({
 		id: 3,
 		vehicleId: 1,
 		routeId: 2,
@@ -103,7 +112,7 @@ export function seed() {
 		weather: "clear",
 	});
 
-	Infraction.create({
+	await Infraction.create({
 		paid: false,
 		id: 1,
 		vehicleId: 2,
@@ -117,7 +126,7 @@ export function seed() {
 		uuid: "6836178f-0c78-4c10-88ec-75bae54fd6a4",
 	});
 
-	Infraction.create({
+	await Infraction.create({
 		paid: false,
 		id: 2,
 		vehicleId: 2,

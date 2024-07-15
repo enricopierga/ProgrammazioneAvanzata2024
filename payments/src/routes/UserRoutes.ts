@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { requireAuthentication } from "../middleware/roles";
+import { requireAuthentication } from "../middlewares/authenticationMiddleware";
 
 import UserController from "../controllers/UserController";
 import PdfController from "../controllers/FinePdfController";
@@ -28,7 +28,7 @@ const router = Router();
  *       403:
  *         description: Forbidden
  */
-router.patch("/:id/credit", requireAuthentication(["Operatore"]), UserController.addCredit);
+router.patch("/:id/credit", requireAuthentication(["Admin"]), UserController.addCredit);
 
 /**
  * @swagger
@@ -61,12 +61,12 @@ router.patch("/:id/credit", requireAuthentication(["Operatore"]), UserController
  *         description: Forbidden
  */
 router.get(
-	"/:id/credit",
+	"/credit",
 	requireAuthentication(["Automobilista", "Operatore"]),
 	UserController.getCredit
 );
 
-router.get("/:id", requireAuthentication(["Automobilista", "Operatore"]), UserController.getMyInfractions);
+router.get("/myInfraction", requireAuthentication(["Automobilista", "Operatore"]), UserController.getMyInfractions);
 
 router.post("/login", UserController.login);
 

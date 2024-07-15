@@ -1,9 +1,11 @@
 import { Request, Response, NextFunction } from "express";
 import { JwtPayload } from "jsonwebtoken";
 import { decodeJwt } from "../security/JWTservice";
-type acceptedRoles = "Operatore" | "Automobilista" | "Varco";
-
-
+import {
+	ReasonPhrases,
+	StatusCodes,
+} from 'http-status-codes';
+type acceptedRoles = "Admin" | "Operatore" | "Automobilista" | "Varco";
 
 /**
  * Middleware to validate JWT and optionally check for specific user role.
@@ -23,10 +25,10 @@ export function requireAuthentication(
 
 		if (!authorizationHeader) {
 			return res
-				.status(401)
-				.json({ message: "Authorization header missing" });
+				.status(StatusCodes.UNAUTHORIZED)
+				.send(ReasonPhrases.UNAUTHORIZED);
 		}
-		//TODO: verificare con expired token
+
 
 		if (requiredRoles !== undefined && requiredRoles.length > 0) {
 			try {
@@ -42,15 +44,17 @@ export function requireAuthentication(
 					}
 				}
 				if (hasValidRole === false) {
-					return res.status(403).json({ message: "Forbidden" })
+					return res
+						.status(StatusCodes.FORBIDDEN)
+						.send(ReasonPhrases.FORBIDDEN);
 
 				}
 				next();
 
 			} catch (error) {
 				return res
-					.status(401)
-					.json({ message: "Invalid or expired token" });
+					.status(StatusCodes.UNAUTHORIZED)
+					.send(ReasonPhrases.UNAUTHORIZED);
 			}
 		}
 	};
