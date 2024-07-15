@@ -1,4 +1,5 @@
 // middleware/errorHandler.ts
+//TODO: lib status codes
 import { Request, Response, NextFunction } from "express";
 
 interface CustomError extends Error {

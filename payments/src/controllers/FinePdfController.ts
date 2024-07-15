@@ -32,7 +32,7 @@ class PdfController {
 
     getPdf = async (req: Request, res: Response) => {
 
-        
+
         const infractionId = parseInt(req.params.id, 10);
         const infraction = await InfractionRepository.getById(infractionId);
         const user = await UserRepository.getById(req.user!.userId);
@@ -77,8 +77,13 @@ class PdfController {
 
         // Invia il PDF come risposta
         res.send(Buffer.from(pdf));
-        
+
     }
+    
+    //TODO: non far generare PDF se la multa non è stata pagata
+    //TODO: status pending
+    //TODO: aggiungere stato multa sul bollettino: pending, payed...
+    //TODO: scomparire dalle rotte
 
     // Funzione per generare il PDF della multa
     async generatePdf(infractionData: TicketData): Promise<Uint8Array> {
