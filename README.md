@@ -27,15 +27,13 @@ Il sistema supporta tre ruoli distinti:
 
 ## Progettazione
 
-### Diagrammi UML
-
-#### Diagramma delle Classi
-
-![Class Diagram](path_to_class_diagram.png)
-
 #### Diagramma dei Casi d'Uso
 
 ![Use Case Diagram](./use-cases-diagram.png)
+
+#### Diagramma ER
+
+![Class Diagram](path_to_class_diagram.png)
 
 ### Pattern Utilizzati
 
