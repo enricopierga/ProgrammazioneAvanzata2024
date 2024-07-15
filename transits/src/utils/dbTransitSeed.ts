@@ -65,14 +65,14 @@ export function seed() {
 	Vehicle.create({
 		id: 1,
         licensePlate: "AA1234",
-        type: "car",
+        type: "Car",
         userId: 1,
 	});
 
 	Vehicle.create({
 		id: 2,
         licensePlate: "BB1234",
-        type: "truck",
+        type: "Truck",
         userId: 2,
 	});
 }

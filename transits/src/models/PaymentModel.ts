@@ -1,11 +1,10 @@
-import { DataTypes, Model, Optional } from 'sequelize';
-import sequelize from '../config/database';
-import User from './UserModel';
-
+import { DataTypes, Model, Optional } from "sequelize";
+import sequelize from "../config/database";
+import User from "./UserModel";
 
 export enum paymentTypes {
   addBalance = "addBalance",
-  finePayment = "finePayment"
+  finePayment = "finePayment",
 }
 
 interface PaymentAttributes {
@@ -17,10 +16,13 @@ interface PaymentAttributes {
   createdAt?: Date;
 }
 
-interface PaymentCreationAttributes extends Optional<PaymentAttributes, 'id'> { }
+interface PaymentCreationAttributes extends Optional<PaymentAttributes, "id"> {}
 
 // Definizione del modello Payment
-class Payment extends Model<PaymentAttributes, PaymentCreationAttributes> implements PaymentAttributes {
+class Payment
+  extends Model<PaymentAttributes, PaymentCreationAttributes>
+  implements PaymentAttributes
+{
   public id!: number;
   public amount!: number;
   public fineId!: number;
@@ -60,13 +62,10 @@ Payment.init(
     },
   },
   {
-
-    tableName: 'payments',
-    modelName: 'payment',
+    tableName: "payments",
+    modelName: "payment",
     sequelize,
   }
 );
-
-Payment.belongsTo(User, { foreignKey: 'userId' });
 
 export default Payment;
