@@ -27,11 +27,11 @@ Il sistema supporta tre ruoli distinti:
 
 ## Progettazione
 
-#### Diagramma dei Casi d'Uso
+### Diagramma dei Casi d'Uso
 
 ![Use Case Diagram](./use-cases-diagram.png)
 
-#### Diagramma ER
+### Diagramma ER
 
 ![Class Diagram](path_to_class_diagram.png)
 
