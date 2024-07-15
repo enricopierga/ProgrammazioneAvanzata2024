@@ -35,7 +35,7 @@ Il sistema supporta tre ruoli distinti:
 
 #### Diagramma dei Casi d'Uso
 
-![Use Case Diagram](path_to_use_case_diagram.png)
+![Use Case Diagram](use_cases_diagram.png)
 
 ### Pattern Utilizzati
 
