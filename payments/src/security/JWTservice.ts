@@ -2,8 +2,9 @@ import jwt from "jsonwebtoken";
 
 interface JwtPayload {
 	userId: number;
-	role: "Operatore" | "Automobilista" | "Varco";
+	role: "Admin" | "Operatore" | "Automobilista" | "Varco";
 }
+
 
 declare global {
 	namespace Express {

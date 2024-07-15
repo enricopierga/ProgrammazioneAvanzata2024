@@ -1,7 +1,9 @@
 import { Router } from "express";
+import { requireAuthentication } from "../middlewares/authenticationMiddleware";
+
 import UserController from "../controllers/UserController";
-import { requireAuthentication } from "../middleware/roles";
-import pdfController from "../controllers/pdfController";
+import PdfController from "../controllers/FinePdfController";
+import FinePdfController from "../controllers/FinePdfController";
 
 const router = Router();
 
@@ -26,7 +28,7 @@ const router = Router();
  *       403:
  *         description: Forbidden
  */
-router.patch("/:id/credit", requireAuthentication(["Operatore"]), UserController.addCredit);
+router.patch("/:id/credit", requireAuthentication(["Admin"]), UserController.addCredit);
 
 /**
  * @swagger
@@ -58,40 +60,17 @@ router.patch("/:id/credit", requireAuthentication(["Operatore"]), UserController
  *       403:
  *         description: Forbidden
  */
-router.get("/:id/credit", requireAuthentication(["Automobilista"]), UserController.getCredit);
+router.get(
+	"/credit",
+	requireAuthentication(["Automobilista", "Operatore"]),
+	UserController.getCredit
+);
 
-router.get("/:id", requireAuthentication(["Automobilista"]), UserController.getMyInfractions);
+router.get("/myInfraction", requireAuthentication(["Automobilista", "Operatore"]), UserController.getMyInfractions);
 
 router.post("/login", UserController.login);
 
-router.get("/:id", requireAuthentication(["Automobilista"]), pdfController.generatePdf);
+router.get("/:id/pdf", requireAuthentication(["Automobilista", "Operatore"]), FinePdfController.getPdf);
 
-
-/*
-// Endpoint per generare il PDF della multa
-app.get('/generate-ticket', async (req: Request, res: Response) => {
-	const ticketData: TicketData = {
-	  firstName: 'John',
-	  lastName: 'Doe',
-	  amount: 150,
-	  entryLocation: 'Main St',
-	  exitLocation: 'Broadway',
-	  expectedSpeed: 60,
-	  actualSpeed: 80,
-	  date: '2023-07-15',
-	  paymentId: '123456789',
-	  ticketId: '987654321',
-	  plateNumber: 'ABC1234',
-	};
-  
-	try {
-	  const pdfBytes = await generateTicketPdf(ticketData);
-	  res.setHeader('Content-Type', 'application/pdf');
-	  res.setHeader('Content-Disposition', 'attachment; filename=ticket.pdf');
-	  res.send(Buffer.from(pdfBytes));
-	} catch (error) {
-	  res.status(500).send('Errore durante la generazione del PDF');
-	}
-*/
 
 export default router;

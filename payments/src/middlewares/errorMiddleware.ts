@@ -1,5 +1,10 @@
 // middleware/errorHandler.ts
+//TODO: lib status codes
 import { Request, Response, NextFunction } from "express";
+import {
+	ReasonPhrases,
+	StatusCodes,
+} from 'http-status-codes';
 
 interface CustomError extends Error {
 	statusCode?: number;
@@ -13,14 +18,10 @@ const errorHandler = (
 ) => {
 	console.error(err.stack);
 
-	const statusCode = err.statusCode || 500;
-	const message = err.message || "An unexpected error occurred";
+	return res
+		.status(StatusCodes.INTERNAL_SERVER_ERROR)
+		.send(ReasonPhrases.INTERNAL_SERVER_ERROR);
 
-	res.status(statusCode).json({
-		status: "error",
-		statusCode,
-		message,
-	});
 };
 
 export { errorHandler };

@@ -1,27 +1,32 @@
 import { DataTypes, Model, Optional } from 'sequelize';
 import sequelize from '../config/database';
-import User from './UserModel';  
+import User from './UserModel';
+
+
+export enum paymentTypes {
+  addBalance = "addBalance",
+  finePayment = "finePayment"
+}
 
 interface PaymentAttributes {
   id: number;
-  uuidPayment: string;
   amount: number;
+  paymentType: paymentTypes;
   userId: number;
+  fineId: number;
   createdAt?: Date;
-  updatedAt?: Date;
 }
 
-interface PaymentCreationAttributes extends Optional<PaymentAttributes, 'id'> {}
+interface PaymentCreationAttributes extends Optional<PaymentAttributes, 'id'> { }
 
 // Definizione del modello Payment
 class Payment extends Model<PaymentAttributes, PaymentCreationAttributes> implements PaymentAttributes {
   public id!: number;
-  public uuidPayment!: string;
   public amount!: number;
+  public fineId!: number;
   public userId!: number;
-
+  public paymentType!: paymentTypes;
   public readonly createdAt!: Date;
-  public readonly updatedAt!: Date;
 }
 
 Payment.init(
@@ -31,10 +36,6 @@ Payment.init(
       autoIncrement: true,
       primaryKey: true,
     },
-    uuidPayment: {
-      type: new DataTypes.STRING(128),
-      allowNull: false,
-    },
     amount: {
       type: DataTypes.DOUBLE,
       allowNull: false,
@@ -43,12 +44,16 @@ Payment.init(
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    createdAt: {
-      type: DataTypes.DATE,
+    paymentType: {
+      type: DataTypes.ENUM,
+      values: Object.values(paymentTypes),
       allowNull: false,
-      defaultValue: DataTypes.NOW,
     },
-    updatedAt: {
+    fineId: {
+      type: DataTypes.INTEGER.UNSIGNED,
+      allowNull: true,
+    },
+    createdAt: {
       type: DataTypes.DATE,
       allowNull: false,
       defaultValue: DataTypes.NOW,
@@ -56,8 +61,8 @@ Payment.init(
   },
   {
 
-  tableName: 'payments',
-	modelName: 'payment',
+    tableName: 'payments',
+    modelName: 'payment',
     sequelize,
   }
 );

@@ -1,9 +1,9 @@
 import { Router } from "express";
 import PaymentController from "../controllers/PaymentController";
-import { requireAuthentication } from "../middleware/roles";
+import { requireAuthentication } from "../middlewares/authenticationMiddleware";
 
 const router = Router();
 
-router.post("/:id", requireAuthentication(["Automobilista"]), PaymentController.payInfractionByUuid);
+router.post("/", requireAuthentication(["Automobilista", "Operatore"]), PaymentController.payInfractionByUuid);
 
 export default router;

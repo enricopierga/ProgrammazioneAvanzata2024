@@ -8,7 +8,7 @@ import "./models/Index";
 dotenv.config();
 
 // Middlewares and configurations
-import { errorHandler } from "./middleware/errorHandler";
+import { errorHandler } from "./middlewares/errorMiddleware";
 import { setupSwagger } from "./config/swagger";
 
 // Routes
@@ -39,8 +39,8 @@ const initializeDb = process.env.CLEAN_DB === "true";
 // Prepare db and start listener
 sequelize
 	.sync({ force: initializeDb }) // Usa force: true solo in sviluppo, cancella e ricrea le tabelle
-	.then(() => {
-		dbSeed();
+	.then(async () => {
+		await dbSeed();
 
 		console.log("Database synced");
 		app.listen(port, () => {
