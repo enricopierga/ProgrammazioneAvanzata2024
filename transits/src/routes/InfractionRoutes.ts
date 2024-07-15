@@ -1,6 +1,6 @@
 // src/routes/infractionRoutes.ts
 import { Router } from 'express';
-import InfractionController from '../controllers/infractionController';
+import InfractionController from '../controllers/InfractionController';
 import { requireAuthentication } from '../middleware/roles';
 
 const router = Router();

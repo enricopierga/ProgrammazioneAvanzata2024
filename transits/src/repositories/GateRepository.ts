@@ -30,7 +30,6 @@ class GateRepository {
 		  throw new Error('Cannot delete gate: it has associated routes.');
 		}
 	
-		// Delete the gate if no dependencies found
 		return await Gate.destroy({ where: { id: id } });
 	  }
 }

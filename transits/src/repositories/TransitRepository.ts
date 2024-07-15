@@ -27,7 +27,7 @@ class TransitRepository {
 	//solo operatore
 	async delete(id: number): Promise<number> {
 		const deleted = await Transit.destroy({
-			where: { id },
+			where: { id: id },
 		});
 		return deleted;
 	}

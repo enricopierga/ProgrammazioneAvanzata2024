@@ -4,15 +4,44 @@ import TransitRepository from "../repositories/TransitRepository";
 import VehicleRepository from "../repositories/VehicleRepository";
 import RouteRepository from "../repositories/RouteRepository";
 import InfractionRepository from "../repositories/InfractionRepository";
+import {
+	SPEED_LIMIT_CAR_CLEAR,
+	SPEED_LIMIT_CAR_RAINY,
+	SPEED_LIMIT_TRUCK_CLEAR,
+	SPEED_LIMIT_TRUCK_RAINY,
+	FINE_AMOUNT
+  } from "../config/constants";
 
 class TransitController {
+
 	// Creazione di un Transit e creazione automatica di un'Infraction
 	// se vengono soddisfatte delle condizioni
 
 	async create(req: Request, res: Response): Promise<void> {
+		const {vehicleId, routeId, travelTime, weather} = req.body;
+		if (isNaN(vehicleId)){
+			res.status(400).json({ message: "Invalid vehicleId format" });
+			return;
+		}
+
+		if (isNaN(routeId)){
+			res.status(400).json({ message: "Invalid routeId format" });
+			return;
+		}
+
+		if (isNaN(travelTime)){
+			res.status(400).json({ message: "Invalid routeId format" });
+			return;
+		}
+
+		if (!(weather === ("clear" || "rainy"))){
+			res.status(400).json({ message: 'Invalid weather, it must be "clear" or "rainy"' });
+			return;
+		}
+		
 		const transit = await TransitRepository.create(req.body); // crea il transito
-		const vehicle = await VehicleRepository.getById(transit.vehicleId)
-		const route = await RouteRepository.getById(transit.routeId);
+		const vehicle = await VehicleRepository.getById(vehicleId)
+		const route = await RouteRepository.getById(routeId);
 
 		if (!vehicle) {
 			res.status(404).json({ message: 'Vehicle not found' });
@@ -26,22 +55,21 @@ class TransitController {
 
 		const speed = Math.floor((route.distance / transit.travelTime) * 3.6); // Calcola la velocità in km/h
 
-		let speedLimit: number = 130;
-		if (vehicle.type === 'car') {
-			speedLimit = transit.weather === 'rainy' ? 110 : 130;
-		} else if (vehicle.type === 'truck') {
-			speedLimit = transit.weather === 'rainy' ? 80 : 100;
-		}
+		let speedLimit: number = SPEED_LIMIT_CAR_CLEAR;
+        if (vehicle.type === "car") {
+            speedLimit = transit.weather === "rainy" ? SPEED_LIMIT_CAR_RAINY : SPEED_LIMIT_CAR_CLEAR;
+        } else if (vehicle.type === "truck") {
+            speedLimit = transit.weather === "rainy" ? SPEED_LIMIT_TRUCK_RAINY : SPEED_LIMIT_TRUCK_CLEAR;
+        }
 
 		if (speed > speedLimit) {
-			// Costruisce i dati per l'infrazione
 			const infractionData = {
 				vehicleId: transit.vehicleId,
 				routeId: req.body.routeId,
 				speed: speed,
 				limit: speedLimit,
 				weather: transit.weather,
-				amount: 150, // Importo fisso per la multa (a prescindere dal meteo e dal tipo di veicolo)
+				amount: FINE_AMOUNT, // Importo fisso per la multa (a prescindere dal meteo e dal tipo di veicolo)
 				timestamp: new Date(),
 			};
 
@@ -83,6 +111,27 @@ class TransitController {
 
 		if (isNaN(transitId)) {
 			res.status(400).json({ message: "Invalid ID format" });
+			return;
+		}
+
+		const {vehicleId, routeId, travelTime, weather} = req.body;
+		if (isNaN(vehicleId)){
+			res.status(400).json({ message: "Invalid vehicleId format" });
+			return;
+		}
+
+		if (isNaN(routeId)){
+			res.status(400).json({ message: "Invalid routeId format" });
+			return;
+		}
+
+		if (isNaN(travelTime)){
+			res.status(400).json({ message: "Invalid routeId format" });
+			return;
+		}
+
+		if (!(weather === ("clear" || "rainy"))){
+			res.status(400).json({ message: 'Invalid weather, it must be "clear" or "rainy"' });
 			return;
 		}
 

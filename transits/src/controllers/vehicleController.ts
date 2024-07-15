@@ -1,25 +1,35 @@
 // src/controllers/VehicleController.ts
 import { Request, Response } from "express";
 import VehicleRepository from "../repositories/VehicleRepository";
-import UserRepository from "../repositories/UserRepository";
+import { checkLicensePlate, checkUserId, checkVehicleType } from "../middleware/Validation";
 
 class VehicleController {
+
 	async create(req: Request, res: Response): Promise<void> {
 		try {
-			const { userId } = req.body;
+			const { licensePlate, type, userId } = req.body;
 
-			// Verifica se lo userId esiste nella tabella Users
-			const user = await UserRepository.getById(userId);
-			if (!user) {
-			  res.status(400).json({ message: `User with ID ${userId} does not exist` });
-			  return;
+			if(!(await checkLicensePlate(licensePlate))){
+				res.status(400).json({ message: "Invalid license plate format" });
+                return;
 			}
-	  
-			const vehicle = await VehicleRepository.create(req.body);
-			res.status(201).json(vehicle);
+
+			if(!(await checkVehicleType(String(type)))){
+				res.status(400).json({ message: 'Invalid vehicle type format, it be "car" or "truck"' });
+				return;
+			}
+
+	        if(await checkUserId(res, userId)){
+				const vehicle = await VehicleRepository.create(req.body);
+			    res.status(201).json(vehicle);
+				return;
+			}			
 		} catch  {
 			res.status(500).json({ message: "Error creating vehicle" });
 		}
+	}
+	checkVehicleType(type: any) {
+		throw new Error("Method not implemented.");
 	}
 
 	async getVehicle(req: Request, res: Response): Promise<void> {
@@ -56,41 +66,59 @@ class VehicleController {
 			  return;
 			}
 
-			const { userId } = req.body;
-			const user = await UserRepository.getById(userId);
-			if (!user) {
-			  res.status(400).json({ message: `User with ID ${userId} does not exist` });
-			  return;
+            const { licensePlate, type, userId } = req.body;
+
+			if(!(await checkLicensePlate(licensePlate))){
+				res.status(400).json({ message: "Invalid license plate format" });
+                return;
 			}
-	  
-			const updated = await VehicleRepository.update(vehicleId, req.body);
-	  
-			if (updated) {
-			  res.status(200).json({ message: "Vehicle updated successfully" });
-			} else {
-			  res.status(404).json({ message: "Vehicle not found" });
+
+
+			if(!(await checkVehicleType(type))){
+				res.status(400).json({ message: "Invalid vehicle type format, it must be car or truck" });
+				return;
 			}
+			console.log("Vaffanculo 1");
+
+			if(await checkUserId(res, userId)){
+				const updated = await VehicleRepository.update(vehicleId, req.body);
+				console.log("Vaffanculo 2");
+	  
+                if (updated) {
+			        res.status(200).json({ message: "Vehicle updated successfully" });
+			    } else {
+			        res.status(404).json({ message: "Vehicle not found" });
+			    }
+			}		
 		} catch {
 			  res.status(500).json({ message: "Error updating vehicle" });
 		}
 	}
 
 	async delete(req: Request, res: Response): Promise<void> {
-		const vehicleId = Number(req.params.vehicleId);
-
-		if (isNaN(vehicleId)) {
-			res.status(400).json({ message: "Invalid ID format" });
-			return;
-		}
-
-		const deleted = await VehicleRepository.delete(vehicleId);
-
-		if (deleted) {
-			res.status(200).json({ message: "Vehicle deleted successfully" });
-		} else {
-			res.status(404).json({ message: "Vehicle not found" });
-		}
-	}
+		try {
+			const vehicleId = Number(req.params.vehicleId);
+	  
+			if (isNaN(vehicleId)) {
+			  res.status(400).json({ message: "Invalid ID format" });
+			  return;
+			}
+	  
+			const deleted = await VehicleRepository.delete(vehicleId);
+			if (deleted) {
+			  res.status(200).json({ message: "Vehicle deleted successfully" });
+			} else {
+			  res.status(404).json({ message: "Vehicle not found" });
+			}
+		} catch (err) {
+			const error = err as Error;
+			if (error.message.includes('Cannot delete vehicle')) {
+			  res.status(400).json({ message: error.message });
+			} else {
+			  res.status(500).json({ message: "Error deleting vehicle"});
+		    }
+	    }
+    }
 }
 
 export default new VehicleController();
