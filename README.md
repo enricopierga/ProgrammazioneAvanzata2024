@@ -33,7 +33,7 @@ Il sistema supporta tre ruoli distinti:
 
 ### Diagramma ER
 
-![Class Diagram](./Er.jpg)
+![Class Diagram](./er_diagram.png)
 
 ### Pattern Utilizzati
 
