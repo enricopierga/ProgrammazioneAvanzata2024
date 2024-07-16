@@ -6,90 +6,94 @@ import UserRepository from "../repositories/UserRepository";
 import InfractionRepository from "../repositories/InfractionRepository";
 import { generateJwt } from "../security/JWTservice";
 import { isString } from "util";
-import { ReasonPhrases, StatusCodes } from 'http-status-codes';
+import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 class UserController {
+  login = async (req: Request, res: Response) => {
+    const { username, password } = req.body;
+    if (username === undefined || username === "") {
+      return res
+        .status(StatusCodes.BAD_REQUEST)
+        .json({ message: "Wrong username or password" });
+    }
 
-	login = async (req: Request, res: Response) => {
-		const { username, password } = req.body;
-		if (username === undefined || username === "") {
-			return res.status(400).json({ message: "Wrong username or password" })
-		}
+    if (password === undefined || password === "") {
+      return res
+        .status(StatusCodes.BAD_REQUEST)
+        .json({ message: "Wrong username or password" });
+    }
 
-		if (password === undefined || password === "") {
-			return res.status(400).json({ message: "Wrong username or password" })
-		}
+    const user = await UserRepository.getByCredentials(username, password);
 
-		const user = await UserRepository.getByCredentials(username, password);
+    if (user === null) {
+      return res
+        .status(StatusCodes.NOT_FOUND)
+        .json({ message: "User not found" });
+    }
 
-		if (user === null) {
-			return res.status(StatusCodes.NOT_FOUND).send(ReasonPhrases.NOT_FOUND)
-		}
+    const jwtToken = generateJwt({ userId: user.id, role: user.role });
+    return res.status(StatusCodes.OK).json({ accessToken: jwtToken });
+  };
 
-		const jwtToken = generateJwt({ userId: user.id, role: user.role });
-		return res.status(StatusCodes.OK).json({accessToken: jwtToken})
+  /**
+   * Controller per ricaricare il credito di un utente.
+   */
+  addCredit = async (req: Request, res: Response) => {
+    const userId = parseInt(req.params.id, 10);
 
-	}
+    if (isNaN(userId)) {
+      res
+        .status(StatusCodes.BAD_REQUEST)
+        .json({ message: "Invalid ID format" });
+      return;
+    }
 
-	/**
-	 * Controller per ricaricare il credito di un utente.
-	 */
-	addCredit = async (req: Request, res: Response) => {
-		const userId = parseInt(req.params.id, 10);
+    const { amount } = req.body;
 
-		if (isNaN(userId)) {
-			res.status(StatusCodes.BAD_REQUEST).json({ message: "Invalid ID format" });
-			return;
-		}
+    if (amount === undefined || isNaN(amount) || isString(amount)) {
+      return res
+        .status(StatusCodes.BAD_REQUEST)
+        .json({ message: "Missing or wrong amount value" });
+    }
 
-		const { amount } = req.body;
+    const utente = await utenteRepository.increaseCredit(userId, amount);
 
-		if (amount === undefined || isNaN(amount) || isString(amount)) {
-			return res.status(StatusCodes.BAD_REQUEST).json({ message: "Missing or wrong amount value" })
-		}
+    //Creo oggetto Payment per salvare il pagamento all'interno della tabella payments
+    const paymentData = {
+      userId: userId,
+      amount: amount,
+      paymentType: paymentTypes.addBalance,
+    };
 
+    const payment = await PaymentRepository.createPayment(paymentData);
 
-		const utente = await utenteRepository.increaseCredit(userId, amount);
+    if (!utente) {
+      return res
+        .status(StatusCodes.NOT_FOUND)
+        .json({ message: "User not found" });
+    }
+    res.status(StatusCodes.OK).json({
+      balance: utente.credit,
+    });
+  };
 
+  /**
+   * Controller per recuperare il credito di un utente.
+   */
+  getCredit = async (req: Request, res: Response) => {
+    const credito = await utenteRepository.getCredit(req.user!.userId);
+    if (credito === null) {
+      return res.status(StatusCodes.NOT_FOUND).send(ReasonPhrases.NOT_FOUND);
+    }
+    res.status(StatusCodes.OK).json({ balance: credito });
+  };
 
-		//Creo oggetto Payment per salvare il pagamento all'interno della tabella payments
-		const paymentData = {
-			userId: userId,
-			amount: amount,
-			paymentType: paymentTypes.addBalance,
-		}
+  getMyInfractions = async (req: Request, res: Response) => {
+    const userInfractions = await InfractionRepository.getInfractionsByUserId(
+      req.user!.userId
+    );
 
-
-		const payment = await PaymentRepository.createPayment(paymentData);
-
-
-		if (!utente) {
-			return res.status(StatusCodes.NOT_FOUND).send(ReasonPhrases.NOT_FOUND);
-		}
-		res.status(StatusCodes.OK).json({
-			balance: utente.credit,
-		});
-	};
-
-	/**
-	 * Controller per recuperare il credito di un utente.
-	 */
-	getCredit = async (req: Request, res: Response) => {
-
-
-		const credito = await utenteRepository.getCredit(req.user!.userId);
-		if (credito === null) {
-			return res.status(StatusCodes.NOT_FOUND).send(ReasonPhrases.NOT_FOUND)
-		}
-		res.status(StatusCodes.OK).json({balance: credito} );
-	};
-
-
-
-	getMyInfractions = async (req: Request, res: Response) => {
-		const userInfractions = await InfractionRepository.getInfractionsByUserId(req.user!.userId)
-
-		res.status(StatusCodes.OK).json( userInfractions );	}
-
+    res.status(StatusCodes.OK).json(userInfractions);
+  };
 }
 export default new UserController();

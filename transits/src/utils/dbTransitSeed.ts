@@ -25,7 +25,7 @@ export async function seed() {
     credit: 1500,
     role: "Automobilista",
   });
-  /*
+
   await User.create({
     id: 3,
     username: "nevio",
@@ -137,5 +137,5 @@ export async function seed() {
     timestamp: new Date(),
     amount: 150,
     uuid: "6836178f-0c79-4c10-88ec-75bae54fd6a4",
-  });*/
+  });
 }

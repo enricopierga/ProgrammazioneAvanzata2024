@@ -12,16 +12,14 @@ import {
   SPEED_LIMIT_TRUCK_RAINY,
   FINE_AMOUNT,
 } from "../config/constants";
-import { checkWeather } from "../middleware/Validation";
+import { checkLicensePlate, checkWeather } from "../middleware/Validation";
 
 class TransitController {
   async create(req: Request, res: Response): Promise<void> {
     try {
-      const { vehicleId, routeId, travelTime, weather } = req.body;
-      if (isNaN(vehicleId)) {
-        res
-          .status(StatusCodes.BAD_REQUEST)
-          .json({ message: "Invalid vehicleId format" });
+      const { licensePlate, routeId, travelTime, weather } = req.body;
+
+      if (!checkLicensePlate(licensePlate, res)) {
         return;
       }
 
@@ -43,9 +41,7 @@ class TransitController {
         return;
       }
 
-      const transit = await TransitRepository.create(req.body); // crea il transito
-      const vehicle = await VehicleRepository.getById(vehicleId);
-      const route = await RouteRepository.getById(routeId);
+      const vehicle = await VehicleRepository.getByLicensePlate(licensePlate);
 
       if (!vehicle) {
         res
@@ -54,10 +50,15 @@ class TransitController {
         return;
       }
 
+      const route = await RouteRepository.getById(routeId);
+
       if (!route) {
         res.status(StatusCodes.NOT_FOUND).json({ message: "Route not found" });
         return;
       }
+
+      req.body.vehicleId = vehicle.id;
+      const transit = await TransitRepository.create(req.body); // crea il transito
 
       const speed = Math.floor((route.distance / transit.travelTime) * 3.6);
 
@@ -78,6 +79,7 @@ class TransitController {
         const infractionData = {
           vehicleId: transit.vehicleId,
           routeId: req.body.routeId,
+          userId: vehicle.userId,
           speed: speed,
           limit: speedLimit,
           weather: transit.weather,
@@ -146,29 +148,47 @@ class TransitController {
         return;
       }
 
-      const { vehicleId, routeId, travelTime, weather } = req.body;
-      if (isNaN(vehicleId)) {
-        res
-          .status(StatusCodes.BAD_REQUEST)
-          .json({ message: "Invalid vehicleId format" });
+      const { licensePlate, routeId, travelTime, weather } = req.body;
+
+      if (licensePlate && !checkLicensePlate(licensePlate, res)) {
         return;
+      } else if (licensePlate) {
+        const vehicle = await VehicleRepository.getByLicensePlate(licensePlate);
+
+        if (!vehicle) {
+          res
+            .status(StatusCodes.NOT_FOUND)
+            .json({ message: "Vehicle not found" });
+          return;
+        }
+
+        req.body.vehicleId = vehicle.id;
       }
 
-      if (isNaN(routeId)) {
+      if (routeId && isNaN(routeId)) {
+        res
+          .status(StatusCodes.BAD_REQUEST)
+          .json({ message: "Invalid routeId format" });
+        return;
+      } else if (routeId) {
+        const route = await RouteRepository.getById(routeId);
+
+        if (!route) {
+          res
+            .status(StatusCodes.NOT_FOUND)
+            .json({ message: "Route not found" });
+          return;
+        }
+      }
+
+      if (travelTime && isNaN(travelTime)) {
         res
           .status(StatusCodes.BAD_REQUEST)
           .json({ message: "Invalid routeId format" });
         return;
       }
 
-      if (isNaN(travelTime)) {
-        res
-          .status(StatusCodes.BAD_REQUEST)
-          .json({ message: "Invalid routeId format" });
-        return;
-      }
-
-      if (!checkWeather(weather, res)) {
+      if (weather && !checkWeather(weather, res)) {
         return;
       }
 

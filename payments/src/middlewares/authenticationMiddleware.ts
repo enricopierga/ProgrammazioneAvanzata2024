@@ -22,7 +22,7 @@ export function requireAuthentication(requiredRoles?: acceptedRoles[]) {
     if (!authorizationHeader) {
       return res
         .status(StatusCodes.UNAUTHORIZED)
-        .send(ReasonPhrases.UNAUTHORIZED);
+        .json({ message: ReasonPhrases.UNAUTHORIZED });
     }
 
     if (requiredRoles !== undefined && requiredRoles.length > 0) {
@@ -40,13 +40,13 @@ export function requireAuthentication(requiredRoles?: acceptedRoles[]) {
         if (hasValidRole === false) {
           return res
             .status(StatusCodes.FORBIDDEN)
-            .send(ReasonPhrases.FORBIDDEN);
+            .json({ message: ReasonPhrases.FORBIDDEN });
         }
         next();
       } catch (error) {
         return res
           .status(StatusCodes.UNAUTHORIZED)
-          .send(ReasonPhrases.UNAUTHORIZED);
+          .json({ message: ReasonPhrases.UNAUTHORIZED });
       }
     }
   };

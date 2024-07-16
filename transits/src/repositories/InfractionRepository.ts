@@ -5,6 +5,21 @@ import Route from "../models/RouteModel";
 import Gate from "../models/GateModel";
 import { v4 as UUIDV4 } from "uuid";
 
+interface InfractionResult {
+  plate: string;
+  type: string;
+  route: {
+    inGate: string;
+    outGate: string;
+    distance: number;
+  };
+  averageSpeed: number;
+  limitSpeed: number;
+  speedDelta: number;
+  weather: string;
+  datetime: Date;
+}
+
 class InfractionRepository {
   async create(data: any): Promise<Infraction> {
     data.uuid = UUIDV4();
@@ -13,7 +28,7 @@ class InfractionRepository {
 
   async getInfractionsByUserId(userId: number): Promise<Infraction[]> {
     return await Infraction.findAll({
-      where: { userId: userId },
+      where: { userId },
     });
   }
 
@@ -23,7 +38,7 @@ class InfractionRepository {
     endDate: string,
     isOperator: boolean,
     userId: number
-  ): Promise<any> {
+  ): Promise<InfractionResult[]> {
     const whereClause: any = {
       timestamp: { [Op.between]: [new Date(startDate), new Date(endDate)] },
     }; // = WHERE timestamp BETWEEN startDate AND endDate
@@ -65,6 +80,7 @@ class InfractionRepository {
       limitSpeed: infraction.limit,
       speedDelta: infraction.speed - infraction.limit,
       weather: infraction.weather,
+      amount: infraction.amount,
       datetime: infraction.timestamp,
     }));
   }
@@ -75,6 +91,16 @@ class InfractionRepository {
 
   async getByUuid(uuid: string): Promise<Infraction | null> {
     return await Infraction.findOne({ where: { uuid } });
+  }
+
+  async markAsPaid(data: Infraction): Promise<boolean> {
+    const [affectedCount] = await Infraction.update(
+      { paid: true },
+      {
+        where: { id: data.id },
+      }
+    );
+    return affectedCount === 1;
   }
 
   async update(id: number, data: any): Promise<number> {

@@ -26,7 +26,9 @@ class UserController {
     const user = await UserRepository.getByCredentials(username, password);
 
     if (user === null) {
-      return res.status(StatusCodes.NOT_FOUND).send(ReasonPhrases.NOT_FOUND);
+      return res
+        .status(StatusCodes.NOT_FOUND)
+        .json({ message: "User not found" });
     }
 
     const jwtToken = generateJwt({ userId: user.id, role: user.role });
@@ -66,7 +68,9 @@ class UserController {
     const payment = await PaymentRepository.createPayment(paymentData);
 
     if (!utente) {
-      return res.status(StatusCodes.NOT_FOUND).send(ReasonPhrases.NOT_FOUND);
+      return res
+        .status(StatusCodes.NOT_FOUND)
+        .json({ message: "User not found" });
     }
     res.status(StatusCodes.OK).json({
       balance: utente.credit,

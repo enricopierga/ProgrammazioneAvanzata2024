@@ -25,9 +25,10 @@ class InfractionController {
       }
 
       // Verifica che plates sia un array e che ogni targa abbia il formato corretto
+
       if (
         !Array.isArray(plates) ||
-        !plates.every((plate) => checkLicensePlate(plate))
+        !plates.every((plate) => checkLicensePlate(plate, res))
       ) {
         res.status(StatusCodes.BAD_REQUEST).json({
           message:

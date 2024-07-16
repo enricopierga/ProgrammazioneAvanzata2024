@@ -7,8 +7,16 @@ import User from "./UserModel";
 import Vehicle from "./VehicleModel";
 
 // Route <-> Gate
-Route.belongsTo(Gate, { foreignKey: "startGateId", targetKey: "id" });
-Route.belongsTo(Gate, { foreignKey: "endGateId", targetKey: "id" });
+Route.belongsTo(Gate, {
+  as: "startGate",
+  foreignKey: "startGateId",
+  targetKey: "id",
+});
+Route.belongsTo(Gate, {
+  as: "endGate",
+  foreignKey: "endGateId",
+  targetKey: "id",
+});
 
 // Infraction <-> Vehicle
 Infraction.belongsTo(Vehicle, {
@@ -25,7 +33,11 @@ Infraction.belongsTo(Route, {
 });
 
 // Infraction <-> User
-Infraction.belongsTo(User, { foreignKey: "userId", targetKey: "id" });
+Infraction.belongsTo(User, {
+  as: "user",
+  foreignKey: "userId",
+  targetKey: "id",
+});
 
 // Vehicle <-> User
 Vehicle.belongsTo(User, { as: "owner", foreignKey: "userId", targetKey: "id" });

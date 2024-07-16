@@ -22,6 +22,10 @@ class VehicleRepository {
     return await Vehicle.findByPk(id);
   }
 
+  async getByLicensePlate(licensePlate: string): Promise<Vehicle | null> {
+    return await Vehicle.findOne({ where: { licensePlate } });
+  }
+
   async update(id: number, data: any): Promise<number> {
     const [updated] = await Vehicle.update(data, {
       where: { id },
