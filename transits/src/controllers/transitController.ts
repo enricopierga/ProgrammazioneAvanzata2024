@@ -12,6 +12,7 @@ import {
   SPEED_LIMIT_TRUCK_RAINY,
   FINE_AMOUNT,
 } from "../config/constants";
+import { checkWeather } from "../middleware/Validation";
 
 class TransitController {
   async create(req: Request, res: Response): Promise<void> {
@@ -38,10 +39,7 @@ class TransitController {
         return;
       }
 
-      if (!(weather === ("clear" || "rainy"))) {
-        res
-          .status(StatusCodes.BAD_REQUEST)
-          .json({ message: "Invalid weather, it must be clear or rainy" });
+      if (!checkWeather(weather, res)) {
         return;
       }
 
@@ -170,10 +168,7 @@ class TransitController {
         return;
       }
 
-      if (!(weather === ("clear" || "rainy"))) {
-        res
-          .status(StatusCodes.BAD_REQUEST)
-          .json({ message: 'Invalid weather, it must be "clear" or "rainy"' });
+      if (!checkWeather(weather, res)) {
         return;
       }
 

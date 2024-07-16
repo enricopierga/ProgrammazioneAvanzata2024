@@ -11,6 +11,12 @@ class InfractionRepository {
     return await Infraction.create(data);
   }
 
+  async getInfractionsByUserId(userId: number): Promise<Infraction[]> {
+    return await Infraction.findAll({
+      where: { userId: userId },
+    });
+  }
+
   async getByPlatesAndPeriod(
     plates: string[],
     startDate: string,
@@ -20,7 +26,7 @@ class InfractionRepository {
   ): Promise<any> {
     const whereClause: any = {
       timestamp: { [Op.between]: [new Date(startDate), new Date(endDate)] },
-    }; // = WHERE timestamp BETWEEN '2024-01-01' AND '2024-12-31'
+    }; // = WHERE timestamp BETWEEN startDate AND endDate
 
     if (!isOperator) {
       whereClause.userId = userId;
@@ -33,7 +39,7 @@ class InfractionRepository {
           model: Vehicle,
           as: "vehicle",
           attributes: ["licensePlate", "type"],
-          where: { licensePlate: { [Op.in]: plates } },
+          where: { licensePlate: { [Op.in]: plates } }, // = WHERE licensePlate IN plates
         },
         {
           model: Route,
@@ -76,13 +82,6 @@ class InfractionRepository {
       where: { id },
     });
     return updated;
-  }
-
-  async delete(id: number): Promise<number> {
-    const deleted = await Infraction.destroy({
-      where: { id },
-    });
-    return deleted;
   }
 }
 

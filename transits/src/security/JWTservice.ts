@@ -1,16 +1,16 @@
 import jwt from "jsonwebtoken";
 
 interface JwtPayload {
-	userId: number;
-	role: "Operatore" | "Automobilista" | "Varco";
+  userId: number;
+  role: "Admin" | "Operatore" | "Automobilista" | "Varco";
 }
 
 declare global {
-	namespace Express {
-		interface Request {
-			user?: JwtPayload;
-		}
-	}
+  namespace Express {
+    interface Request {
+      user?: JwtPayload;
+    }
+  }
 }
 
 /**
@@ -20,11 +20,11 @@ declare global {
  * @returns The extracted JWT.
  */
 function extractToken(bearer: string): string {
-	const prefix = "Bearer ";
-	if (bearer.startsWith(prefix)) {
-		return bearer.slice(prefix.length);
-	}
-	return bearer;
+  const prefix = "Bearer ";
+  if (bearer.startsWith(prefix)) {
+    return bearer.slice(prefix.length);
+  }
+  return bearer;
 }
 
 /**
@@ -34,8 +34,8 @@ function extractToken(bearer: string): string {
  * @returns The decoded JWT object.
  */
 export function decodeJwt(bearer: string): JwtPayload {
-	const token = extractToken(bearer);
-	return jwt.verify(token, process.env.JWT_PRIVATE_KEY as string) as JwtPayload;
+  const token = extractToken(bearer);
+  return jwt.verify(token, process.env.JWT_PRIVATE_KEY as string) as JwtPayload;
 }
 
 /**
@@ -45,7 +45,7 @@ export function decodeJwt(bearer: string): JwtPayload {
  * @returns The generated JWT token.
  */
 export function generateJwt(payload: JwtPayload): string {
-	return jwt.sign(payload, process.env.JWT_PRIVATE_KEY as string, {
-		expiresIn: "1h",
-	});
+  return jwt.sign(payload, process.env.JWT_PRIVATE_KEY as string, {
+    expiresIn: "1h",
+  });
 }

@@ -74,9 +74,17 @@ class RouteController {
         return;
       }
 
-      const { startGateId, endGateId } = req.body;
+      const { startGateId, endGateId, distance } = req.body;
       if (await checkGatesIds(res, startGateId, endGateId)) {
+        if (isNaN(distance)) {
+          res
+            .status(StatusCodes.BAD_GATEWAY)
+            .json({ message: "Invalid distance format" });
+          return;
+        }
+
         const updated = await RouteRepository.update(routeId, req.body);
+
         if (updated) {
           res
             .status(StatusCodes.OK)

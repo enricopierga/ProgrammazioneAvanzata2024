@@ -4,6 +4,10 @@ import { requireAuthentication } from "../middlewares/authenticationMiddleware";
 
 const router = Router();
 
-router.post("/", requireAuthentication(["Automobilista", "Operatore"]), PaymentController.payInfractionByUuid);
+router.post(
+  "/paga",
+  requireAuthentication(["Automobilista"]),
+  PaymentController.payInfractionByUuid
+);
 
 export default router;

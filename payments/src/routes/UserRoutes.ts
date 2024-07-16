@@ -28,7 +28,11 @@ const router = Router();
  *       403:
  *         description: Forbidden
  */
-router.patch("/:id/credit", requireAuthentication(["Admin"]), UserController.addCredit);
+router.patch(
+  "/:id/credit",
+  requireAuthentication(["Admin"]),
+  UserController.addCredit
+);
 
 /**
  * @swagger
@@ -61,16 +65,23 @@ router.patch("/:id/credit", requireAuthentication(["Admin"]), UserController.add
  *         description: Forbidden
  */
 router.get(
-	"/credit",
-	requireAuthentication(["Automobilista", "Operatore"]),
-	UserController.getCredit
+  "/credit",
+  requireAuthentication(["Automobilista", "Operatore"]),
+  UserController.getCredit
 );
 
-router.get("/myInfraction", requireAuthentication(["Automobilista", "Operatore"]), UserController.getMyInfractions);
+router.get(
+  "/myInfraction",
+  requireAuthentication(["Automobilista", "Operatore"]),
+  UserController.getMyInfractions
+);
 
 router.post("/login", UserController.login);
 
-router.get("/:id/pdf", requireAuthentication(["Automobilista", "Operatore"]), FinePdfController.getPdf);
-
+router.get(
+  "/:id/pdf",
+  requireAuthentication(["Automobilista", "Operatore"]),
+  FinePdfController.getPdf
+);
 
 export default router;

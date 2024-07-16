@@ -2,7 +2,6 @@ import { Request, Response, NextFunction } from "express";
 import { JwtPayload } from "jsonwebtoken";
 import { decodeJwt } from "../security/JWTservice";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
-
 type acceptedRoles = "Admin" | "Operatore" | "Automobilista" | "Varco";
 
 /**

@@ -13,23 +13,15 @@ class VehicleController {
     try {
       const { licensePlate, type, userId } = req.body;
 
-      if (!(await checkLicensePlate(licensePlate))) {
-        res
-          .status(StatusCodes.BAD_REQUEST)
-          .json({ message: "Invalid license plate format" });
+      if (!checkLicensePlate(licensePlate, res)) {
         return;
       }
 
-      if (!(await checkVehicleType(String(type)))) {
-        res
-          .status(StatusCodes.BAD_REQUEST)
-          .json({
-            message: 'Invalid vehicle type format, it be "car" or "truck"',
-          });
+      if (!checkVehicleType(type, res)) {
         return;
       }
 
-      if (await checkUserId(res, userId)) {
+      if (await checkUserId(userId, res)) {
         const vehicle = await VehicleRepository.create(req.body);
         res.status(StatusCodes.CREATED).json(vehicle);
         return;
@@ -89,23 +81,15 @@ class VehicleController {
 
       const { licensePlate, type, userId } = req.body;
 
-      if (!(await checkLicensePlate(licensePlate))) {
-        res
-          .status(StatusCodes.BAD_REQUEST)
-          .json({ message: "Invalid license plate format" });
+      if (!checkLicensePlate(licensePlate, res)) {
         return;
       }
 
-      if (!(await checkVehicleType(type))) {
-        res
-          .status(StatusCodes.BAD_REQUEST)
-          .json({
-            message: "Invalid vehicle type format, it must be car or truck",
-          });
+      if (!checkVehicleType(type, res)) {
         return;
       }
 
-      if (await checkUserId(res, userId)) {
+      if (await checkUserId(userId, res)) {
         const updated = await VehicleRepository.update(vehicleId, req.body);
 
         if (updated) {
