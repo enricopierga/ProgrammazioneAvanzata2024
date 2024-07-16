@@ -10,7 +10,7 @@ class PaymentController {
   async payInfractionByUuid(req: Request, res: Response): Promise<void> {
     const { uuid } = req.body;
 
-    if (!(await checkUuid(uuid, res))) {
+    if (!checkUuid(uuid, res)) {
       return;
     }
 
