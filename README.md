@@ -140,8 +140,7 @@ In caso di errore invece, ovvero di utente non autorizzato, verrà generato il s
 ```json
  status: 403 FORBIDDEN
 {
-   
-    "message": "Forbidden"
+   "message": "Forbidden"
 }
 ```
 
