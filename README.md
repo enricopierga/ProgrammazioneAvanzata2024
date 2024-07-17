@@ -232,7 +232,7 @@ Risposta:
       "description": "Varco omologato e testato"
       "updatedAt": "2024-07-17T19:45:12.942Z",
       "createdAt": "2024-07-17T19:45:12.942Z",
-    }
+    }]
   ```
 
 - **PATCH /gate/:id**
