@@ -97,7 +97,7 @@ Per poter ottenere una risposta, il corpo delle richieste dovrà seguire il segu
     }
  ```
 Il meccanismo che si innesca all'atto della chiamata è descritto dal seguente diagramma:
-![Use Case Diagram](./use_cases_diagram.png)
+![login](./sequenceDiagrams/login.png)
 
 #### CRUD per la Gestione dei Varchi
 - **POST /gates**
