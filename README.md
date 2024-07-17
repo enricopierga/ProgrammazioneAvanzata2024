@@ -192,12 +192,12 @@ Risposta:
 - **POST /gate**
   
   Un esempio di body della richiesta potrebbe essere il seguente (la descrizione è facoltativa):
-    ```json
+  ```json
     {
       "location": "Location 1",
       "descrizione": "Varco omologato e testato"
     }
-    ```
+  ```
   Se la richiesta viene effettuata correttamente, la risposta sarà la seguente:
   ```json
     {
@@ -207,7 +207,7 @@ Risposta:
       "updatedAt": "2024-07-17T19:43:32.942Z",
       "createdAt": "2024-07-17T19:43:32.942Z",
     }
-    ```
+  ```
 - **GET /gate(?id)**
   
   La seguente rotta permette di recuperare tutti i varchi salvati oppure un particolare varco specificando il suo ```id``` tramite parametro di query:
