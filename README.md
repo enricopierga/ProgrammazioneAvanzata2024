@@ -264,7 +264,7 @@ Il meccanismo che si innesca all'atto della chiamata è descritto dal seguente d
 ![transit_post](./sequenceDiagrams/transit_post.png)
 
 Se la richiesta viene effettuata correttamente, viene restituito il seguente messaggio se la velocità media del transito non supera la velocità limite:
-    ```json
+```json
     {
         "id": 1,
         "routeId": 1,
@@ -274,7 +274,7 @@ Se la richiesta viene effettuata correttamente, viene restituito il seguente mes
         "updatedAt": "2024-07-16T13:57:59.349Z",
         "createdAt": "2024-07-16T13:57:59.349Z"
     }
-    ```
+```
 Se invece la velocità media calcolata supera la velocità limite, verrà generata automaticamente la multa e verrà visualizzato il seguente messaggio:
     ```json
     
