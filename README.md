@@ -414,7 +414,7 @@ Risposta:
   Se la richiesta viene eseguita correttamente, il risultato della risposta sarà un messaggio di avvenuta modifica:
   ```json
     {
-      "message": "Vehicle deleted successfully""
+      "message": "Vehicle deleted successfully"
     }
   ```
 - **DELETE /vehicle/:id**
