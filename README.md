@@ -264,15 +264,15 @@ Risposta:
 - **POST /route**
   
   Un esempio di body della richiesta potrebbe essere il seguente:
-    ```json
+  ```json
     {
       "startGateId": 1,
       "endGateId": 2,
       "distance": 50
     }
-    ```
+  ```
   Se la richiesta viene effettuata correttamente, la risposta è la seguente:
-    ```json
+  ```json
     {
       "id": 1,
       "startGateId": 1,
@@ -281,12 +281,12 @@ Risposta:
       "updatedAt": "2024-07-17T19:43:32.942Z",
       "createdAt": "2024-07-17T19:43:32.942Z"
     }
-    ```
+  ```
 
 - **GET /route(?id)**
   
   Questa rotta permette di recuperare tutte le tratte salvate:
-    ```json
+  ```json
     [{
       "id": 1,
       "startGateId": 1,
@@ -303,11 +303,11 @@ Risposta:
       "updatedAt": "2024-07-17T19:44:50.942Z",
       "createdAt": "2024-07-17T19:44:50.942Z"
     }]
-    ```
+  ```
     
   Questa rotta permette inoltre di recuperare una specifica tratta utilizzando il suo ```id``` come parametro di query:
   
-    ```json
+  ```json
     {
       "id": 1,
       "startGateId": 1,
@@ -316,47 +316,47 @@ Risposta:
       "updatedAt": "2024-07-17T19:43:32.942Z",
       "createdAt": "2024-07-17T19:43:32.942Z"
     }
-    ```
+  ```
 
 - **PATCH /route/:id**
   
   Questa rotta permette di aggiornare una tratta specifica utilizzando il suo ```id``` come parametro nell'url path e specificando i campi da aggiornare nel body della richiesta:
-    ```json
+  ```json
     {
       "startGateId": 1,
       "endGateId": 3,
       "distance": 3500
     }
-    ```
+  ```
   Se la richiesta viene eseguita correttamente, il risultato della risposta sarà un messaggio di avvenuta modifica:
-    ```json
+  ```json
     {
       "message": "Route updated successfully"
     }
-    ```
+  ```
 
 - **DELETE /route/:id**
   
   Questa rotta permette di eliminare una tratta specifica tramite il suo ```id``` come parametro nell'url path:
-    ```json
+  ```json
     {
       "message": "Route deleted successfully"
     }
-    ```
+  ```
 
 ### CRUD per la Gestione dei Veicoli
 - **POST /vehicle**
   
   Un esempio di body della richiesta potrebbe essere il seguente:
-    ```json
+  ```json
     {
       "licensePlate": "AB123CD",
       "type": "Car",
       "userId": 1
     }
-    ```
+  ```
   Se la richiesta viene effettuata correttamente, la risposta è la seguente:
-    ```json
+  ```json
     {
       "id": 1,
       "licensePlate": "AB123CD",
@@ -365,12 +365,12 @@ Risposta:
       "updatedAt": "2024-07-17T19:43:32.942Z",
       "createdAt": "2024-07-17T19:43:32.942Z"
     }
-    ```
+  ```
 
 - **GET /vehicle(?id)**
   
   Questa rotta permette di recuperare tutti i veicoli salvati:
-    ```json
+  ```json
     [{
       "id": 1,
       "licensePlate": "AB123CD",
@@ -387,11 +387,11 @@ Risposta:
       "updatedAt": "2024-07-17T19:44:50.942Z",
       "createdAt": "2024-07-17T19:44:50.942Z"
     }]
-    ```
+  ```
     
   Questa rotta permette inoltre di recuperare uno specifico veicolo utilizzando il suo ```id``` come parametro di query:
   
-    ```json
+  ```json
     {
       "id": 1,
       "licensePlate": "AB123CD",
@@ -400,17 +400,17 @@ Risposta:
       "updatedAt": "2024-07-17T19:43:32.942Z",
       "createdAt": "2024-07-17T19:43:32.942Z"
     }
-    ```
+  ```
 
 - **PATCH /vehicle/:id**
   
   Questa rotta permette di aggiornare un veicolo specifico utilizzando il suo ```id``` come parametro nell'url path e specificando i campi da aggiornare nel body della richiesta:
-    ```json
+  ```json
     {
       "licensePlate": "AB123CD",
       "type": "Truck"
     }
-    ```
+  ```
   Se la richiesta viene eseguita correttamente, il risultato della risposta sarà un messaggio di avvenuta modifica:
   ```json
     {
@@ -429,8 +429,8 @@ Risposta:
 ### CRUD per la Gestione dei Transiti (e Generazione delle Multe)
 - **POST /transit**
   
-    Per poter ottenere una risposta, il corpo delle richieste dovrà seguire il seguente modello:
-    ```json
+  Per poter ottenere una risposta, il corpo delle richieste dovrà seguire il seguente modello:
+  ```json
     {
       "licensePlate": "AA123BB",
       "routeId": 1,
@@ -438,11 +438,11 @@ Risposta:
       "weather": "clear"
     }
     ```
-    Il meccanismo che si innesca all'atto della chiamata è descritto dal seguente diagramma delle sequenze:
-    ![transit_post](./sequenceDiagrams/transit-post.png)
+  Il meccanismo che si innesca all'atto della chiamata è descritto dal seguente diagramma delle sequenze:
+  ![transit_post](./sequenceDiagrams/transit-post.png)
 
-    Se la richiesta viene effettuata correttamente, viene restituito il seguente messaggio in caso la velocità media del transito non superi la velocità limite:
-    ```json
+  Se la richiesta viene effettuata correttamente, viene restituito il seguente messaggio in caso la velocità media del transito non superi la velocità limite:
+  ```json
     {
         "id": 1,
         "routeId": 1,
@@ -452,9 +452,9 @@ Risposta:
         "updatedAt": "2024-07-16T13:57:59.349Z",
         "createdAt": "2024-07-16T13:57:59.349Z"
     }
-    ```
-    Se invece la velocità media calcolata supera la velocità limite, verrà generata automaticamente la multa e verrà visualizzato il seguente json:
-    ```json    
+  ```
+  Se invece la velocità media calcolata supera la velocità limite, verrà generata automaticamente la multa e verrà visualizzato il seguente json:
+  ```json    
     {
     "transit": {
         "id": 1,
@@ -481,12 +481,12 @@ Risposta:
         "createdAt": "2024-07-16T13:57:59.355Z"
         }
     }
-    ```
+  ```
 
 - **GET /transit(?id)**
   
   La seguente rotta permette di recuperare tutti i transiti salvati oppure un particolare transito specificandone il `id` tramite parametro di query:
-    ```json
+  ```json
     [{
       "id": 1,
       "routeId": 1,
@@ -505,50 +505,50 @@ Risposta:
       "updatedAt": "2024-07-16T14:01:12.349Z",
       "createdAt": "2024-07-16T14:01:12.349Z"
     }]
-    ```
-    Il meccanismo che si innesca all'atto della chiamata è descritto dal seguente diagramma delle sequenze:
-    ![transit_get](./sequenceDiagrams/transit-get.png)
+  ```
+  Il meccanismo che si innesca all'atto della chiamata è descritto dal seguente diagramma delle sequenze:
+  ![transit_get](./sequenceDiagrams/transit-get.png)
 
 - **PATCH /transit/:transitId**
 
-    La seguente rotta permette di aggiornare i campi di un transito specificandoli nel body della richiesta e indicando il `transitId` come parametro nell'URL:
-    ```json
+  La seguente rotta permette di aggiornare i campi di un transito specificandoli nel body della richiesta e indicando il `transitId` come parametro nell'URL:
+  ```json
     {
       "travelTime": 80,
       "weather": "Clear"
     }
-    ```
-    Se la richiesta viene eseguita correttamente, il risultato della risposta sarà un messaggio di avvenuta modifica:
-    ```json
+  ```
+  Se la richiesta viene eseguita correttamente, il risultato della risposta sarà un messaggio di avvenuta modifica:
+  ```json
     {
       "message": "Transit updated successfully"
     }
-    ```
-    Il meccanismo che si innesca all'atto della chiamata è descritto dal seguente diagramma delle sequenze:
-    ![transit_update](./sequenceDiagrams/transit-update.png)
+  ```
+  Il meccanismo che si innesca all'atto della chiamata è descritto dal seguente diagramma delle sequenze:
+  ![transit_update](./sequenceDiagrams/transit-update.png)
 
 - **DELETE /transit/:transitId**
 
-    La seguente rotta permette di eliminare un transito specificando il suo `transitId` come parametro nell'URL.
-    Se la richiesta viene eseguita correttamente, il risultato della risposta sarà un messaggio di avvenuta eliminazione:
-    ```json
+  La seguente rotta permette di eliminare un transito specificando il suo `transitId` come parametro nell'URL.
+  Se la richiesta viene eseguita correttamente, il risultato della risposta sarà un messaggio di avvenuta eliminazione:
+  ```json
     {
       "message": "Transit deleted successfully"
     }
-    ```
-    Il meccanismo che si innesca all'atto della chiamata è descritto dal seguente diagramma delle sequenze:
-    ![transit_delete](./sequenceDiagrams/transit-delete.png)
+  ```
+  Il meccanismo che si innesca all'atto della chiamata è descritto dal seguente diagramma delle sequenze:
+  ![transit_delete](./sequenceDiagrams/transit-delete.png)
 
 #### Scaricare Bollettino di Pagamento
 - **GET /payments/:id/pdf**
   
 #### Effettuare un Pagamento
 - **POST /payments**
-    ```json
+  ```json
     {
       "paymentUuid": "6836178f-0c79-4c10-88ec-75bae54fd6a4",
     }
-    ```
+  ```
 
 ### Conclusione
 
