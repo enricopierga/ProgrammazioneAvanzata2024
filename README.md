@@ -197,12 +197,15 @@ Se la richiesta viene effettuata correttamente viene restituito il seguente mess
 - **POST /transits**
     ```json
     {
-      "vehicleId": 1,
+      "licensePlate": "AA123BB",
       "routeId": 1,
       "travelTime": 3600,
       "weather": "clear"
     }
     ```
+Il meccanismo che si innesca all'atto della chiamata è descritto dal seguente diagramma delle sequenze:
+![transit_post](./sequenceDiagrams/transit_post.png)
+
 
 #### Richiesta Multe per Targa e Periodo
 - **POST /infractions/plates-and-period**
