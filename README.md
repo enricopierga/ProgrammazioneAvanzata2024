@@ -189,7 +189,7 @@ Risposta:
 
 
 ### CRUD per la Gestione dei Varchi
-- **POST /gates**
+- **POST /gate**
   
   Un esempio di body della richiesta potrebbe essere il seguente (la descrizione è facoltativa):
     ```json
@@ -208,7 +208,7 @@ Risposta:
       "createdAt": "2024-07-17T19:43:32.942Z",
     }
     ```
-- **GET /gates(?id)**
+- **GET /gate(?id)**
   
   La seguente rotta permette di recuperare tutti i varchi salvati oppure un particolare varco specificando il suo ```id``` tramite parametro di query:
   ```json
@@ -235,7 +235,7 @@ Risposta:
     }
   ```
 
-- **PATCH /gates/:id**
+- **PATCH /gate/:id**
   
   La seguente rotta permette di aggiornare i campi di un varco specificandoli nel body della richiesta e indicando il suo ```id``` come parametro nell'url path:
   
@@ -251,7 +251,7 @@ Risposta:
     }
   ```
   
-- **DELETE /gates/:id**
+- **DELETE /gate/:id**
   
   Questa rotta permette di eliminare un varco specifico tramite ```id``` come parametro nell’url path:
   ```json
@@ -261,7 +261,7 @@ Risposta:
   ```
 
 ### CRUD per la Gestione delle Tratte
-- **POST /routes**
+- **POST /route**
   
   Un esempio di body della richiesta potrebbe essere il seguente:
     ```json
@@ -318,7 +318,7 @@ Risposta:
     }
     ```
 
-- **PATCH /routes/:id**
+- **PATCH /route/:id**
   
   Questa rotta permette di aggiornare una tratta specifica utilizzando il suo ```id``` come parametro nell'url path e specificando i campi da aggiornare nel body della richiesta:
     ```json
@@ -335,7 +335,7 @@ Risposta:
     }
     ```
 
-- **DELETE /routes/:id**
+- **DELETE /route/:id**
   
   Questa rotta permette di eliminare una tratta specifica tramite il suo ```id``` come parametro nell'url path:
     ```json
@@ -345,7 +345,7 @@ Risposta:
     ```
 
 ### CRUD per la Gestione dei Veicoli
-- **POST /vehicles**
+- **POST /vehicle**
   
   Un esempio di body della richiesta potrebbe essere il seguente:
     ```json
@@ -367,7 +367,7 @@ Risposta:
     }
     ```
 
-- **GET /vehicles(?id)**
+- **GET /vehicle(?id)**
   
   Questa rotta permette di recuperare tutti i veicoli salvati:
     ```json
@@ -402,7 +402,7 @@ Risposta:
     }
     ```
 
-- **PATCH /vehicles/:id**
+- **PATCH /vehicle/:id**
   
   Questa rotta permette di aggiornare un veicolo specifico utilizzando il suo ```id``` come parametro nell'url path e specificando i campi da aggiornare nel body della richiesta:
     ```json
@@ -417,7 +417,7 @@ Risposta:
       "message": "Vehicle deleted successfully""
     }
   ```
-- **DELETE /vehicles/:id**
+- **DELETE /vehicle/:id**
   
   Questa rotta permette di eliminare un veicolo specifico tramite il suo ```id```, se la richiesta va a buon fine il risultato della risposta sarà un messaggio di avvenuta eliminazione:
   ```json
@@ -427,7 +427,7 @@ Risposta:
   ```
 
 ### CRUD per la Gestione dei Transiti (e Generazione delle Multe)
-- **POST /transits**
+- **POST /transit**
   
     Per poter ottenere una risposta, il corpo delle richieste dovrà seguire il seguente modello:
     ```json
@@ -483,7 +483,7 @@ Risposta:
     }
     ```
 
-- **GET /transits(?id)**
+- **GET /transit(?id)**
   
   La seguente rotta permette di recuperare tutti i transiti salvati oppure un particolare transito specificandone il `id` tramite parametro di query:
     ```json
@@ -509,7 +509,7 @@ Risposta:
     Il meccanismo che si innesca all'atto della chiamata è descritto dal seguente diagramma delle sequenze:
     ![transit_get](./sequenceDiagrams/transit-get.png)
 
-- **PATCH /transits/:transitId**
+- **PATCH /transit/:transitId**
 
     La seguente rotta permette di aggiornare i campi di un transito specificandoli nel body della richiesta e indicando il `transitId` come parametro nell'URL:
     ```json
@@ -527,7 +527,7 @@ Risposta:
     Il meccanismo che si innesca all'atto della chiamata è descritto dal seguente diagramma delle sequenze:
     ![transit_update](./sequenceDiagrams/transit-update.png)
 
-- **DELETE /transits/:transitId**
+- **DELETE /transit/:transitId**
 
     La seguente rotta permette di eliminare un transito specificando il suo `transitId` come parametro nell'URL.
     Se la richiesta viene eseguita correttamente, il risultato della risposta sarà un messaggio di avvenuta eliminazione:
