@@ -155,7 +155,7 @@ Per poter ottenere una risposta, il corpo delle richieste dovrà seguire il segu
     }
  ```
 Il meccanismo che si innesca all'atto della chiamata è descritto dal seguente diagramma:
-
+![add_Credit](./sequenceDiagrams/addCredit.png)
 
 **NOTA:** l'accesso a questa rotta è garantito solamente all'utente di tipo Admin.
 
@@ -178,9 +178,9 @@ Richiesta:
 }
 ```
 
-```json
-
 Risposta:
+
+```json
  status: 400 BAD_REQUEST
 {
    "message": "Missing or wrong amount value"
