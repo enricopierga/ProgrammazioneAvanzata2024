@@ -252,6 +252,7 @@ Risposta:
 - **POST /transits**
 Per poter ottenere una risposta, il corpo delle richieste dovrà seguire il seguente modello:
     ```json
+    
     {
       "licensePlate": "AA123BB",
       "routeId": 1,
@@ -276,6 +277,7 @@ Se la richiesta viene effettuata correttamente, viene restituito il seguente mes
     ```
 Se invece la velocità media calcolata supera la velocità limite, verrà generata automaticamente la multa e verrà visualizzato il seguente messaggio:
     ```json
+    
     {
     "transit": {
         "id": 1,
