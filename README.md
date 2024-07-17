@@ -202,7 +202,7 @@ Risposta:
   ```json
     {
       "id": 2,
-      "location": "Location ",
+      "location": "Location 1",
       "description": "Varco omologato e testato"
       "updatedAt": "2024-07-17T19:43:32.942Z",
       "createdAt": "2024-07-17T19:43:32.942Z",
