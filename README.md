@@ -250,6 +250,7 @@ Risposta:
 
 #### Inserimento Transiti e Generazione Multe
 - **POST /transits**
+Per poter ottenere una risposta, il corpo delle richieste dovrà seguire il seguente modello:
     ```json
     {
       "licensePlate": "AA123BB",
@@ -260,6 +261,48 @@ Risposta:
     ```
 Il meccanismo che si innesca all'atto della chiamata è descritto dal seguente diagramma delle sequenze:
 ![transit_post](./sequenceDiagrams/transit_post.png)
+
+Se la richiesta viene effettuata correttamente, viene restituito il seguente messaggio se la velocità media del transito non supera la velocità limite:
+    ```json
+    {
+        "id": 1,
+        "routeId": 1,
+        "travelTime": 70,
+        "weather": "Rainy",
+        "vehicleId": 1,
+        "updatedAt": "2024-07-16T13:57:59.349Z",
+        "createdAt": "2024-07-16T13:57:59.349Z"
+    }
+    ```
+Se invece la velocità media calcolata supera la velocità limite, verrà generata automaticamente la multa e verrà visualizzato il seguente messaggio:
+    ```json
+    {
+    "transit": {
+        "id": 1,
+        "routeId": 1,
+        "travelTime": 50,
+        "weather": "Rainy",
+        "vehicleId": 1,
+        "updatedAt": "2024-07-16T13:57:59.349Z",
+        "createdAt": "2024-07-16T13:57:59.349Z"
+        },
+    "infraction": {
+        "paid": false,
+        "vehicleId": 1,
+        "routeId": 1,
+        "userId": 1,
+        "speed": 144,
+        "limit": 110,
+        "weather": "Rainy",
+        "amount": 150,
+        "timestamp": "2024-07-16T13:57:59.353Z",
+        "id": 5,
+        "uuid": "b606694c-8742-4860-aea8-7d3f99f7debe",
+        "updatedAt": "2024-07-16T13:57:59.355Z",
+        "createdAt": "2024-07-16T13:57:59.355Z"
+        }
+    }
+    ```
 
 
 #### Richiesta Multe per Targa e Periodo
