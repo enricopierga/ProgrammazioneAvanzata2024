@@ -190,23 +190,75 @@ Risposta:
 
 #### CRUD per la Gestione dei Varchi
 - **POST /gates**
+  Un esempio di body della richiesta potrebbe essere il seguente (la descrizione è facoltativa):
     ```json
     {
-      "location": "Location 1"
+      "location": "Location 1",
+      "descrizione": "Varco omologato e testato"
     }
     ```
-- **GET /gates**
-- **GET /gates/:id**
-- **PUT /gates/:id**
-    ```json
+  Se la richiesta viene effettuata correttamente, la risposta è la seguente:
+  ```json
     {
-      "location": "New Location"
+      "id": 2,
+      "location": "Location ",
+      "description": "Varco omologato e testato"
+      "updatedAt": "2024-07-17T19:43:32.942Z",
+      "createdAt": "2024-07-17T19:43:32.942Z",
     }
     ```
-- **DELETE /gates/:id**
+- **GET /gates(?id)**
+  La seguente rotta permette di recuperare tutti i varchi salvati oppure un particolare varco specificando il suo ```id``` tramite parametro di query:
+  ```json
+    [{
+      "id": 1,
+      "location": "Location 1",
+      "description": "Varco omologato e testato"
+      "updatedAt": "2024-07-17T19:43:32.942Z",
+      "createdAt": "2024-07-17T19:43:32.942Z",
+    },
+    {
+      "id": 2,
+      "location": "Location 2",
+      "description": "Varco omologato e testato"
+      "updatedAt": "2024-07-17T19:44:50.942Z",
+      "createdAt": "2024-07-17T19:44:50.942Z",
+    },
+    {
+      "id": 3,
+      "location": "Location 3",
+      "description": "Varco omologato e testato"
+      "updatedAt": "2024-07-17T19:45:12.942Z",
+      "createdAt": "2024-07-17T19:45:12.942Z",
+    }
+  ```
 
-#### CRUD per la Gestione delle Tratte
+- **PATCH /gates/:id**
+  La seguente rotta permette di aggiornare i campi di un varco specificandoli nel body della richiesta e indicando il suo ```id``` come parametro nell'url path:
+  
+    ```json
+    {
+      "location": "New Location 1"
+    }
+    ```
+  Se la richiesta viene eseguita correttamente, il risultato della risposta sarà un messaggio di avvenuta modifica:
+  ```json
+    {
+      "message": "Gate updated successfully"
+    }
+  ```
+  
+- **DELETE /gates/:id**
+  Questa rotta permette di eliminare un varco specifico tramite ```id``` come parametro nell’url path:
+  ```json
+    {
+      "message": "Gate deleted successfully"
+    }
+  ```
+
+### CRUD per la Gestione delle Tratte
 - **POST /routes**
+  Un esempio di body della richiesta potrebbe essere il seguente:
     ```json
     {
       "startGateId": 1,
@@ -214,44 +266,158 @@ Risposta:
       "distance": 50
     }
     ```
-- **GET /routes**
-- **GET /routes/:id**
-- **PUT /routes/:id**
+  Se la richiesta viene effettuata correttamente, la risposta è la seguente:
+    ```json
+    {
+      "id": 1,
+      "startGateId": 1,
+      "endGateId": 2,
+      "distance": 1500,
+      "updatedAt": "2024-07-17T19:43:32.942Z",
+      "createdAt": "2024-07-17T19:43:32.942Z"
+    }
+    ```
+
+- **GET /route(?id)**
+  Questa rotta permette di recuperare tutte le tratte salvate:
+    ```json
+    [{
+      "id": 1,
+      "startGateId": 1,
+      "endGateId": 2,
+      "distance": 1500,
+      "updatedAt": "2024-07-17T19:43:32.942Z",
+      "createdAt": "2024-07-17T19:43:32.942Z"
+    },
+    {
+      "id": 2,
+      "startGateId": 2,
+      "endGateId": 3,
+      "distance": 3500,
+      "updatedAt": "2024-07-17T19:44:50.942Z",
+      "createdAt": "2024-07-17T19:44:50.942Z"
+    }]
+    ```
+    
+  Questa rotta permette inoltre di recuperare una specifica tratta utilizzando il suo ```id``` come parametro di query:
+  
+    ```json
+    {
+      "id": 1,
+      "startGateId": 1,
+      "endGateId": 2,
+      "distance": 1500,
+      "updatedAt": "2024-07-17T19:43:32.942Z",
+      "createdAt": "2024-07-17T19:43:32.942Z"
+    }
+    ```
+
+- **PATCH /routes/:id**
+  Questa rotta permette di aggiornare una tratta specifica utilizzando il suo ```id``` come parametro nell'url path e specificando i campi da aggiornare nel body della richiesta:
     ```json
     {
       "startGateId": 1,
       "endGateId": 3,
-      "distance": 55
+      "distance": 3500
     }
     ```
-- **DELETE /routes/:id**
+  Se la richiesta viene eseguita correttamente, il risultato della risposta sarà un messaggio di avvenuta modifica:
+    ```json
+    {
+      "message": "Route updated successfully"
+    }
+    ```
 
-#### CRUD per la Gestione dei Veicoli
+- **DELETE /routes/:id**
+  Questa rotta permette di eliminare una tratta specifica tramite il suo ```id``` come parametro nell'url path:
+    ```json
+    {
+      "message": "Route deleted successfully"
+    }
+    ```
+
+### CRUD per la Gestione dei Veicoli
 - **POST /vehicles**
+  Un esempio di body della richiesta potrebbe essere il seguente:
     ```json
     {
       "licensePlate": "AB123CD",
-      "type": "car",
+      "type": "Car",
       "userId": 1
     }
     ```
-- **GET /vehicles**
-- **GET /vehicles/:id**
-- **PUT /vehicles/:id**
+  Se la richiesta viene effettuata correttamente, la risposta è la seguente:
+    ```json
+    {
+      "id": 1,
+      "licensePlate": "AB123CD",
+      "type": "Car",
+      "userId": 1,
+      "updatedAt": "2024-07-17T19:43:32.942Z",
+      "createdAt": "2024-07-17T19:43:32.942Z"
+    }
+    ```
+
+- **GET /vehicles(?id)**
+  Questa rotta permette di recuperare tutti i veicoli salvati:
+    ```json
+    [{
+      "id": 1,
+      "licensePlate": "AB123CD",
+      "type": "Car",
+      "userId": 1,
+      "updatedAt": "2024-07-17T19:43:32.942Z",
+      "createdAt": "2024-07-17T19:43:32.942Z"
+    },
+    {
+      "id": 2,
+      "licensePlate": "EF456GH",
+      "type": "Truck",
+      "userId": 2,
+      "updatedAt": "2024-07-17T19:44:50.942Z",
+      "createdAt": "2024-07-17T19:44:50.942Z"
+    }]
+    ```
+    
+  Questa rotta permette inoltre di recuperare uno specifico veicolo utilizzando il suo ```id``` come parametro di query:
+  
+    ```json
+    {
+      "id": 1,
+      "licensePlate": "AB123CD",
+      "type": "car",
+      "userId": 1,
+      "updatedAt": "2024-07-17T19:43:32.942Z",
+      "createdAt": "2024-07-17T19:43:32.942Z"
+    }
+    ```
+
+- **PATCH /vehicles/:id**
+  Questa rotta permette di aggiornare un veicolo specifico utilizzando il suo ```id``` come parametro nell'url path e specificando i campi da aggiornare nel body della richiesta:
     ```json
     {
       "licensePlate": "AB123CD",
-      "type": "truck"
+      "type": "Truck"
     }
     ```
+  Se la richiesta viene eseguita correttamente, il risultato della risposta sarà un messaggio di avvenuta modifica:
+  ```json
+    {
+      "message": "Vehicle deleted successfully""
+    }
+  ```
 - **DELETE /vehicles/:id**
+  Questa rotta permette di eliminare un veicolo specifico tramite il suo ```id```, se la richiesta va a buon fine il risultato della risposta sarà un messaggio di avvenuta eliminazione:
+  ```json
+    {
+      "message": "Vehicle updated successfully"
+    }
+  ```
 
-#### Inserimento Transiti e Generazione Multe
+### Inserimento Transiti e Generazione Multe
 - **POST /transits**
-  
     Per poter ottenere una risposta, il corpo delle richieste dovrà seguire il seguente modello:
     ```json
-    
     {
       "licensePlate": "AA123BB",
       "routeId": 1,
@@ -262,7 +428,7 @@ Risposta:
     Il meccanismo che si innesca all'atto della chiamata è descritto dal seguente diagramma delle sequenze:
     ![transit_post](./sequenceDiagrams/transit-post.png)
 
-    Se la richiesta viene effettuata correttamente, viene restituito il seguente messaggio se la velocità media del transito non supera la velocità limite:
+    Se la richiesta viene effettuata correttamente, viene restituito il seguente messaggio in caso la velocità media del transito non superi la velocità limite:
     ```json
     {
         "id": 1,
@@ -274,7 +440,7 @@ Risposta:
         "createdAt": "2024-07-16T13:57:59.349Z"
     }
     ```
-    Se invece la velocità media calcolata supera la velocità limite, verrà generata automaticamente la multa e verrà visualizzato il seguente messaggio:
+    Se invece la velocità media calcolata supera la velocità limite, verrà generata automaticamente la multa e verrà visualizzato il seguente json:
     ```json    
     {
     "transit": {
@@ -304,34 +470,61 @@ Risposta:
     }
     ```
 
-- **GET /transits(?transitId)**
+- **GET /transits(?id)**
   
-  Il meccanismo che si innesca all'atto della chiamata è descritto dal seguente diagramma delle sequenze:
-  ![transit_post](./sequenceDiagrams/transit-get.png)
+  La seguente rotta permette di recuperare tutti i transiti salvati oppure un particolare transito specificandone il `id` tramite parametro di query:
+    ```json
+    [{
+      "id": 1,
+      "routeId": 1,
+      "travelTime": 70,
+      "weather": "Rainy",
+      "vehicleId": 1,
+      "updatedAt": "2024-07-16T13:57:59.349Z",
+      "createdAt": "2024-07-16T13:57:59.349Z"
+    },
+    {
+      "id": 2,
+      "routeId": 2,
+      "travelTime": 60,
+      "weather": "Clear",
+      "vehicleId": 2,
+      "updatedAt": "2024-07-16T14:01:12.349Z",
+      "createdAt": "2024-07-16T14:01:12.349Z"
+    }]
+    ```
+    Il meccanismo che si innesca all'atto della chiamata è descritto dal seguente diagramma delle sequenze:
+    ![transit_get](./sequenceDiagrams/transit-get.png)
 
-- **PATCH /:transitId**
-  
-  Il meccanismo che si innesca all'atto della chiamata è descritto dal seguente diagramma delle sequenze:
-  ![transit_post](./sequenceDiagrams/transit-update.png)
+- **PATCH /transits/:transitId**
 
-- **DELETE /:transitId**
-  
-  Il meccanismo che si innesca all'atto della chiamata è descritto dal seguente diagramma delle sequenze:
-  ![transit_post](./sequenceDiagrams/transit-delete.png)
-  
-
-#### Richiesta Multe per Targa e Periodo
-- **POST /infractions/plates-and-period**
-  
+    La seguente rotta permette di aggiornare i campi di un transito specificandoli nel body della richiesta e indicando il `transitId` come parametro nell'URL:
     ```json
     {
-      "plates": ["AB123CD", "EF456GH"],
-      "startDate": "2024-01-01",
-      "endDate": "2024-07-21"
+      "travelTime": 80,
+      "weather": "Clear"
+    }
+    ```
+    Se la richiesta viene eseguita correttamente, il risultato della risposta sarà un messaggio di avvenuta modifica:
+    ```json
+    {
+      "message": "Transit updated successfully"
     }
     ```
     Il meccanismo che si innesca all'atto della chiamata è descritto dal seguente diagramma delle sequenze:
-    ![transit_post](./sequenceDiagrams/infraction-get-by.png)
+    ![transit_update](./sequenceDiagrams/transit-update.png)
+
+- **DELETE /transits/:transitId**
+
+    La seguente rotta permette di eliminare un transito specificando il suo `transitId` come parametro nell'URL.
+    Se la richiesta viene eseguita correttamente, il risultato della risposta sarà un messaggio di avvenuta eliminazione:
+    ```json
+    {
+      "message": "Transit deleted successfully"
+    }
+    ```
+    Il meccanismo che si innesca all'atto della chiamata è descritto dal seguente diagramma delle sequenze:
+    ![transit_delete](./sequenceDiagrams/transit-delete.png)
 
 #### Scaricare Bollettino di Pagamento
 - **GET /payments/:id/pdf**
