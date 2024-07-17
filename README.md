@@ -83,6 +83,14 @@ Il sistema supporta tre ruoli distinti:
 [Scarica la Collection Postman](path_to_postman_collection.json)
 
 ### Esempi di Richieste
+### Login nel sistema
+- **POST /login**
+```json
+    {
+    "username" : "Enrico",
+    "password": "12345" 
+    }
+    ```
 
 #### CRUD per la Gestione dei Varchi
 - **POST /gates**
@@ -165,7 +173,7 @@ Il sistema supporta tre ruoli distinti:
 
 #### Scaricare Bollettino di Pagamento
 - **GET /payments/:id/pdf**
-
+- 
 #### Effettuare un Pagamento
 - **POST /payments**
     ```json
