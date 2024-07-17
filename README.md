@@ -198,7 +198,7 @@ Risposta:
       "descrizione": "Varco omologato e testato"
     }
     ```
-  Se la richiesta viene effettuata correttamente, la risposta è la seguente
+  Se la richiesta viene effettuata correttamente, la risposta sarà la seguente:
   ```json
     {
       "id": 2,
