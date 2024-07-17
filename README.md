@@ -87,9 +87,10 @@ Il sistema supporta tre ruoli distinti:
 - **POST /login**
  ```json
     {
-      "location": "Location 1"
-    }
-    ```
+    "username" : "pangolino",
+    "password": "12345" 
+}
+ ```
 #### CRUD per la Gestione dei Varchi
 - **POST /gates**
     ```json
