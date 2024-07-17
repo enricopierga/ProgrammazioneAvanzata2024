@@ -97,7 +97,96 @@ Per poter ottenere una risposta, il corpo delle richieste dovrà seguire il segu
     }
  ```
 Il meccanismo che si innesca all'atto della chiamata è descritto dal seguente diagramma:
-![login](../sequenceDiagrams/login.png)
+![login](./sequenceDiagrams/login.png)
+
+Se la richiesta viene effettuata correttamente viene restituito il seguente messaggio:
+
+```json
+{
+    "accessToken": {
+        "jwt": "MY_JWT_TOKEN"
+    }
+}
+```
+In caso di errore invece, come nel seguente caso, verrà generato un messaggio di errore assieme allo status code ad esso associato:
+```json
+{
+    "username":"giacomo",
+    "password":"PureDrive10!"
+}
+```
+Verrà generato il seguente errore:
+```json
+status: 404 NOT_FOUND
+{
+    "message": "User not found"
+}
+```
+### Ottenere il credito di un utente
+**GET /credit**
+Per poter ottenere una risposta non è necessario inserire un body, basta essere autenticati tramite JWT.
+Se la richiesta viene effettuata correttamente viene restituito il seguente messaggio:
+
+```json
+{
+    "balance": 50
+}
+
+```
+
+**NOTA:** l'accesso a questa rotta è garantito agli utenti Automobilista ed Operatore.
+
+In caso di errore invece, ovvero di utente non autorizzato, verrà generato il seguente messaggio ed il relativo status code associato:
+```json
+ status: 403 FORBIDDEN
+{
+   "message": "Forbidden"
+}
+```
+
+### Aggiungere il credito ad un utente
+**PATCH /<user_id>/credit**
+Per poter ottenere una risposta, il corpo delle richieste dovrà seguire il seguente modello:
+  
+ ```json
+ {
+    "amount" : 1000
+ }
+ ```
+Il meccanismo che si innesca all'atto della chiamata è descritto dal seguente diagramma:
+![add_Credit](./sequenceDiagrams/addCredit.png)
+
+**NOTA:** l'accesso a questa rotta è garantito solamente all'utente di tipo Admin.
+
+In caso di errore, ovvero di utente non autorizzato, verrà generato il seguente messaggio ed il relativo status code associato:
+```json
+ status: 403 FORBIDDEN
+{
+   "message": "Forbidden"
+}
+```
+
+In caso di errore di inserimento, dell'inserimento di una stringa al posto di un numero, verrà generato il seguente messaggio ed il relativo status code associato:
+
+Richiesta:
+
+```json
+{
+   "amount": "Mille"
+}
+```
+
+Risposta:
+
+```json
+ status: 400 BAD_REQUEST
+{
+   "message": "Missing or wrong amount value"
+}
+```
+
+
+
 
 #### CRUD per la Gestione dei Varchi
 - **POST /gates**
@@ -159,14 +248,61 @@ Il meccanismo che si innesca all'atto della chiamata è descritto dal seguente d
 
 #### Inserimento Transiti e Generazione Multe
 - **POST /transits**
+Per poter ottenere una risposta, il corpo delle richieste dovrà seguire il seguente modello:
     ```json
+    
     {
-      "vehicleId": 1,
+      "licensePlate": "AA123BB",
       "routeId": 1,
       "travelTime": 3600,
       "weather": "clear"
     }
     ```
+Il meccanismo che si innesca all'atto della chiamata è descritto dal seguente diagramma delle sequenze:
+![transit_post](./sequenceDiagrams/transit_post.png)
+
+Se la richiesta viene effettuata correttamente, viene restituito il seguente messaggio se la velocità media del transito non supera la velocità limite:
+```json
+    {
+        "id": 1,
+        "routeId": 1,
+        "travelTime": 70,
+        "weather": "Rainy",
+        "vehicleId": 1,
+        "updatedAt": "2024-07-16T13:57:59.349Z",
+        "createdAt": "2024-07-16T13:57:59.349Z"
+    }
+```
+Se invece la velocità media calcolata supera la velocità limite, verrà generata automaticamente la multa e verrà visualizzato il seguente messaggio:
+```json    
+    {
+    "transit": {
+        "id": 1,
+        "routeId": 1,
+        "travelTime": 50,
+        "weather": "Rainy",
+        "vehicleId": 1,
+        "updatedAt": "2024-07-16T13:57:59.349Z",
+        "createdAt": "2024-07-16T13:57:59.349Z"
+        },
+    "infraction": {
+        "paid": false,
+        "vehicleId": 1,
+        "routeId": 1,
+        "userId": 1,
+        "speed": 144,
+        "limit": 110,
+        "weather": "Rainy",
+        "amount": 150,
+        "timestamp": "2024-07-16T13:57:59.353Z",
+        "id": 5,
+        "uuid": "b606694c-8742-4860-aea8-7d3f99f7debe",
+        "updatedAt": "2024-07-16T13:57:59.355Z",
+        "createdAt": "2024-07-16T13:57:59.355Z"
+        }
+    }
+```
+
 
 #### Richiesta Multe per Targa e Periodo
 - **POST /infractions/plates-and-period**
