@@ -239,11 +239,11 @@ Risposta:
   
   La seguente rotta permette di aggiornare i campi di un varco specificandoli nel body della richiesta e indicando il suo ```id``` come parametro nell'url path:
   
-    ```json
+  ```json
     {
       "location": "New Location 1"
     }
-    ```
+  ```
   Se la richiesta viene eseguita correttamente, il risultato della risposta sarà un messaggio di avvenuta modifica:
   ```json
     {
