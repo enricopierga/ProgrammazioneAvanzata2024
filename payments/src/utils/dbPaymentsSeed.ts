@@ -93,7 +93,7 @@ export async function seed() {
 		vehicleId: 1,
 		routeId: 2,
 		travelTime: 70,
-		weather: "clear",
+		weather: "Clear",
 	});
 
 	await Transit.create({
@@ -101,7 +101,7 @@ export async function seed() {
 		vehicleId: 1,
 		routeId: 2,
 		travelTime: 150,
-		weather: "rainy",
+		weather: "Rainy",
 	});
 
 	await Transit.create({
@@ -109,7 +109,7 @@ export async function seed() {
 		vehicleId: 1,
 		routeId: 2,
 		travelTime: 600,
-		weather: "clear",
+		weather: "Clear",
 	});
 
 	await Infraction.create({

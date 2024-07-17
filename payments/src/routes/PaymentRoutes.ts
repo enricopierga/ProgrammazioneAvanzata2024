@@ -6,7 +6,7 @@ const router = Router();
 
 router.post(
   "/paga",
-  requireAuthentication(["Automobilista"]),
+  requireAuthentication(["Automobilista", "Operatore"]),
   PaymentController.payInfractionByUuid
 );
 
