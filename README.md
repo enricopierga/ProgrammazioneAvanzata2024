@@ -124,14 +124,15 @@ status: 404 NOT_FOUND
 ```
 ### Ottenere il credito di un utente
 **GET /credit**
--Per poter ottenere una risposta non è necessario inserire un body, basta essere autenticati tramite JWT.
--Se la richiesta viene effettuata correttamente viene restituito il seguente messaggio:
+Per poter ottenere una risposta non è necessario inserire un body, basta essere autenticati tramite JWT.
+
+Se la richiesta viene effettuata correttamente viene restituito il seguente messaggio:
+
 ```json
 {
-  {
     "balance": 50
-  }
 }
+
 ```
 
 #### CRUD per la Gestione dei Varchi
