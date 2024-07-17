@@ -108,7 +108,7 @@ Se la richiesta viene effettuata correttamente viene restituito il seguente mess
     }
 }
 ```
-In caso di errore invece verrà restituito un messaggio che ha come chiave il nome del codice violato e un messaggio di errore:
+In caso di errore invece, come nel seguente caso, verrà generato un messaggio di errore assieme allo status code ad esso associato:
 ```json
 {
     "username":"giacomo",
@@ -117,11 +117,9 @@ In caso di errore invece verrà restituito un messaggio che ha come chiave il no
 ```
 Verrà generato il seguente errore:
 ```json
+status: 404 NOT_FOUND
 {
-    status: 404 NOT_FOUND
-    
     "message": "User not found"
-
 }
 ```
 
