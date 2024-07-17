@@ -190,6 +190,7 @@ Risposta:
 
 #### CRUD per la Gestione dei Varchi
 - **POST /gates**
+  
   Un esempio di body della richiesta potrebbe essere il seguente (la descrizione è facoltativa):
     ```json
     {
@@ -197,7 +198,7 @@ Risposta:
       "descrizione": "Varco omologato e testato"
     }
     ```
-  Se la richiesta viene effettuata correttamente, la risposta è la seguente:
+  Se la richiesta viene effettuata correttamente, la risposta è la seguente
   ```json
     {
       "id": 2,
@@ -208,6 +209,7 @@ Risposta:
     }
     ```
 - **GET /gates(?id)**
+  
   La seguente rotta permette di recuperare tutti i varchi salvati oppure un particolare varco specificando il suo ```id``` tramite parametro di query:
   ```json
     [{
@@ -234,6 +236,7 @@ Risposta:
   ```
 
 - **PATCH /gates/:id**
+  
   La seguente rotta permette di aggiornare i campi di un varco specificandoli nel body della richiesta e indicando il suo ```id``` come parametro nell'url path:
   
     ```json
@@ -249,6 +252,7 @@ Risposta:
   ```
   
 - **DELETE /gates/:id**
+  
   Questa rotta permette di eliminare un varco specifico tramite ```id``` come parametro nell’url path:
   ```json
     {
@@ -258,6 +262,7 @@ Risposta:
 
 ### CRUD per la Gestione delle Tratte
 - **POST /routes**
+  
   Un esempio di body della richiesta potrebbe essere il seguente:
     ```json
     {
@@ -279,6 +284,7 @@ Risposta:
     ```
 
 - **GET /route(?id)**
+  
   Questa rotta permette di recuperare tutte le tratte salvate:
     ```json
     [{
@@ -313,6 +319,7 @@ Risposta:
     ```
 
 - **PATCH /routes/:id**
+  
   Questa rotta permette di aggiornare una tratta specifica utilizzando il suo ```id``` come parametro nell'url path e specificando i campi da aggiornare nel body della richiesta:
     ```json
     {
@@ -329,6 +336,7 @@ Risposta:
     ```
 
 - **DELETE /routes/:id**
+  
   Questa rotta permette di eliminare una tratta specifica tramite il suo ```id``` come parametro nell'url path:
     ```json
     {
@@ -338,6 +346,7 @@ Risposta:
 
 ### CRUD per la Gestione dei Veicoli
 - **POST /vehicles**
+  
   Un esempio di body della richiesta potrebbe essere il seguente:
     ```json
     {
@@ -359,6 +368,7 @@ Risposta:
     ```
 
 - **GET /vehicles(?id)**
+  
   Questa rotta permette di recuperare tutti i veicoli salvati:
     ```json
     [{
@@ -393,6 +403,7 @@ Risposta:
     ```
 
 - **PATCH /vehicles/:id**
+  
   Questa rotta permette di aggiornare un veicolo specifico utilizzando il suo ```id``` come parametro nell'url path e specificando i campi da aggiornare nel body della richiesta:
     ```json
     {
@@ -407,6 +418,7 @@ Risposta:
     }
   ```
 - **DELETE /vehicles/:id**
+  
   Questa rotta permette di eliminare un veicolo specifico tramite il suo ```id```, se la richiesta va a buon fine il risultato della risposta sarà un messaggio di avvenuta eliminazione:
   ```json
     {
@@ -416,6 +428,7 @@ Risposta:
 
 ### Inserimento Transiti e Generazione Multe
 - **POST /transits**
+  
     Per poter ottenere una risposta, il corpo delle richieste dovrà seguire il seguente modello:
     ```json
     {
@@ -528,7 +541,7 @@ Risposta:
 
 #### Scaricare Bollettino di Pagamento
 - **GET /payments/:id/pdf**
-- 
+  
 #### Effettuare un Pagamento
 - **POST /payments**
     ```json
