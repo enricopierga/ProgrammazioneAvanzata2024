@@ -188,7 +188,7 @@ Risposta:
 
 
 
-#### CRUD per la Gestione dei Varchi
+### CRUD per la Gestione dei Varchi
 - **POST /gates**
   
   Un esempio di body della richiesta potrebbe essere il seguente (la descrizione è facoltativa):
@@ -426,7 +426,7 @@ Risposta:
     }
   ```
 
-### Inserimento Transiti e Generazione Multe
+### CRUD per la Gestione dei Transiti (e Generazione delle Multe)
 - **POST /transits**
   
     Per poter ottenere una risposta, il corpo delle richieste dovrà seguire il seguente modello:
