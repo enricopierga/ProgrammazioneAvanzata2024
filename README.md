@@ -85,13 +85,11 @@ Il sistema supporta tre ruoli distinti:
 ### Esempi di Richieste
 ### Login nel sistema
 - **POST /login**
-```json
+ ```json
     {
-    "username" : "Enrico",
-    "password": "12345" 
+      "location": "Location 1"
     }
     ```
-
 #### CRUD per la Gestione dei Varchi
 - **POST /gates**
     ```json
