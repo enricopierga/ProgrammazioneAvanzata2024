@@ -125,7 +125,6 @@ status: 404 NOT_FOUND
 ### Ottenere il credito di un utente
 **GET /credit**
 Per poter ottenere una risposta non è necessario inserire un body, basta essere autenticati tramite JWT.
-
 Se la richiesta viene effettuata correttamente viene restituito il seguente messaggio:
 
 ```json
@@ -133,6 +132,16 @@ Se la richiesta viene effettuata correttamente viene restituito il seguente mess
     "balance": 50
 }
 
+```
+
+**NOTA:** l'accesso a questa rotta è garantito agli utenti Automobilista ed Operatore.
+
+In caso di errore invece, ovvero di utente non autorizzato, verrà generato il seguente messaggio ed il relativo status code associato:
+```json
+{
+    status: 403 FORBIDDEN
+    "message": "Forbidden"
+}
 ```
 
 #### CRUD per la Gestione dei Varchi
