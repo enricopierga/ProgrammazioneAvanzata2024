@@ -5,23 +5,19 @@ import { requireAuthentication } from "../middleware/authenticationMiddleware";
 
 const router = Router();
 
-router.post(
-  "/:id",
-  requireAuthentication(["Operatore"]),
-  VehicleController.create
-);
+router.post("", requireAuthentication(["Operatore"]), VehicleController.create);
 router.get(
-  "/:id",
+  "",
   requireAuthentication(["Operatore"]),
   VehicleController.getVehicle
 );
 router.patch(
-  "/:id/:vehicleId",
+  "/:vehicleId",
   requireAuthentication(["Operatore"]),
   VehicleController.update
 );
 router.delete(
-  "/:id/:vehicleId",
+  "/:vehicleId",
   requireAuthentication(["Operatore"]),
   VehicleController.delete
 );

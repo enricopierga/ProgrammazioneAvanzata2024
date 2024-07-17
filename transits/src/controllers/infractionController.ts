@@ -13,8 +13,14 @@ class InfractionController {
   async getByPlatesAndPeriod(req: Request, res: Response): Promise<void> {
     try {
       const { plates, startDate, endDate } = req.body;
-      const requestingUserId = Number(req.params.id);
-      const requestingUser = await UserRepository.getById(requestingUserId);
+
+      const requestingUserId = req.user?.userId; // userId dal middleware
+      if (!requestingUserId) {
+        res.status(StatusCodes.FORBIDDEN).json({ message: "Forbidden" });
+        return;
+      }
+
+      const isOperator = req.user?.role === "Operatore";
 
       // Verifica che plates, startDate e endDate siano presenti
       if (!plates || !startDate || !endDate) {
@@ -47,13 +53,6 @@ class InfractionController {
         return;
       }
 
-      // Verifica che l'utente richiedente esista
-      if (!requestingUser) {
-        res.status(StatusCodes.NOT_FOUND).json({ message: "User not found" });
-        return;
-      }
-
-      const isOperator = requestingUser.role === "Operatore";
       const infractions = await InfractionRepository.getByPlatesAndPeriod(
         plates,
         startDate,

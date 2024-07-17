@@ -81,6 +81,7 @@ class InfractionRepository {
       speedDelta: infraction.speed - infraction.limit,
       weather: infraction.weather,
       amount: infraction.amount,
+      uuid: infraction.uuid,
       datetime: infraction.timestamp,
     }));
   }

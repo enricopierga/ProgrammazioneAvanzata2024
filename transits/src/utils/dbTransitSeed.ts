@@ -138,4 +138,32 @@ export async function seed() {
     amount: 150,
     uuid: "6836178f-0c79-4c10-88ec-75bae54fd6a4",
   });
+
+  await Infraction.create({
+    paid: false,
+    id: 3,
+    vehicleId: 2,
+    routeId: 2,
+    userId: 2,
+    speed: 198,
+    limit: 80,
+    weather: "Rainy",
+    timestamp: new Date(),
+    amount: 150,
+    uuid: "6836178f-0c80-4c10-88ec-75bae54fd6a4",
+  });
+
+  await Infraction.create({
+    paid: false,
+    id: 4,
+    vehicleId: 2,
+    routeId: 2,
+    userId: 2,
+    speed: 198,
+    limit: 80,
+    weather: "Rainy",
+    timestamp: new Date(),
+    amount: 150,
+    uuid: "6836178f-0c81-4c10-88ec-75bae54fd6a4",
+  });
 }

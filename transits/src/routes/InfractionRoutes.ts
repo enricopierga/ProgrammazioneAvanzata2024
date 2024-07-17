@@ -6,7 +6,7 @@ import { requireAuthentication } from "../middleware/authenticationMiddleware";
 const router = Router();
 
 router.get(
-  "/:id",
+  "",
   requireAuthentication(["Operatore", "Automobilista"]),
   InfractionController.getByPlatesAndPeriod
 );

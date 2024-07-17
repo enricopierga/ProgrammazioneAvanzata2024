@@ -16,11 +16,9 @@ import gateRoutes from "./routes/GateRoutes";
 import infractionRoutes from "./routes/InfractionRoutes";
 import routeRoutes from "./routes/RouteRoutes";
 import transitRoutes from "./routes/TransitRoutes";
-import vehicleRoutes from "./routes/VehicleRoutes"
-import User from "./models/UserModel";
+import vehicleRoutes from "./routes/VehicleRoutes";
 import { seed as dbSeed, seed } from "./utils/dbTransitSeed";
 import userRoutes from "./routes/UserRoutes";
-
 
 // Initialize Express application
 const app = express();
@@ -42,24 +40,21 @@ app.use("/vehicle", vehicleRoutes); // Transit-related routes
 app.use("/transit", transitRoutes); // Transit-related routes
 app.use("/infraction", infractionRoutes); // Infraction-related routes
 
-
 app.use("/user", userRoutes); // User-related routes
-
 
 const initializeDb = process.env.CLEAN_DB === "true";
 
 // Prepare db and start listener
 sequelize
-	.sync({ force: initializeDb }) // Usa force: true solo in sviluppo, cancella e ricrea le tabelle
-	.then(() => {
-		if (initializeDb)
-			seed();
+  .sync({ force: initializeDb }) // Usa force: true solo in sviluppo, cancella e ricrea le tabelle
+  .then(() => {
+    if (initializeDb) seed();
 
-		console.log("Database synced");
-		app.listen(port, () => {
-			console.log(`Server is running on port ${port}`);
-		});
-	})
-	.catch((error) => {
-		console.error("Unable to connect to the database:", error);
-	});
+    console.log("Database synced");
+    app.listen(port, () => {
+      console.log(`Server is running on port ${port}`);
+    });
+  })
+  .catch((error) => {
+    console.error("Unable to connect to the database:", error);
+  });

@@ -5,23 +5,15 @@ import { requireAuthentication } from "../middleware/authenticationMiddleware";
 
 const router = Router();
 
-router.post(
-  "/:id",
-  requireAuthentication(["Operatore"]),
-  RouteController.create
-);
-router.get(
-  "/:id",
-  requireAuthentication(["Operatore"]),
-  RouteController.getRoute
-);
+router.post("", requireAuthentication(["Operatore"]), RouteController.create);
+router.get("", requireAuthentication(["Operatore"]), RouteController.getRoute);
 router.patch(
-  "/:id/:routeId",
+  "/:routeId",
   requireAuthentication(["Operatore"]),
   RouteController.update
 );
 router.delete(
-  "/:id/:routeId",
+  "/:routeId",
   requireAuthentication(["Operatore"]),
   RouteController.delete
 );
