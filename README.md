@@ -441,7 +441,7 @@ Risposta:
   Il meccanismo che si innesca all'atto della chiamata è descritto dal seguente diagramma delle sequenze:
   ![transit_post](./sequenceDiagrams/transit-post.png)
 
-  Se la richiesta viene effettuata correttamente, viene restituito il seguente messaggio in caso la velocità media del transito non superi la velocità limite:
+  Se la richiesta viene effettuata correttamente, viene restituito il seguente messaggio nel caso in cui la velocità media del transito non superi la velocità limite:
   ```json
     {
         "id": 1,
