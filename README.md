@@ -149,9 +149,9 @@ In caso di errore invece, ovvero di utente non autorizzato, verrà generato il s
 Per poter ottenere una risposta, il corpo delle richieste dovrà seguire il seguente modello:
   
  ```json
-    {
+ {
     "amount" : 1000
-    }
+ }
  ```
 Il meccanismo che si innesca all'atto della chiamata è descritto dal seguente diagramma:
 ![add_Credit](./sequenceDiagrams/addCredit.png)
@@ -161,9 +161,9 @@ Il meccanismo che si innesca all'atto della chiamata è descritto dal seguente d
 In caso di errore, ovvero di utente non autorizzato, verrà generato il seguente messaggio ed il relativo status code associato:
 ```json
  status: 403 FORBIDDEN
-  {
+{
    "message": "Forbidden"
-  }
+}
 ```
 
 In caso di errore di inserimento, dell'inserimento di una stringa al posto di un numero, verrà generato il seguente messaggio ed il relativo status code associato:
@@ -171,18 +171,18 @@ In caso di errore di inserimento, dell'inserimento di una stringa al posto di un
 Richiesta:
 
 ```json
-  {
+{
    "amount": "Mille"
-  }
+}
 ```
 
 Risposta:
 
 ```json
  status: 400 BAD_REQUEST
-  {
+{
    "message": "Missing or wrong amount value"
-  }
+}
 ```
 
 
