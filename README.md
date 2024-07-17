@@ -312,7 +312,7 @@ Risposta:
 - **PATCH /:transitId**
   
   Il meccanismo che si innesca all'atto della chiamata è descritto dal seguente diagramma delle sequenze:
-  ![transit_post](./sequenceDiagrams/transit-patch.png)
+  ![transit_post](./sequenceDiagrams/transit-update.png)
 
 - **DELETE /:transitId**
   
