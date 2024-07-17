@@ -248,6 +248,7 @@ Risposta:
 
 #### Inserimento Transiti e Generazione Multe
 - **POST /transits**
+  
     Per poter ottenere una risposta, il corpo delle richieste dovrà seguire il seguente modello:
     ```json
     
@@ -304,20 +305,24 @@ Risposta:
     ```
 
 - **GET /transits(?transitId)**
+  
   Il meccanismo che si innesca all'atto della chiamata è descritto dal seguente diagramma delle sequenze:
   ![transit_post](./sequenceDiagrams/transit-get.png)
 
 - **PATCH /:transitId**
+  
   Il meccanismo che si innesca all'atto della chiamata è descritto dal seguente diagramma delle sequenze:
   ![transit_post](./sequenceDiagrams/transit-patch.png)
 
 - **DELETE /:transitId**
+  
   Il meccanismo che si innesca all'atto della chiamata è descritto dal seguente diagramma delle sequenze:
   ![transit_post](./sequenceDiagrams/transit-delete.png)
   
 
 #### Richiesta Multe per Targa e Periodo
 - **POST /infractions/plates-and-period**
+  
     ```json
     {
       "plates": ["AB123CD", "EF456GH"],
