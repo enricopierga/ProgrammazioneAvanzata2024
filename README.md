@@ -539,6 +539,58 @@ Risposta:
   Il meccanismo che si innesca all'atto della chiamata è descritto dal seguente diagramma delle sequenze:
   ![transit_delete](./sequenceDiagrams/transit-delete.png)
 
+### Richiesta Multe per Targa e Periodo
+- **POST /infractions/plates-and-period**
+
+    Per poter ottenere una risposta, il corpo della richiesta dovrà seguire il seguente modello:
+    ```json
+    {
+      "plates": ["AB123CD", "EF456GH"],
+      "startDate": "2024-01-01",
+      "endDate": "2024-07-21"
+    }
+    ```
+    Il meccanismo che si innesca all'atto della chiamata è descritto dal seguente diagramma delle sequenze:
+    ![infraction_get_by](./sequenceDiagrams/infraction-get-by.png)
+
+    Se la richiesta viene effettuata correttamente, verrà restituito il seguente messaggio:
+    ```json
+    [
+      {
+        "plate": "AB123CD",
+        "type": "Car",
+        "route": {
+          "inGate": "Location 1",
+          "outGate": "Location 2",
+          "distance": 50
+        },
+        "averageSpeed": 90,
+        "limitSpeed": 80,
+        "speedDelta": 10,
+        "weather": "Clear",
+        "amount": 150,
+        "uuid": "b606694c-8742-4860-aea8-7d3f99f7debe",
+        "datetime": "2024-07-16T13:57:59.353Z"
+      },
+      {
+        "plate": "EF456GH",
+        "type": "Truck",
+        "route": {
+          "inGate": "Location 2",
+          "outGate": "Location 3",
+          "distance": 60
+        },
+        "averageSpeed": 70,
+        "limitSpeed": 60,
+        "speedDelta": 10,
+        "weather": "Rainy",
+        "amount": 150,
+        "uuid": "c306694c-8742-4860-aea8-7d3f99f7debf",
+        "datetime": "2024-07-17T14:00:00.000Z"
+      }
+    ]
+    ```
+
 #### Scaricare Bollettino di Pagamento
 - **GET /payments/:id/pdf**
   
