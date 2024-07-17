@@ -48,6 +48,16 @@ class UserController {
       return;
     }
 
+    const userFound = await UserRepository.getById(userId);
+
+    if (userFound === null) {
+      return res
+        .status(StatusCodes.NOT_FOUND)
+        .json({ message: "User not found" });
+    }
+
+
+
     const { amount } = req.body;
 
     if (amount === undefined || isNaN(amount) || isString(amount)) {
