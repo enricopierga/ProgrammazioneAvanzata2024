@@ -276,8 +276,7 @@ Se la richiesta viene effettuata correttamente, viene restituito il seguente mes
     }
 ```
 Se invece la velocità media calcolata supera la velocità limite, verrà generata automaticamente la multa e verrà visualizzato il seguente messaggio:
-    ```json
-    
+```json    
     {
     "transit": {
         "id": 1,
@@ -304,7 +303,7 @@ Se invece la velocità media calcolata supera la velocità limite, verrà genera
         "createdAt": "2024-07-16T13:57:59.355Z"
         }
     }
-    ```
+```
 
 
 #### Richiesta Multe per Targa e Periodo
