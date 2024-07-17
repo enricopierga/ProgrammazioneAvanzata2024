@@ -76,6 +76,7 @@ Il sistema supporta tre ruoli distinti:
 
 ## Test del Progetto
 
+
 ### Postman
 
 È possibile testare il progetto utilizzando Postman. Forniamo una collection Postman che contiene tutte le richieste necessarie per testare le API. Importare la collection in Postman e seguire le istruzioni per testare le diverse rotte.
@@ -84,13 +85,20 @@ Il sistema supporta tre ruoli distinti:
 
 ### Esempi di Richieste
 ### Login nel sistema
-- **POST /login**
+
+**POST /login**
+
+Per poter ottenere una risposta, il corpo delle richieste dovrà seguire il seguente modello:
+  
  ```json
     {
     "username" : "pangolino",
     "password": "12345" 
-}
+    }
  ```
+Il meccanismo che si innesca all'atto della chiamata è descritto dal seguente diagramma:
+![Use Case Diagram](./use_cases_diagram.png)
+
 #### CRUD per la Gestione dei Varchi
 - **POST /gates**
     ```json
