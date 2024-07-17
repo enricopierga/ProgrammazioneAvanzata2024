@@ -248,7 +248,7 @@ Risposta:
 
 #### Inserimento Transiti e Generazione Multe
 - **POST /transits**
-Per poter ottenere una risposta, il corpo delle richieste dovrà seguire il seguente modello:
+    Per poter ottenere una risposta, il corpo delle richieste dovrà seguire il seguente modello:
     ```json
     
     {
@@ -258,11 +258,11 @@ Per poter ottenere una risposta, il corpo delle richieste dovrà seguire il segu
       "weather": "clear"
     }
     ```
-Il meccanismo che si innesca all'atto della chiamata è descritto dal seguente diagramma delle sequenze:
-![transit_post](./sequenceDiagrams/transit_post.png)
+    Il meccanismo che si innesca all'atto della chiamata è descritto dal seguente diagramma delle sequenze:
+    ![transit_post](./sequenceDiagrams/transit-post.png)
 
-Se la richiesta viene effettuata correttamente, viene restituito il seguente messaggio se la velocità media del transito non supera la velocità limite:
-```json
+    Se la richiesta viene effettuata correttamente, viene restituito il seguente messaggio se la velocità media del transito non supera la velocità limite:
+    ```json
     {
         "id": 1,
         "routeId": 1,
@@ -272,9 +272,9 @@ Se la richiesta viene effettuata correttamente, viene restituito il seguente mes
         "updatedAt": "2024-07-16T13:57:59.349Z",
         "createdAt": "2024-07-16T13:57:59.349Z"
     }
-```
-Se invece la velocità media calcolata supera la velocità limite, verrà generata automaticamente la multa e verrà visualizzato il seguente messaggio:
-```json    
+    ```
+    Se invece la velocità media calcolata supera la velocità limite, verrà generata automaticamente la multa e verrà visualizzato il seguente messaggio:
+    ```json    
     {
     "transit": {
         "id": 1,
@@ -301,8 +301,20 @@ Se invece la velocità media calcolata supera la velocità limite, verrà genera
         "createdAt": "2024-07-16T13:57:59.355Z"
         }
     }
-```
+    ```
 
+- **GET /transits(?transitId)**
+  Il meccanismo che si innesca all'atto della chiamata è descritto dal seguente diagramma delle sequenze:
+  ![transit_post](./sequenceDiagrams/transit-get.png)
+
+- **PATCH /:transitId**
+  Il meccanismo che si innesca all'atto della chiamata è descritto dal seguente diagramma delle sequenze:
+  ![transit_post](./sequenceDiagrams/transit-patch.png)
+
+- **DELETE /:transitId**
+  Il meccanismo che si innesca all'atto della chiamata è descritto dal seguente diagramma delle sequenze:
+  ![transit_post](./sequenceDiagrams/transit-delete.png)
+  
 
 #### Richiesta Multe per Targa e Periodo
 - **POST /infractions/plates-and-period**
@@ -313,6 +325,8 @@ Se invece la velocità media calcolata supera la velocità limite, verrà genera
       "endDate": "2024-07-21"
     }
     ```
+    Il meccanismo che si innesca all'atto della chiamata è descritto dal seguente diagramma delle sequenze:
+    ![transit_post](./sequenceDiagrams/infraction-get-by.png)
 
 #### Scaricare Bollettino di Pagamento
 - **GET /payments/:id/pdf**
