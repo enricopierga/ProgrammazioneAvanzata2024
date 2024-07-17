@@ -99,6 +99,32 @@ Per poter ottenere una risposta, il corpo delle richieste dovrà seguire il segu
 Il meccanismo che si innesca all'atto della chiamata è descritto dal seguente diagramma:
 ![login](./sequenceDiagrams/login.png)
 
+Se la richiesta viene effettuata correttamente viene restituito il seguente messaggio:
+
+```json
+{
+    "accessToken": {
+        "jwt": "MY_JWT_TOKEN"
+    }
+}
+```
+In caso di errore invece verrà restituito un messaggio che ha come chiave il nome del codice violato e un messaggio di errore:
+```json
+{
+    "username":"giacomo",
+    "password":"PureDrive10!"
+}
+```
+Verrà generato il seguente errore:
+```json
+{
+    status: 404 NOT_FOUND
+    
+    "message": "User not found"
+
+}
+```
+
 #### CRUD per la Gestione dei Varchi
 - **POST /gates**
     ```json
