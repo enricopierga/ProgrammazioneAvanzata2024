@@ -123,7 +123,7 @@ status: 404 NOT_FOUND
 }
 ```
 ### Ottenere il credito di un utente
-**GET /credit**
+- **GET /credit**
 Per poter ottenere una risposta non è necessario inserire un body, basta essere autenticati tramite JWT.
 Se la richiesta viene effettuata correttamente viene restituito il seguente messaggio:
 
@@ -145,7 +145,7 @@ In caso di errore invece, ovvero di utente non autorizzato, verrà generato il s
 ```
 
 ### Aggiungere il credito ad un utente
-**PATCH /<user_id>/credit**
+- **PATCH /<user_id>/credit**
 Per poter ottenere una risposta, il corpo delle richieste dovrà seguire il seguente modello:
   
  ```json
