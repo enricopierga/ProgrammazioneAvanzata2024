@@ -1,5 +1,29 @@
 # Sistema di Gestione delle Multe Autostradali
 
+## Indice
+1. [Obiettivo del Progetto](#obiettivo-del-progetto)
+2. [Progettazione](#progettazione)
+    - [Diagramma dei Casi d'Uso](#diagramma-dei-casi-duso)
+    - [Diagramma ER](#diagramma-er)
+    - [Pattern Utilizzati](#pattern-utilizzati)
+3. [Avviare il Progetto](#avviare-il-progetto)
+    - [Prerequisiti](#prerequisiti)
+    - [Istruzioni](#istruzioni)
+4. [Test del Progetto](#test-del-progetto)
+    - [Postman](#postman)
+    - [Esempi di Richieste](#esempi-di-richieste)
+        - [Login nel Sistema](#login-nel-sistema)
+        - [Rotta protetta (decodeJWT)](#rotta-protetta-decodejwt)
+        - [CRUD per la Gestione dei Varchi](#crud-per-la-gestione-dei-varchi)
+        - [CRUD per la Gestione delle Tratte](#crud-per-la-gestione-delle-tratte)
+        - [CRUD per la Gestione dei Veicoli](#crud-per-la-gestione-dei-veicoli)
+        - [CRUD per la Gestione dei Transiti (e Generazione delle Multe)](#crud-per-la-gestione-dei-transiti-e-generazione-delle-multe)
+        - [Richiesta Multe per Targa e Periodo](#richiesta-multe-per-targa-e-periodo)
+        - [Ottenere il credito di un utente](#ottenere-il-credito-di-un-utente)
+        - [Aggiungere il credito ad un utente](#aggiungere-il-credito-ad-un-utente)
+        - [Scaricare Bollettino di Pagamento](#scaricare-bollettino-di-pagamento)
+        - [Effettuare un Pagamento](#effettuare-un-pagamento)
+
 ## Obiettivo del Progetto
 
 Il progetto ha l'obiettivo di sviluppare un sistema per la gestione delle multe derivanti dal superamento dei limiti di velocità su tratte autostradali, simile ai sistemi Tutor. Questo sistema modella diverse entità chiave:
@@ -33,12 +57,59 @@ Il sistema supporta tre ruoli distinti:
 
 ### Diagramma ER
 
-![Class Diagram](./er_diagram.png)
+ <p align="center">
+     <img src="./er_diagram.png" alt="der_diagramT" width="600" height="800">
+  </p>
 
 ### Pattern Utilizzati
 
 - **MVC (Model-View-Controller)**: Il pattern MVC è stato scelto per separare la logica di business dalla presentazione e dalla gestione delle richieste. Questo permette di mantenere il codice modulare e facilmente manutenibile. Occore tuttavia fare una precisazione: ai fini del progetto la componente **View** non viene applicata non essendoci una vista vera e propria.
-- **Repository Pattern**: Il Repository Pattern è stato utilizzato per astrarre la logica di accesso ai dati, fornendo una chiara separazione tra la logica di business e la logica di accesso ai dati. Questo rende il codice più testabile e manutenibile. L'interazione con il database avviene tramite Sequelize.
+- **Repository Pattern**: Il Repository Pattern è stato utilizzato per astrarre la logica di accesso ai dati, fornendo una chiara separazione tra la logica di business e la logica di accesso ai dati. Questo rende il codice più testabile e manutenibile. L'interazione con il database avviene tramite Sequelize. Un esempio di Repository viene mostrato di seguito:
+
+```javascript
+import Gate from "../models/GateModel"; // Import the Gate model
+import Route from "../models/RouteModel"; // Import the Route model
+
+class GateRepository {
+  // Method to create a new gate
+  async create(data: any): Promise<Gate> {
+    return await Gate.create(data);
+  }
+
+  // Method to retrieve all gates
+  async getAll(): Promise<Gate[]> {
+    return await Gate.findAll();
+  }
+
+  // Method to retrieve a gate by its ID
+  async getById(gateId: number): Promise<Gate | null> {
+    return await Gate.findByPk(gateId);
+  }
+
+  // Method to update a gate by its ID
+  async update(id: number, data: any): Promise<number> {
+    const [updated] = await Gate.update(data, {
+      where: { id },
+    });
+    return updated;
+  }
+
+  // Method to delete a gate by its ID
+  async delete(id: number): Promise<number> {
+    // Check for dependencies in routes
+    const routeDependency = await Route.findOne({ where: { startGateId: id } })
+                                 || await Route.findOne({ where: { endGateId: id } });
+    if (routeDependency) {
+      throw new Error('Cannot delete gate: it has associated routes.');
+    }
+
+    return await Gate.destroy({ where: { id: id } });
+  }
+}
+
+export default new GateRepository(); // Export an instance of GateRepository
+
+```
 
 ## Avviare il Progetto
 
@@ -86,144 +157,66 @@ Il sistema supporta tre ruoli distinti:
 ### Esempi di Richieste
 ### Login nel sistema
 
-**POST /login**
+- **POST /login**
 
-Per poter ottenere una risposta, il corpo delle richieste dovrà seguire il seguente modello:
+  Per poter ottenere una risposta, il corpo delle richieste dovrà seguire il seguente modello:
   
- ```json
-    {
-    "username" : "pangolino",
-    "password": "12345" 
-    }
- ```
-Il meccanismo che si innesca all'atto della chiamata è descritto dal seguente diagramma:
-![login](./sequenceDiagrams/login.png)
+  ```json
+     {
+       "username" : "pangolino",
+       "password": "12345" 
+     }
+  ```
+  Il meccanismo che si innesca all'atto della chiamata è descritto dal seguente diagramma:
+  ![login](./sequenceDiagrams/login.png)
 
-Se la richiesta viene effettuata correttamente viene restituito il seguente messaggio:
+  Se la richiesta viene effettuata correttamente viene restituito il seguente messaggio:
 
-```json
-{
-    "accessToken": {
-        "jwt": "MY_JWT_TOKEN"
-    }
-}
-```
-In caso di errore invece, come in questo caso (utente non presente nel sistema):
-```json
-{
-    "username":"giacomo",
-    "password":"PureDrive10!"
-}
-```
-Verrà generato il seguente errore:
-```json
-status: 404 NOT_FOUND
-{
-    "message": "User not found"
-}
-```
-### Esempio di rotta protetta (decodeJWT Token)
-- /protectedRoute
+  ```json
+     {
+       "accessToken": {
+         "jwt": "MY_JWT_TOKEN"
+       }
+     }
+  ```
+  In caso di errore invece, come in questo caso (utente non presente nel sistema):
+  ```json
+     {
+      "username":"giacomo",
+      "password":"PureDrive10!"
+     }
+  ```
+  Verrà generato il seguente errore:
+  ```json
+     status: 404 NOT_FOUND
+     {
+       "message": "User not found"
+     }
+  ```
 
-Questo esempio raffigura il comportamento in caso di accesso ad una rotta protetta, il meccanismo che si innesca è descritto nel sequente diagramma:
-<p align="center">
-<img src="./sequenceDiagrams/decodeJWT.png" alt="decodeJWT" width="600" height="800">
-</p>
-
-In caso di accesso alla rotta da parte di un utente non autorizzato, il messaggio è il seguente:
-```json
-status: 403 FORBIDDEN
-{
-    "message": "Frobidden"
-}
-```
-In caso di token errato, il messaggio è il seguente:
-```json
-status: 401 UNAUThORIZED
-{
-    "message": "Unauthorized"
-}
-```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-### Ottenere il credito di un utente
-- **GET /credit**
-Per poter ottenere una risposta non è necessario inserire un body, basta essere autenticati tramite JWT.
-Se la richiesta viene effettuata correttamente viene restituito il seguente messaggio:
-
-```json
-{
-    "balance": 50
-}
-
-```
-
-**NOTA:** l'accesso a questa rotta è garantito agli utenti Automobilista ed Operatore.
-
-In caso di errore invece, ovvero di utente non autorizzato, verrà generato il seguente messaggio ed il relativo status code associato:
-```json
- status: 403 FORBIDDEN
-{
-   "message": "Forbidden"
-}
-```
-
-### Aggiungere il credito ad un utente
-- **PATCH /<user_id>/credit**
-Per poter ottenere una risposta, il corpo delle richieste dovrà seguire il seguente modello:
+### Rotta protetta (decodeJWT)
+- **/protectedRoute**
   
- ```json
- {
-    "amount" : 1000
- }
- ```
-Il meccanismo che si innesca all'atto della chiamata è descritto dal seguente diagramma:
-![add_Credit](./sequenceDiagrams/addCredit.png)
+  Questo esempio raffigura il comportamento in caso di accesso ad una rotta protetta, il meccanismo che si innesca è descritto dal sequente diagramma:
+  <p align="center">
+     <img src="./sequenceDiagrams/decodeJWT.png" alt="decodeJWT" width="600" height="800">
+  </p>
 
-**NOTA:** l'accesso a questa rotta è garantito solamente all'utente di tipo Admin.
-
-In caso di errore, ovvero di utente non autorizzato, verrà generato il seguente messaggio ed il relativo status code associato:
-```json
- status: 403 FORBIDDEN
-{
-   "message": "Forbidden"
-}
-```
-
-In caso di errore di inserimento, dell'inserimento di una stringa al posto di un numero, verrà generato il seguente messaggio ed il relativo status code associato:
-
-Richiesta:
-
-```json
-{
-   "amount": "Mille"
-}
-```
-
-Risposta:
-
-```json
- status: 400 BAD_REQUEST
-{
-   "message": "Missing or wrong amount value"
-}
-```
-
-
-
-
+  In caso di accesso alla rotta da parte di un utente non autorizzato, il messaggio è il seguente:
+  ```json
+     status: 403 FORBIDDEN
+     {
+       "message": "Forbidden"
+     }
+  ```
+  In caso di token errato, il messaggio è il seguente:
+  ```json
+     status: 401 UNAUThORIZED
+     {   
+        "message": "Unauthorized"
+     }
+  ```
+  
 ### CRUD per la Gestione dei Varchi
 - **POST /gate**
   
@@ -624,18 +617,132 @@ Risposta:
         "datetime": "2024-07-17T14:00:00.000Z"
       }]
     ```
+### Ottenere il credito di un utente
+- **GET /credit**
+  Per poter ottenere una risposta non è necessario inserire un body, basta essere autenticati tramite JWT.
+  Se la richiesta viene effettuata correttamente viene restituito il seguente messaggio:
 
-#### Scaricare Bollettino di Pagamento
-- **GET /payments/:id/pdf**
+  ```json
+     {
+        "balance": 50
+     }
+  ```
+
+  **NOTA:** l'accesso a questa rotta è garantito agli utenti Automobilista ed Operatore.
+
+  In caso di errore invece, ovvero di utente non autorizzato, verrà generato il seguente messaggio ed il relativo status code associato:
+  ```json
+     status: 403 FORBIDDEN
+     {
+       "message": "Forbidden"
+     }
+  ```
+
+### Aggiungere il credito ad un utente
+- **PATCH /<user_id>/credit**
+  Per poter ottenere una risposta, il corpo delle richieste dovrà seguire il seguente modello:
   
+  ```json
+     {
+       "amount" : 1000
+     }
+  ```
+  Il meccanismo che si innesca all'atto della chiamata è descritto dal seguente diagramma:
+  ![add_Credit](./sequenceDiagrams/addCredit.png)
+
+  **NOTA:** l'accesso a questa rotta è garantito solamente all'utente di tipo Admin.
+
+  In caso di errore, ovvero di utente non autorizzato, verrà generato il seguente messaggio ed il relativo status code associato:
+  ```json
+     status: 403 FORBIDDEN
+     {
+        "message": "Forbidden"
+     }
+  ```
+
+  In caso di errore di inserimento, dell'inserimento di una stringa al posto di un numero, verrà generato il seguente messaggio ed il relativo status code associato:
+
+  Richiesta:
+
+  ```json
+     {
+        "amount": "Mille"
+     }  
+  ```
+
+  Risposta:
+
+  ```json
+     status: 400 BAD_REQUEST
+     {
+        "message": "Missing or wrong amount value"
+     }
+  ```
+
+
+
 #### Effettuare un Pagamento
 - **POST /payments**
+  Per poter ottenere una risposta, il corpo della richiesta dovrà essere il seguente:
   ```json
     {
-      "paymentUuid": "6836178f-0c79-4c10-88ec-75bae54fd6a4",
+      "paymentUuid": "UUID_PAYMENT",
     }
   ```
 
+  In caso di UUID corretto e di credito sufficiente, verrà restituito l'oggetto Infraction corrispondente, ed il suo stato di "paid" passerà a true:
+
+  ```json
+    {
+        "id": 2,
+        "vehicleId": 2,
+        "routeId": 2,
+        "userId": 2,
+        "speed": 198,
+        "limit": 80,
+        "weather": "rainy",
+        "amount": 150,
+        "timestamp": "2024-07-18T11:09:30.044Z",
+        "uuid": "6836178f-0c79-4c10-88ec-75bae54fd6a4",
+        "paid": true,
+        "createdAt": "2024-07-18T11:09:30.045Z",
+        "updatedAt": "2024-07-18T11:09:30.045Z"
+    }
+```
+In caso di UUID corretto e di credito insufficiente, verrà restituito il seguente messaggio di errore:
+
+```json
+     status: 402 PAYMENT_REQUIRED
+     {
+    "message": "Insufficient Balance"
+     }
+```
+
+In questo caso, l'utente dovrà contattare l'Admin del sistema in modo da poter ricaricare il suo credito e poter effettuare il pagamento delle sue Infractions.
+
+Nel caso in cui il formato dell'UUID inserito non sia corretto, verrà restituito il seguente messaggio di errore:
+
+```json
+     status: 400 BAD_REQUEST
+     {
+    "message": "Invalid uuid format"
+     }
+```
+
+Se il formato è corretto ma l'UUID non appartiene a nessuna Infraction, allora verrà restituito il seguente messaggio di errore:
+
+```json
+     status: 404 NOT_FOUND
+     {
+    "message": "Not found"
+     }
+```
+
+
+#### Scaricare Bollettino di Pagamento
+- **GET /payments/:id/pdf**
+
+  
 ### Conclusione
 
 Questo progetto implementa un sistema completo per la gestione delle multe autostradali con ruoli differenziati, utilizzando pattern architetturali solidi e tecnologie moderne. Seguire le istruzioni per avviare e testare il sistema e garantire la corretta configurazione delle variabili d'ambiente e dei servizi Docker.
