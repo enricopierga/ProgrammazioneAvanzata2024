@@ -216,7 +216,7 @@ export default new GateRepository(); // Export an instance of GateRepository
         "message": "Unauthorized"
      }
   ```
-
+  
 ### CRUD per la Gestione dei Varchi
 - **POST /gate**
   
@@ -685,11 +685,35 @@ export default new GateRepository(); // Export an instance of GateRepository
   
 #### Effettuare un Pagamento
 - **POST /payments**
+  Per poter ottenere una risposta, il corpo della richiesta dovrà essere il seguente:
   ```json
     {
-      "paymentUuid": "6836178f-0c79-4c10-88ec-75bae54fd6a4",
+      "paymentUuid": "UUID_PAYMENT",
     }
   ```
+
+  In caso di UUID corretto e di credito sufficiente, verrà restituito l'oggetto Infraction corrispondente, ed il suo stato di "paid" passerà a true:
+
+    ```json
+   [
+    {
+        "id": 2,
+        "vehicleId": 2,
+        "routeId": 2,
+        "userId": 2,
+        "speed": 198,
+        "limit": 80,
+        "weather": "rainy",
+        "amount": 150,
+        "timestamp": "2024-07-18T11:09:30.044Z",
+        "uuid": "6836178f-0c79-4c10-88ec-75bae54fd6a4",
+        "paid": false,
+        "createdAt": "2024-07-18T11:09:30.045Z",
+        "updatedAt": "2024-07-18T11:09:30.045Z"
+    }
+]
+  ```
+  
 
 ### Conclusione
 
