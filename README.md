@@ -122,6 +122,23 @@ status: 404 NOT_FOUND
     "message": "User not found"
 }
 ```
+### Esempio di rotta protetta (decodeJWT Token)
+![decodeJWT](./sequenceDiagrams/decodeJWT.png)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ### Ottenere il credito di un utente
 - **GET /credit**
 Per poter ottenere una risposta non è necessario inserire un body, basta essere autenticati tramite JWT.
