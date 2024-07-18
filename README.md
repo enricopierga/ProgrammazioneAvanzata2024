@@ -211,7 +211,7 @@ Il sistema supporta tre ruoli distinti:
   ```
   In caso di token errato, il messaggio è il seguente:
   ```json
-     status: 401 UNAUThORIZED
+     status: 401 UNAUTHORIZED
      {   
         "message": "Unauthorized"
      }
