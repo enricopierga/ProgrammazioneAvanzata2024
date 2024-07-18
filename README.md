@@ -108,7 +108,7 @@ Se la richiesta viene effettuata correttamente viene restituito il seguente mess
     }
 }
 ```
-In caso di errore invece, come nel seguente caso, verrà generato un messaggio di errore assieme allo status code ad esso associato:
+In caso di errore invece, come in questo caso (utente non presente nel sistema):
 ```json
 {
     "username":"giacomo",
