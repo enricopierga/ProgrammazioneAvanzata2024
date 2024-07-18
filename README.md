@@ -170,71 +170,6 @@ Il sistema supporta tre ruoli distinti:
      }
   ```
 
-### Ottenere il credito di un utente
-- **GET /credit**
-  Per poter ottenere una risposta non è necessario inserire un body, basta essere autenticati tramite JWT.
-  Se la richiesta viene effettuata correttamente viene restituito il seguente messaggio:
-
-  ```json
-     {
-        "balance": 50
-     }
-  ```
-
-  **NOTA:** l'accesso a questa rotta è garantito agli utenti Automobilista ed Operatore.
-
-  In caso di errore invece, ovvero di utente non autorizzato, verrà generato il seguente messaggio ed il relativo status code associato:
-  ```json
-     status: 403 FORBIDDEN
-     {
-       "message": "Forbidden"
-     }
-  ```
-
-### Aggiungere il credito ad un utente
-- **PATCH /<user_id>/credit**
-  Per poter ottenere una risposta, il corpo delle richieste dovrà seguire il seguente modello:
-  
-  ```json
-     {
-       "amount" : 1000
-     }
-  ```
-  Il meccanismo che si innesca all'atto della chiamata è descritto dal seguente diagramma:
-  ![add_Credit](./sequenceDiagrams/addCredit.png)
-
-  **NOTA:** l'accesso a questa rotta è garantito solamente all'utente di tipo Admin.
-
-  In caso di errore, ovvero di utente non autorizzato, verrà generato il seguente messaggio ed il relativo status code associato:
-  ```json
-     status: 403 FORBIDDEN
-     {
-        "message": "Forbidden"
-     }
-  ```
-
-  In caso di errore di inserimento, dell'inserimento di una stringa al posto di un numero, verrà generato il seguente messaggio ed il relativo status code associato:
-
-  Richiesta:
-
-  ```json
-     {
-        "amount": "Mille"
-     }  
-  ```
-
-  Risposta:
-
-  ```json
-     status: 400 BAD_REQUEST
-     {
-        "message": "Missing or wrong amount value"
-     }
-  ```
-
-
-
-
 ### CRUD per la Gestione dei Varchi
 - **POST /gate**
   
@@ -635,6 +570,68 @@ Il sistema supporta tre ruoli distinti:
         "datetime": "2024-07-17T14:00:00.000Z"
       }]
     ```
+### Ottenere il credito di un utente
+- **GET /credit**
+  Per poter ottenere una risposta non è necessario inserire un body, basta essere autenticati tramite JWT.
+  Se la richiesta viene effettuata correttamente viene restituito il seguente messaggio:
+
+  ```json
+     {
+        "balance": 50
+     }
+  ```
+
+  **NOTA:** l'accesso a questa rotta è garantito agli utenti Automobilista ed Operatore.
+
+  In caso di errore invece, ovvero di utente non autorizzato, verrà generato il seguente messaggio ed il relativo status code associato:
+  ```json
+     status: 403 FORBIDDEN
+     {
+       "message": "Forbidden"
+     }
+  ```
+
+### Aggiungere il credito ad un utente
+- **PATCH /<user_id>/credit**
+  Per poter ottenere una risposta, il corpo delle richieste dovrà seguire il seguente modello:
+  
+  ```json
+     {
+       "amount" : 1000
+     }
+  ```
+  Il meccanismo che si innesca all'atto della chiamata è descritto dal seguente diagramma:
+  ![add_Credit](./sequenceDiagrams/addCredit.png)
+
+  **NOTA:** l'accesso a questa rotta è garantito solamente all'utente di tipo Admin.
+
+  In caso di errore, ovvero di utente non autorizzato, verrà generato il seguente messaggio ed il relativo status code associato:
+  ```json
+     status: 403 FORBIDDEN
+     {
+        "message": "Forbidden"
+     }
+  ```
+
+  In caso di errore di inserimento, dell'inserimento di una stringa al posto di un numero, verrà generato il seguente messaggio ed il relativo status code associato:
+
+  Richiesta:
+
+  ```json
+     {
+        "amount": "Mille"
+     }  
+  ```
+
+  Risposta:
+
+  ```json
+     status: 400 BAD_REQUEST
+     {
+        "message": "Missing or wrong amount value"
+     }
+  ```
+
 
 #### Scaricare Bollettino di Pagamento
 - **GET /payments/:id/pdf**
