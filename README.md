@@ -743,6 +743,6 @@ Se il formato è corretto ma l'UUID non appartiene a nessuna Infraction, allora 
 - **GET /payments/:id/pdf**
 
   
-### Conclusione
-
-Questo progetto implementa un sistema completo per la gestione delle multe autostradali con ruoli differenziati, utilizzando pattern architetturali solidi e tecnologie moderne. Seguire le istruzioni per avviare e testare il sistema e garantire la corretta configurazione delle variabili d'ambiente e dei servizi Docker.
+### Autori
+- Enrico Piergallini
+- Davide De Grazia
