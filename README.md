@@ -123,6 +123,8 @@ status: 404 NOT_FOUND
 }
 ```
 ### Esempio di rotta protetta (decodeJWT Token)
+- /protectedRoute
+Questo esempio raffigura il comportamento in caso di accesso ad una rotta protetta, il meccanismo che si innesca è descritto nel sequente diagramma:
 <p align="center">
 <img src="./sequenceDiagrams/decodeJWT.png" alt="decodeJWT" width="600" height="800">
 </p>
