@@ -86,140 +86,127 @@ Il sistema supporta tre ruoli distinti:
 ### Esempi di Richieste
 ### Login nel sistema
 
-**POST /login**
+- **POST /login**
 
-Per poter ottenere una risposta, il corpo delle richieste dovrà seguire il seguente modello:
+  Per poter ottenere una risposta, il corpo delle richieste dovrà seguire il seguente modello:
   
- ```json
-    {
-    "username" : "pangolino",
-    "password": "12345" 
-    }
- ```
-Il meccanismo che si innesca all'atto della chiamata è descritto dal seguente diagramma:
-![login](./sequenceDiagrams/login.png)
+  ```json
+     {
+       "username" : "pangolino",
+       "password": "12345" 
+     }
+  ```
+  Il meccanismo che si innesca all'atto della chiamata è descritto dal seguente diagramma:
+  ![login](./sequenceDiagrams/login.png)
 
-Se la richiesta viene effettuata correttamente viene restituito il seguente messaggio:
+  Se la richiesta viene effettuata correttamente viene restituito il seguente messaggio:
 
-```json
-{
-    "accessToken": {
-        "jwt": "MY_JWT_TOKEN"
-    }
-}
-```
-In caso di errore invece, come in questo caso (utente non presente nel sistema):
-```json
-{
-    "username":"giacomo",
-    "password":"PureDrive10!"
-}
-```
-Verrà generato il seguente errore:
-```json
-status: 404 NOT_FOUND
-{
-    "message": "User not found"
-}
-```
-### Esempio di rotta protetta (decodeJWT Token)
-- /protectedRoute
+  ```json
+     {
+       "accessToken": {
+         "jwt": "MY_JWT_TOKEN"
+       }
+     }
+  ```
+  In caso di errore invece, come in questo caso (utente non presente nel sistema):
+  ```json
+     {
+      "username":"giacomo",
+      "password":"PureDrive10!"
+     }
+  ```
+  Verrà generato il seguente errore:
+  ```json
+     status: 404 NOT_FOUND
+     {
+       "message": "User not found"
+     }
+  ```
 
-Questo esempio raffigura il comportamento in caso di accesso ad una rotta protetta, il meccanismo che si innesca è descritto nel sequente diagramma:
-<p align="center">
-<img src="./sequenceDiagrams/decodeJWT.png" alt="decodeJWT" width="600" height="800">
-</p>
+### Rotta protetta (decodeJWT)
+- **/protectedRout**
+  
+  Questo esempio raffigura il comportamento in caso di accesso ad una rotta protetta, il meccanismo che si innesca è descritto nel sequente diagramma:
+  <p align="center">
+     <img src="./sequenceDiagrams/decodeJWT.png" alt="decodeJWT" width="600" height="800">
+  </p>
 
-In caso di accesso alla rotta da parte di un utente non autorizzato, il messaggio è il seguente:
-```json
-status: 403 FORBIDDEN
-{
-    "message": "Frobidden"
-}
-```
-In caso di token errato, il messaggio è il seguente:
-```json
-status: 401 UNAUThORIZED
-{
-    "message": "Unauthorized"
-}
-```
-
-
-
-
-
-
-
-
-
-
-
-
-
+  In caso di accesso alla rotta da parte di un utente non autorizzato, il messaggio è il seguente:
+  ```json
+     status: 403 FORBIDDEN
+     {
+       "message": "Frobidden"
+     }
+  ```
+  In caso di token errato, il messaggio è il seguente:
+  ```json
+     status: 401 UNAUThORIZED
+     {   
+        "message": "Unauthorized"
+     }
+  ```
 
 ### Ottenere il credito di un utente
 - **GET /credit**
-Per poter ottenere una risposta non è necessario inserire un body, basta essere autenticati tramite JWT.
-Se la richiesta viene effettuata correttamente viene restituito il seguente messaggio:
+  Per poter ottenere una risposta non è necessario inserire un body, basta essere autenticati tramite JWT.
+  Se la richiesta viene effettuata correttamente viene restituito il seguente messaggio:
 
-```json
-{
-    "balance": 50
-}
+  ```json
+     {
+        "balance": 50
+     }
+  ```
 
-```
+  **NOTA:** l'accesso a questa rotta è garantito agli utenti Automobilista ed Operatore.
 
-**NOTA:** l'accesso a questa rotta è garantito agli utenti Automobilista ed Operatore.
-
-In caso di errore invece, ovvero di utente non autorizzato, verrà generato il seguente messaggio ed il relativo status code associato:
-```json
- status: 403 FORBIDDEN
-{
-   "message": "Forbidden"
-}
-```
+  In caso di errore invece, ovvero di utente non autorizzato, verrà generato il seguente messaggio ed il relativo status code associato:
+  ```json
+     status: 403 FORBIDDEN
+     {
+       "message": "Forbidden"
+     }
+  ```
 
 ### Aggiungere il credito ad un utente
 - **PATCH /<user_id>/credit**
-Per poter ottenere una risposta, il corpo delle richieste dovrà seguire il seguente modello:
+  Per poter ottenere una risposta, il corpo delle richieste dovrà seguire il seguente modello:
   
- ```json
- {
-    "amount" : 1000
- }
- ```
-Il meccanismo che si innesca all'atto della chiamata è descritto dal seguente diagramma:
-![add_Credit](./sequenceDiagrams/addCredit.png)
+  ```json
+     {
+       "amount" : 1000
+     }
+  ```
+  Il meccanismo che si innesca all'atto della chiamata è descritto dal seguente diagramma:
+  ![add_Credit](./sequenceDiagrams/addCredit.png)
 
-**NOTA:** l'accesso a questa rotta è garantito solamente all'utente di tipo Admin.
+  **NOTA:** l'accesso a questa rotta è garantito solamente all'utente di tipo Admin.
 
-In caso di errore, ovvero di utente non autorizzato, verrà generato il seguente messaggio ed il relativo status code associato:
-```json
- status: 403 FORBIDDEN
-{
-   "message": "Forbidden"
-}
-```
+  In caso di errore, ovvero di utente non autorizzato, verrà generato il seguente messaggio ed il relativo status code associato:
+  ```json
+     status: 403 FORBIDDEN
+     {
+        "message": "Forbidden"
+     }
+  ```
 
-In caso di errore di inserimento, dell'inserimento di una stringa al posto di un numero, verrà generato il seguente messaggio ed il relativo status code associato:
+  In caso di errore di inserimento, dell'inserimento di una stringa al posto di un numero, verrà generato il seguente messaggio ed il relativo status code associato:
 
-Richiesta:
+  Richiesta:
 
-```json
-{
-   "amount": "Mille"
-}
-```
+  ```json
+     {
+        "amount": "Mille"
+     }  
+  ```
 
-Risposta:
+  Risposta:
 
-```json
- status: 400 BAD_REQUEST
-{
-   "message": "Missing or wrong amount value"
-}
-```
+  ```json
+     status: 400 BAD_REQUEST
+     {
+        "message": "Missing or wrong amount value"
+     }
+  ```
 
 
 
