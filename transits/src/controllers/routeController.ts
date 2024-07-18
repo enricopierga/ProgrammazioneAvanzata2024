@@ -1,11 +1,16 @@
-// src/controllers/RouteController.ts
 import { Request, Response } from "express";
 import RouteRepository from "../repositories/RouteRepository";
-import GateRepository from "../repositories/GateRepository";
 import { checkGatesIds } from "../middleware/Validation";
 import { StatusCodes } from "http-status-codes";
 
 class RouteController {
+  /**
+   * Creates a new route.
+   * Expects a request body containing 'startGateId', 'endGateId', and 'distance'.
+   * Responds with the created route or an error message.
+   * @param req - Express request object.
+   * @param res - Express response object.
+   */
   async create(req: Request, res: Response): Promise<void> {
     try {
       const { startGateId, endGateId, distance } = req.body;
@@ -28,6 +33,13 @@ class RouteController {
     }
   }
 
+  /**
+   * Retrieves a route or all routes.
+   * If 'routeId' query parameter is provided, it retrieves the specific route.
+   * Otherwise, it retrieves all routes.
+   * @param req - Express request object.
+   * @param res - Express response object.
+   */
   async getRoute(req: Request, res: Response): Promise<void> {
     try {
       if (req.query.routeId) {
@@ -63,6 +75,13 @@ class RouteController {
     }
   }
 
+  /**
+   * Updates a route.
+   * Expects 'routeId' as a URL parameter and updates the fields provided in the request body.
+   * Responds with a success or error message.
+   * @param req - Express request object.
+   * @param res - Express response object.
+   */
   async update(req: Request, res: Response): Promise<void> {
     try {
       const routeId = Number(req.params.routeId);
@@ -75,6 +94,8 @@ class RouteController {
       }
 
       const { startGateId, endGateId, distance } = req.body;
+
+      // Check if the start and end gates exist
       if (await checkGatesIds(res, startGateId, endGateId)) {
         if (isNaN(distance)) {
           res
@@ -104,6 +125,13 @@ class RouteController {
     }
   }
 
+  /**
+   * Deletes a route.
+   * Expects 'routeId' as a URL parameter.
+   * Responds with a success or error message.
+   * @param req - Express request object.
+   * @param res - Express response object.
+   */
   async delete(req: Request, res: Response): Promise<void> {
     try {
       const routeId = Number(req.params.routeId);

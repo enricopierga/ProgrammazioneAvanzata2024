@@ -1,4 +1,3 @@
-// src/controllers/TransitController.ts
 import { Request, Response } from "express";
 import TransitRepository from "../repositories/TransitRepository";
 import VehicleRepository from "../repositories/VehicleRepository";
@@ -15,14 +14,23 @@ import {
 import { checkLicensePlate, checkWeather } from "../middleware/Validation";
 
 class TransitController {
+  /**
+   * Creates a new transit.
+   * Expects a request body containing 'licensePlate', 'routeId', 'travelTime', and 'weather'.
+   * Responds with the created transit and possibly a new infraction if the speed limit is exceeded.
+   * @param req - Express request object.
+   * @param res - Express response object.
+   */
   async create(req: Request, res: Response): Promise<void> {
     try {
       const { licensePlate, routeId, travelTime, weather } = req.body;
 
+      // Validate license plate format
       if (!checkLicensePlate(licensePlate, res)) {
         return;
       }
 
+      // Validate routeId and travelTime are numbers
       if (isNaN(routeId)) {
         res
           .status(StatusCodes.BAD_REQUEST)
@@ -37,10 +45,12 @@ class TransitController {
         return;
       }
 
+      // Validate weather format
       if (!checkWeather(weather, res)) {
         return;
       }
 
+      // Retrieve the vehicle using license plate
       const vehicle = await VehicleRepository.getByLicensePlate(licensePlate);
 
       if (!vehicle) {
@@ -50,6 +60,7 @@ class TransitController {
         return;
       }
 
+      // Retrieve the route using routeId
       const route = await RouteRepository.getById(routeId);
 
       if (!route) {
@@ -57,11 +68,16 @@ class TransitController {
         return;
       }
 
+      // Set vehicleId in the request body
       req.body.vehicleId = vehicle.id;
-      const transit = await TransitRepository.create(req.body); // crea il transito
 
+      // Create the transit
+      const transit = await TransitRepository.create(req.body);
+
+      // Calculate the speed of the vehicle
       const speed = Math.floor((route.distance / transit.travelTime) * 3.6);
 
+      // Determine the speed limit based on vehicle type and weather conditions
       let speedLimit: number = SPEED_LIMIT_CAR_CLEAR;
       if (vehicle.type === "Car") {
         speedLimit =
@@ -75,6 +91,7 @@ class TransitController {
             : SPEED_LIMIT_TRUCK_CLEAR;
       }
 
+      // If the speed exceeds the speed limit, create an infraction
       if (speed > speedLimit) {
         const infractionData = {
           vehicleId: transit.vehicleId,
@@ -103,6 +120,13 @@ class TransitController {
     }
   }
 
+  /**
+   * Retrieves a transit or all transits.
+   * If 'transitId' query parameter is provided, it retrieves the specific transit.
+   * Otherwise, it retrieves all transits.
+   * @param req - Express request object.
+   * @param res - Express response object.
+   */
   async getTransit(req: Request, res: Response): Promise<void> {
     try {
       if (req.query.transitId) {
@@ -137,6 +161,13 @@ class TransitController {
     }
   }
 
+  /**
+   * Updates a transit.
+   * Expects 'transitId' as a URL parameter and updates the fields provided in the request body.
+   * Responds with a success or error message.
+   * @param req - Express request object.
+   * @param res - Express response object.
+   */
   async update(req: Request, res: Response): Promise<void> {
     try {
       const transitId = Number(req.params.transitId);
@@ -150,6 +181,7 @@ class TransitController {
 
       const { licensePlate, routeId, travelTime, weather } = req.body;
 
+      // Validate and process licensePlate if provided
       if (licensePlate && !checkLicensePlate(licensePlate, res)) {
         return;
       } else if (licensePlate) {
@@ -165,6 +197,7 @@ class TransitController {
         req.body.vehicleId = vehicle.id;
       }
 
+      // Validate and process routeId if provided
       if (routeId && isNaN(routeId)) {
         res
           .status(StatusCodes.BAD_REQUEST)
@@ -181,6 +214,7 @@ class TransitController {
         }
       }
 
+      // Validate travelTime if provided
       if (travelTime && isNaN(travelTime)) {
         res
           .status(StatusCodes.BAD_REQUEST)
@@ -188,10 +222,12 @@ class TransitController {
         return;
       }
 
+      // Validate weather if provided
       if (weather && !checkWeather(weather, res)) {
         return;
       }
 
+      // Update the transit entry in the database
       const updated = await TransitRepository.update(transitId, req.body);
 
       if (updated) {
@@ -212,6 +248,13 @@ class TransitController {
     }
   }
 
+  /**
+   * Deletes a transit.
+   * Expects 'transitId' as a URL parameter.
+   * Responds with a success or error message.
+   * @param req - Express request object.
+   * @param res - Express response object.
+   */
   async delete(req: Request, res: Response): Promise<void> {
     try {
       const transitId = Number(req.params.transitId);

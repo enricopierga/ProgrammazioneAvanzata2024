@@ -7,7 +7,6 @@ type acceptedRoles = "Admin" | "Operatore" | "Automobilista" | "Varco";
 
 /**
  * Middleware to validate JWT and optionally check for specific user role.
- *
  * @param requiredRole - The required user role to access the route (optional).
  * @returns The middleware function.
  */

@@ -1,9 +1,15 @@
-// src/controllers/GateController.ts
 import { Request, Response } from "express";
 import GateRepository from "../repositories/GateRepository";
 import { StatusCodes } from "http-status-codes";
 
 class GateController {
+  /**
+   * Creates a new gate.
+   * Expects a request body containing the gate details.
+   * Responds with the created gate or an error message.
+   * @param req - Express request object.
+   * @param res - Express response object.
+   */
   async create(req: Request, res: Response): Promise<void> {
     try {
       const gate = await GateRepository.create(req.body);
@@ -15,6 +21,14 @@ class GateController {
     }
   }
 
+  /**
+   * Retrieves a specific gate by ID or all gates if no ID is provided.
+   * If a gateId query parameter is provided, fetches the gate with that ID.
+   * If no gateId is provided, fetches all gates.
+   * Responds with the gate(s) or an error message.
+   * @param req - Express request object.
+   * @param res - Express response object.
+   */
   async getGate(req: Request, res: Response): Promise<void> {
     try {
       if (req.query.gateId) {
@@ -45,6 +59,13 @@ class GateController {
     }
   }
 
+  /**
+   * Updates an existing gate by ID.
+   * Expects a gateId parameter in the URL and the updated gate details in the request body.
+   * Responds with a success message or an error message.
+   * @param req - Express request object.
+   * @param res - Express response object.
+   */
   async update(req: Request, res: Response): Promise<void> {
     try {
       const gateId = Number(req.params.gateId);
@@ -73,6 +94,13 @@ class GateController {
     }
   }
 
+  /**
+   * Deletes a gate by ID.
+   * Expects a gateId parameter in the URL.
+   * Responds with a success message or an error message.
+   * @param req - Express request object.
+   * @param res - Express response object.
+   */
   async delete(req: Request, res: Response): Promise<void> {
     try {
       const gateId = Number(req.params.gateId);

@@ -1,4 +1,3 @@
-// src/controllers/VehicleController.ts
 import { Request, Response } from "express";
 import VehicleRepository from "../repositories/VehicleRepository";
 import {
@@ -9,6 +8,11 @@ import {
 import { StatusCodes } from "http-status-codes";
 
 class VehicleController {
+  /**
+   * Creates a new vehicle.
+   * @param req - Express request object.
+   * @param res - Express response object.
+   */
   async create(req: Request, res: Response): Promise<void> {
     try {
       const { licensePlate, type, userId } = req.body;
@@ -33,6 +37,11 @@ class VehicleController {
     }
   }
 
+  /**
+   * Retrieves a vehicle by vehicleId or all vehicles if vehicleId is not specified as query parameter.
+   * @param req - Express request object.
+   * @param res - Express response object.
+   */
   async getVehicle(req: Request, res: Response): Promise<void> {
     try {
       if (req.query.vehicleId) {
@@ -68,6 +77,11 @@ class VehicleController {
     }
   }
 
+  /**
+   * Updates a vehicle.
+   * @param req - Express request object.
+   * @param res - Express response object.
+   */
   async update(req: Request, res: Response): Promise<void> {
     try {
       const vehicleId = Number(req.params.vehicleId);
@@ -111,6 +125,11 @@ class VehicleController {
     }
   }
 
+  /**
+   * Deletes a vehicle.
+   * @param req - Express request object.
+   * @param res - Express response object.
+   */
   async delete(req: Request, res: Response): Promise<void> {
     try {
       const vehicleId = Number(req.params.vehicleId);

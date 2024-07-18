@@ -15,7 +15,6 @@ declare global {
 
 /**
  * Extracts the token from the Bearer prefix, if present.
- *
  * @param bearer - The authorization string containing the JWT.
  * @returns The extracted JWT.
  */
@@ -29,7 +28,6 @@ function extractToken(bearer: string): string {
 
 /**
  * Decodes a JWT token.
- *
  * @param bearer - The authorization string containing the JWT.
  * @returns The decoded JWT object.
  */
@@ -40,7 +38,6 @@ export function decodeJwt(bearer: string): JwtPayload {
 
 /**
  * Generates a JWT token from a given payload.
- *
  * @param payload - The JWT payload containing userId and role.
  * @returns The generated JWT token.
  */
