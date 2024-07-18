@@ -711,6 +711,16 @@ export default new GateRepository(); // Export an instance of GateRepository
         "updatedAt": "2024-07-18T11:09:30.045Z"
     }
     ```
+In caso di UUID corretto e di credito insufficiente, verrà restituito il seguente messaggio di errore:
+
+```json
+     status: 402 PAYMENT_REQUIRED
+     {
+    "message": "Insufficient Balance"
+     }
+  ```
+
+In questo caso, l'utente dovrà contattare l'Admin del sistema in modo da poter ricaricare il suo credito e poter effettuare il pagamento delle sue Infractions.
 
 Nel caso in cui il formato dell'UUID inserito non sia corretto, verrà restituito il seguente messaggio di errore:
 
