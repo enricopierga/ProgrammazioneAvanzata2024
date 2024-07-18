@@ -206,7 +206,7 @@ export default new GateRepository(); // Export an instance of GateRepository
   ```json
      status: 403 FORBIDDEN
      {
-       "message": "Frobidden"
+       "message": "Forbidden"
      }
   ```
   In caso di token errato, il messaggio è il seguente:
