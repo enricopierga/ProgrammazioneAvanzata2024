@@ -142,8 +142,8 @@ Il sistema supporta tre ruoli distinti:
     ```
 
 4. Accedere ai servizi:
-    - Backend Transiti: `http://localhost:3000`
-    - Backend Pagamenti: `http://localhost:3001`
+    - Backend Pagamenti: `http://localhost:3000`
+    - Backend Transiti: `http://localhost:3001`
 
 ## Test del Progetto
 
