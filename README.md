@@ -126,7 +126,7 @@ Il sistema supporta tre ruoli distinti:
 ### Rotta protetta (decodeJWT)
 - **/protectedRout**
   
-  Questo esempio raffigura il comportamento in caso di accesso ad una rotta protetta, il meccanismo che si innesca è descritto nel sequente diagramma:
+  Questo esempio raffigura il comportamento in caso di accesso ad una rotta protetta, il meccanismo che si innesca è descritto dal sequente diagramma:
   <p align="center">
      <img src="./sequenceDiagrams/decodeJWT.png" alt="decodeJWT" width="600" height="800">
   </p>
