@@ -540,7 +540,7 @@ Risposta:
   ![transit_delete](./sequenceDiagrams/transit-delete.png)
 
 ### Richiesta Multe per Targa e Periodo
-- **POST /infractions/plates-and-period**
+- **GET /infraction**
 
     Per poter ottenere una risposta, il corpo della richiesta dovrà seguire il seguente modello:
     ```json
