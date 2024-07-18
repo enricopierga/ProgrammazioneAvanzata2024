@@ -707,13 +707,30 @@ export default new GateRepository(); // Export an instance of GateRepository
         "amount": 150,
         "timestamp": "2024-07-18T11:09:30.044Z",
         "uuid": "6836178f-0c79-4c10-88ec-75bae54fd6a4",
-        "paid": false,
+        "paid": true,
         "createdAt": "2024-07-18T11:09:30.045Z",
         "updatedAt": "2024-07-18T11:09:30.045Z"
     }
 ]
   ```
-  
+
+Nel caso in cui il formato dell'UUID inserito non sia corretto, verrà restituito il seguente messaggio di errore:
+
+  ```json
+     status: 400 BAD_REQUEST
+     {
+    "message": "Invalid uuid format"
+     }
+  ```
+
+Se il formato è corretto ma l'UUID non appartiene a nessuna Infraction, allora verrà restituito il seguente messaggio di errore:
+
+  ```json
+     status: 404 NOT_FOUND
+     {
+    "message": "Not found"
+     }
+  ```
 
 ### Conclusione
 
