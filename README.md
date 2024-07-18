@@ -130,6 +130,14 @@ Questo esempio raffigura il comportamento in caso di accesso ad una rotta protet
 <img src="./sequenceDiagrams/decodeJWT.png" alt="decodeJWT" width="600" height="800">
 </p>
 
+In caso di accesso alla rotta da parte di un utente non autorizzato, il messaggio è il seguente:
+```json
+status: 403 FORBIDDEN
+{
+    "message": "Frobidden"
+}
+```
+
 
 
 
