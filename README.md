@@ -694,7 +694,7 @@ export default new GateRepository(); // Export an instance of GateRepository
 
   In caso di UUID corretto e di credito sufficiente, verrà restituito l'oggetto Infraction corrispondente, ed il suo stato di "paid" passerà a true:
 
-    ```json
+  ```json
     {
         "id": 2,
         "vehicleId": 2,
@@ -710,7 +710,7 @@ export default new GateRepository(); // Export an instance of GateRepository
         "createdAt": "2024-07-18T11:09:30.045Z",
         "updatedAt": "2024-07-18T11:09:30.045Z"
     }
-    ```
+```
 In caso di UUID corretto e di credito insufficiente, verrà restituito il seguente messaggio di errore:
 
 ```json
@@ -718,27 +718,27 @@ In caso di UUID corretto e di credito insufficiente, verrà restituito il seguen
      {
     "message": "Insufficient Balance"
      }
-  ```
+```
 
 In questo caso, l'utente dovrà contattare l'Admin del sistema in modo da poter ricaricare il suo credito e poter effettuare il pagamento delle sue Infractions.
 
 Nel caso in cui il formato dell'UUID inserito non sia corretto, verrà restituito il seguente messaggio di errore:
 
-  ```json
+```json
      status: 400 BAD_REQUEST
      {
     "message": "Invalid uuid format"
      }
-  ```
+```
 
 Se il formato è corretto ma l'UUID non appartiene a nessuna Infraction, allora verrà restituito il seguente messaggio di errore:
 
-  ```json
+```json
      status: 404 NOT_FOUND
      {
     "message": "Not found"
      }
-  ```
+```
 
 ### Conclusione
 
