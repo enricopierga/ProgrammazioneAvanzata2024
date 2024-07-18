@@ -137,7 +137,13 @@ status: 403 FORBIDDEN
     "message": "Frobidden"
 }
 ```
-
+In caso di token errato, il messaggio è il seguente:
+```json
+status: 401 UNaUThORIZED
+{
+    "message": "Unauthorized"
+}
+```
 
 
 
