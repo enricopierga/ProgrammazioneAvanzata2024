@@ -695,7 +695,6 @@ export default new GateRepository(); // Export an instance of GateRepository
   In caso di UUID corretto e di credito sufficiente, verrà restituito l'oggetto Infraction corrispondente, ed il suo stato di "paid" passerà a true:
 
     ```json
-   [
     {
         "id": 2,
         "vehicleId": 2,
@@ -711,8 +710,7 @@ export default new GateRepository(); // Export an instance of GateRepository
         "createdAt": "2024-07-18T11:09:30.045Z",
         "updatedAt": "2024-07-18T11:09:30.045Z"
     }
-]
-  ```
+    ```
 
 Nel caso in cui il formato dell'UUID inserito non sia corretto, verrà restituito il seguente messaggio di errore:
 
