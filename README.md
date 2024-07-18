@@ -139,7 +139,7 @@ status: 403 FORBIDDEN
 ```
 In caso di token errato, il messaggio è il seguente:
 ```json
-status: 401 UNaUThORIZED
+status: 401 UNAUThORIZED
 {
     "message": "Unauthorized"
 }
