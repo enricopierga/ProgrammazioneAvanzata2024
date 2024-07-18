@@ -34,7 +34,7 @@ function extractToken(bearer: string): string {
  * @param bearer - The authorization string containing the JWT.
  * @returns The decoded JWT object.
  */
-export function decodeJwt(bearer: string): JwtPayload {
+export function decodeAndVerifyJwt(bearer: string): JwtPayload {
 	const token = extractToken(bearer);
 	return jwt.verify(token, process.env.JWT_PRIVATE_KEY as string) as JwtPayload;
 }

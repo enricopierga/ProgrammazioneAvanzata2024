@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { JwtPayload } from "jsonwebtoken";
-import { decodeJwt } from "../security/JWTservice";
+import { decodeAndVerifyJwt } from "../security/JWTservice";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 type acceptedRoles = "Admin" | "Operatore" | "Automobilista" | "Varco";
@@ -27,7 +27,7 @@ export function requireAuthentication(requiredRoles?: acceptedRoles[]) {
 
     if (requiredRoles !== undefined && requiredRoles.length > 0) {
       try {
-        const decodedToken = decodeJwt(authorizationHeader);
+        const decodedToken = decodeAndVerifyJwt(authorizationHeader);
         req.user = decodedToken;
 
         let hasValidRole = false;

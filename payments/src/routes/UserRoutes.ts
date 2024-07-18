@@ -1,87 +1,41 @@
-import { Router } from "express";
-import { requireAuthentication } from "../middlewares/authenticationMiddleware";
+import { Router } from "express"; // Import the Router from Express
+import { requireAuthentication } from "../middlewares/authenticationMiddleware"; // Import the authentication middleware
+import UserController from "../controllers/UserController"; // Import the UserController
+import FinePdfController from "../controllers/FinePdfController"; // Import the FinePdfController
 
-import UserController from "../controllers/UserController";
-import PdfController from "../controllers/FinePdfController";
-import FinePdfController from "../controllers/FinePdfController";
-
+// Create an instance of the Express router
 const router = Router();
 
-/**
- * @swagger
- * /user/{id}/credit:
- *   post:
- *     summary: Top up user's credit
- *     tags: [Users]
- *     parameters:
- *       - in: path
- *         name: id
- *         schema:
- *           type: integer
- *         required: true
- *         description: User ID
- *     responses:
- *       200:
- *         description: Credit topped up
- *       401:
- *         description: Unauthorized
- *       403:
- *         description: Forbidden
- */
-router.patch(
-  "/:id/credit",
-  requireAuthentication(["Admin"]),
-  UserController.addCredit
-);
-
-/**
- * @swagger
- * /user/{id}/credit:
- *   get:
- *     summary: Get user's credit
- *     tags: [Users]
- *     parameters:
- *       - in: path
- *         name: id
- *         schema:
- *           type: integer
- *         required: true
- *         description: User ID
- *     responses:
- *       200:
- *         description: User credit retrieved
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 credit:
- *                   type: number
- *                   description: User's credit
- *                   example: 100.5
- *       401:
- *         description: Unauthorized
- *       403:
- *         description: Forbidden
- */
-router.get(
-  "/credit",
-  requireAuthentication(["Automobilista", "Operatore"]),
-  UserController.getCredit
-);
-
-router.get(
-  "/myInfraction",
-  requireAuthentication(["Automobilista", "Operatore"]),
-  UserController.getMyInfractions
-);
-
+// Route for user login, calls the login method of UserController
 router.post("/login", UserController.login);
 
+// Route to get user credit, accessible only to users with "Automobilista" and "Operatore" roles
 router.get(
-  "/:id/pdf",
-  requireAuthentication(["Automobilista", "Operatore"]),
-  FinePdfController.getPdf
+  "/credit",
+  requireAuthentication(["Automobilista", "Operatore"]), // Authentication middleware checking for roles
+  UserController.getCredit // Calls the getCredit method of UserController
 );
 
+// Route to add credit to a specific user, accessible only to Admins
+router.patch(
+  "/:id/credit",
+  requireAuthentication(["Admin"]), // Authentication middleware checking for Admin role
+  UserController.addCredit // Calls the addCredit method of UserController
+);
+
+// Route to get the infractions of the authenticated user, accessible only to users with "Automobilista" and "Operatore" roles
+router.get(
+  "/myInfraction",
+  requireAuthentication(["Automobilista", "Operatore"]), // Authentication middleware checking for roles
+  UserController.getMyInfractions // Calls the getMyInfractions method of UserController
+);
+
+// Route to get the PDF of a specific infraction, accessible only to users with "Automobilista" and "Operatore" roles
+router.get(
+  "/:id/pdf",
+  requireAuthentication(["Automobilista", "Operatore"]), // Authentication middleware checking for roles
+  FinePdfController.getPdf // Calls the getPdf method of FinePdfController
+);
+
+// Export the router to be used in other parts of the application
 export default router;

@@ -1,14 +1,14 @@
-import { Request, Response } from "express";
-import { PDFDocument, rgb, StandardFonts } from "pdf-lib";
-import QRCode from "qrcode";
-import InfractionRepository from "../repositories/InfractionRepository";
-import UserRepository from "../repositories/UserRepository";
-import VehicleRepository from "../repositories/VehicleRepository";
-import routeRepository from "../repositories/RouteRepository";
-import GateRepository from "../repositories/GateRepository";
-import { ReasonPhrases, StatusCodes } from "http-status-codes";
+import { Request, Response } from "express"; // Import Request and Response types from Express
+import { PDFDocument, rgb, StandardFonts } from "pdf-lib"; // Import PDF creation tools from pdf-lib
+import QRCode from "qrcode"; // Import QR code generation library
+import InfractionRepository from "../repositories/InfractionRepository"; // Import the InfractionRepository
+import UserRepository from "../repositories/UserRepository"; // Import the UserRepository
+import VehicleRepository from "../repositories/VehicleRepository"; // Import the VehicleRepository
+import routeRepository from "../repositories/RouteRepository"; // Import the RouteRepository
+import GateRepository from "../repositories/GateRepository"; // Import the GateRepository
+import { ReasonPhrases, StatusCodes } from "http-status-codes"; // Import HTTP status codes and reason phrases
 
-// Interfaccia per i dati della multa
+// Interface for ticket data
 interface TicketData {
   id: String;
   username: string;
@@ -25,33 +25,35 @@ interface TicketData {
 }
 
 class PdfController {
-  // Funzione per generare il QR code
+  // Function to generate QR code
   async generateQrCode(data: string): Promise<String> {
     return QRCode.toDataURL(data);
   }
 
+  // Function to handle PDF generation request
   getPdf = async (req: Request, res: Response) => {
-    const infractionId = parseInt(req.params.id, 10);
-    const infraction = await InfractionRepository.getById(infractionId);
-    const user = await UserRepository.getById(req.user!.userId);
+    const infractionId = parseInt(req.params.id, 10); // Parse the infraction ID from the request parameters
+    const infraction = await InfractionRepository.getById(infractionId); // Retrieve infraction details from the repository
+    const user = await UserRepository.getById(req.user!.userId); // Retrieve user details from the repository
 
-    const vehicle = await VehicleRepository.getById(infraction?.vehicleId!);
-
-    const route = await routeRepository.getById(infraction?.routeId!);
+    const vehicle = await VehicleRepository.getById(infraction?.vehicleId!); // Retrieve vehicle details from the repository
+    const route = await routeRepository.getById(infraction?.routeId!); // Retrieve route details from the repository
     const entryGateId = route?.startGateId;
     const exitGateId = route?.endGateId;
+    const entryGate = await GateRepository.getById(entryGateId!); // Retrieve entry gate details from the repository
+    const exitGate = await GateRepository.getById(exitGateId!); // Retrieve exit gate details from the repository
 
-    const entryGate = await GateRepository.getById(entryGateId!);
-    const exitGate = await GateRepository.getById(exitGateId!);
-
+    // Check if infraction ID is valid
     if (isNaN(infractionId)) {
       return res.status(StatusCodes.FORBIDDEN).send(ReasonPhrases.FORBIDDEN);
     }
 
+    // Check if the user is authorized to access the infraction
     if (user?.id !== infraction!.userId) {
       return res.status(StatusCodes.NOT_FOUND).send(ReasonPhrases.NOT_FOUND);
     }
 
+    // Prepare the data for the ticket
     const data: TicketData = {
       username: user!.username,
       id: infraction!.id.toString(),
@@ -67,7 +69,7 @@ class PdfController {
       isPaid: infraction!.paid,
     };
 
-    const pdf = await this.generatePdf(data);
+    const pdf = await this.generatePdf(data); // Generate the PDF with the ticket data
 
     res.setHeader("Content-Type", "application/pdf");
     res.setHeader(
@@ -76,11 +78,11 @@ class PdfController {
     );
     res.setHeader("Content-Length", pdf.length);
 
-    // Invia il PDF come risposta
+    // Send the generated PDF as a response
     res.send(Buffer.from(pdf));
   };
 
-  // Funzione per generare il PDF della multa
+  // Function to generate the PDF of the infraction
   async generatePdf(infractionData: TicketData): Promise<Uint8Array> {
     const pdfDoc = await PDFDocument.create();
     const page = pdfDoc.addPage([800, 550]);
@@ -153,7 +155,7 @@ class PdfController {
     });
 
     page.drawText(
-      `Misured Speed: ${infractionData.actualSpeed.toString()} km/h`,
+      `Measured Speed: ${infractionData.actualSpeed.toString()} km/h`,
       {
         x: 50,
         y: height - 450,
@@ -171,16 +173,16 @@ class PdfController {
       color: rgb(0, 0, 0),
     });
 
-    // Genera un QR code come immagine in formato Data URL
+    // Generate a QR code as a Data URL image
     const qrCodeDataUrl = await QRCode.toDataURL(
       `${infractionData.id} | ${infractionData.uuid} | ${infractionData.plateNumber} | ${infractionData.amount}`
     );
 
-    // Decodifica l'immagine in formato Data URL
+    // Decode the Data URL image
     const qrCodeImageBytes = Buffer.from(qrCodeDataUrl.split(",")[1], "base64");
     const qrCodeImage = await pdfDoc.embedPng(qrCodeImageBytes);
 
-    // Aggiungi l'immagine del QR code al PDF
+    // Add the QR code image to the PDF
     const qrCodeDims = qrCodeImage.scale(0.8);
     page.drawImage(qrCodeImage, {
       x: 400,
@@ -194,4 +196,4 @@ class PdfController {
   }
 }
 
-export default new PdfController();
+export default new PdfController(); // Export an instance of PdfController
