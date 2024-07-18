@@ -708,35 +708,35 @@ Il sistema supporta tre ruoli distinti:
         "createdAt": "2024-07-18T11:09:30.045Z",
         "updatedAt": "2024-07-18T11:09:30.045Z"
     }
-```
-In caso di UUID corretto e di credito insufficiente, verrà restituito il seguente messaggio di errore:
+  ```
+  In caso di UUID corretto e di credito insufficiente, verrà restituito il seguente messaggio di errore:
 
-```json
-     status: 402 PAYMENT_REQUIRED
-     {
-    "message": "Insufficient Balance"
-     }
-```
+  ```json
+      status: 402 PAYMENT_REQUIRED
+      {
+        "message": "Insufficient Balance"
+      }
+  ```
 
-In questo caso, l'utente dovrà contattare l'Admin del sistema in modo da poter ricaricare il suo credito e poter effettuare il pagamento delle sue Infractions.
+  In questo caso, l'utente dovrà contattare l'Admin del sistema in modo da poter ricaricare il suo credito e poter effettuare il pagamento delle sue Infractions.
 
-Nel caso in cui il formato dell'UUID inserito non sia corretto, verrà restituito il seguente messaggio di errore:
+  Nel caso in cui il formato dell'UUID inserito non sia corretto, verrà restituito il seguente messaggio di errore:
 
-```json
+  ```json
      status: 400 BAD_REQUEST
      {
-    "message": "Invalid uuid format"
+        "message": "Invalid uuid format"
      }
-```
+  ```
 
-Se il formato è corretto ma l'UUID non appartiene a nessuna Infraction, allora verrà restituito il seguente messaggio di errore:
+  Se il formato è corretto ma l'UUID non appartiene a nessuna Infraction, allora verrà restituito il seguente messaggio di errore:
 
-```json
+  ```json
      status: 404 NOT_FOUND
      {
-    "message": "Not found"
+       "message": "Not found"
      }
-```
+  ```
 
 
 #### Scaricare Bollettino di Pagamento
