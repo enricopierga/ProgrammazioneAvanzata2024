@@ -57,7 +57,9 @@ Il sistema supporta tre ruoli distinti:
 
 ### Diagramma ER
 
-![Class Diagram](./er_diagram.png)
+ <p align="center">
+     <img src="./er_diagram" alt="decodeJWT" width="600" height="800">
+  </p>
 
 ### Pattern Utilizzati
 
@@ -193,7 +195,7 @@ export default new GateRepository(); // Export an instance of GateRepository
   ```
 
 ### Rotta protetta (decodeJWT)
-- **/protectedRout**
+- **/protectedRoute**
   
   Questo esempio raffigura il comportamento in caso di accesso ad una rotta protetta, il meccanismo che si innesca è descritto dal sequente diagramma:
   <p align="center">
