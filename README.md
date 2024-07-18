@@ -108,7 +108,7 @@ Se la richiesta viene effettuata correttamente viene restituito il seguente mess
     }
 }
 ```
-In caso di errore invece, come nel seguente caso, verrà generato un messaggio di errore assieme allo status code ad esso associato:
+In caso di errore invece, come in questo caso (utente non presente nel sistema):
 ```json
 {
     "username":"giacomo",
@@ -122,6 +122,42 @@ status: 404 NOT_FOUND
     "message": "User not found"
 }
 ```
+### Esempio di rotta protetta (decodeJWT Token)
+- /protectedRoute
+
+Questo esempio raffigura il comportamento in caso di accesso ad una rotta protetta, il meccanismo che si innesca è descritto nel sequente diagramma:
+<p align="center">
+<img src="./sequenceDiagrams/decodeJWT.png" alt="decodeJWT" width="600" height="800">
+</p>
+
+In caso di accesso alla rotta da parte di un utente non autorizzato, il messaggio è il seguente:
+```json
+status: 403 FORBIDDEN
+{
+    "message": "Frobidden"
+}
+```
+In caso di token errato, il messaggio è il seguente:
+```json
+status: 401 UNAUThORIZED
+{
+    "message": "Unauthorized"
+}
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ### Ottenere il credito di un utente
 - **GET /credit**
 Per poter ottenere una risposta non è necessario inserire un body, basta essere autenticati tramite JWT.
@@ -540,7 +576,7 @@ Risposta:
   ![transit_delete](./sequenceDiagrams/transit-delete.png)
 
 ### Richiesta Multe per Targa e Periodo
-- **POST /infractions/plates-and-period**
+- **GET /infraction**
 
     Per poter ottenere una risposta, il corpo della richiesta dovrà seguire il seguente modello:
     ```json
