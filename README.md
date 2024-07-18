@@ -712,10 +712,10 @@ Il sistema supporta tre ruoli distinti:
   In caso di UUID corretto e di credito insufficiente, verrà restituito il seguente messaggio di errore:
 
   ```json
-      status: 402 PAYMENT_REQUIRED
-      {
-        "message": "Insufficient Balance"
-      }
+    status: 402 PAYMENT_REQUIRED
+    {
+       "message": "Insufficient Balance"
+    }
   ```
 
   In questo caso, l'utente dovrà contattare l'Admin del sistema in modo da poter ricaricare il suo credito e poter effettuare il pagamento delle sue Infractions.
@@ -723,19 +723,19 @@ Il sistema supporta tre ruoli distinti:
   Nel caso in cui il formato dell'UUID inserito non sia corretto, verrà restituito il seguente messaggio di errore:
 
   ```json
-     status: 400 BAD_REQUEST
-     {
-        "message": "Invalid uuid format"
-     }
+    status: 400 BAD_REQUEST
+    {
+       "message": "Invalid uuid format"
+    }  
   ```
 
   Se il formato è corretto ma l'UUID non appartiene a nessuna Infraction, allora verrà restituito il seguente messaggio di errore:
 
   ```json
-     status: 404 NOT_FOUND
-     {
+    status: 404 NOT_FOUND
+    {
        "message": "Not found"
-     }
+    }
   ```
 
 
