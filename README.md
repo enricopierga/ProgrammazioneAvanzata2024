@@ -1,5 +1,29 @@
 # Sistema di Gestione delle Multe Autostradali
 
+## Indice
+1. [Obiettivo del Progetto](#obiettivo-del-progetto)
+2. [Progettazione](#progettazione)
+    - [Diagramma dei Casi d'Uso](#diagramma-dei-casi-duso)
+    - [Diagramma ER](#diagramma-er)
+    - [Pattern Utilizzati](#pattern-utilizzati)
+3. [Avviare il Progetto](#avviare-il-progetto)
+    - [Prerequisiti](#prerequisiti)
+    - [Istruzioni](#istruzioni)
+4. [Test del Progetto](#test-del-progetto)
+    - [Postman](#postman)
+    - [Esempi di Richieste](#esempi-di-richieste)
+        - [Login nel sistema](#login-nel-sistema)
+        - [Rotta protetta (decodeJWT)](#rotta-protetta-decodejwt)
+        - [Ottenere il credito di un utente](#ottenere-il-credito-di-un-utente)
+        - [Aggiungere il credito ad un utente](#aggiungere-il-credito-ad-un-utente)
+5. [CRUD per la Gestione dei Varchi](#crud-per-la-gestione-dei-varchi)
+6. [CRUD per la Gestione delle Tratte](#crud-per-la-gestione-delle-tratte)
+7. [CRUD per la Gestione dei Veicoli](#crud-per-la-gestione-dei-veicoli)
+8. [CRUD per la Gestione dei Transiti (e Generazione delle Multe)](#crud-per-la-gestione-dei-transiti-e-generazione-delle-multe)
+9. [Richiesta Multe per Targa e Periodo](#richiesta-multe-per-targa-e-periodo)
+10. [Scaricare Bollettino di Pagamento](#scaricare-bollettino-di-pagamento)
+11. [Effettuare un Pagamento](#effettuare-un-pagamento)
+
 ## Obiettivo del Progetto
 
 Il progetto ha l'obiettivo di sviluppare un sistema per la gestione delle multe derivanti dal superamento dei limiti di velocità su tratte autostradali, simile ai sistemi Tutor. Questo sistema modella diverse entità chiave:
