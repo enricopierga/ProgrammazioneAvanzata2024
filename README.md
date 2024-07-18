@@ -58,7 +58,7 @@ Il sistema supporta tre ruoli distinti:
 ### Diagramma ER
 
  <p align="center">
-     <img src="./er_diagram.png" alt="der_diagramT" width="600" height="800">
+     <img src="./er_diagram.png" alt="der_diagramT" width="700" height="800">
   </p>
 
 ### Pattern Utilizzati
