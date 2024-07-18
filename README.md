@@ -639,7 +639,7 @@ Il sistema supporta tre ruoli distinti:
   ```
 
 ### Aggiungere il credito ad un utente
-- **PATCH /<user_id>/credit**
+- **PATCH /:userId>/credit**
   Per poter ottenere una risposta, il corpo delle richieste dovrà seguire il seguente modello:
   
   ```json
