@@ -123,7 +123,7 @@ status: 404 NOT_FOUND
 }
 ```
 ### Esempio di rotta protetta (decodeJWT Token)
-<img src="./sequenceDiagrams/decodeJWT.png" alt="decodeJWT" width="150" height="150">
+<img src="./sequenceDiagrams/decodeJWT.png" alt="decodeJWT" width="600" height="800">
 
 
 
