@@ -76,7 +76,7 @@ class UserController {
     }
 
     // Increase user's credit
-    const utente = await utenteRepository.increaseCredit(userId, amount);
+    const utente = await UserRepository.increaseCredit(userId, amount);
 
     // Create a Payment object to record the transaction
     const paymentData = {

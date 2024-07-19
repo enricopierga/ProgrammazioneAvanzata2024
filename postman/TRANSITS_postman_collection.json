@@ -7,110 +7,6 @@
 	},
 	"item": [
 		{
-			"name": "Payments",
-			"item": [
-				{
-					"name": "loginbyOperatore",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"const response = pm.response.json();\r",
-									"pm.globals.set(\"BEARER_TOKEN\", response.accessToken);\r",
-									"\r",
-									"let CryptoJs = require('crypto-js');\r",
-									"\r",
-									"a = response.accessToken.split('.');\r",
-									"var words = CryptoJs.enc.Base64.parse(a[1]);\r",
-									"var textString = CryptoJs.enc.Utf8.stringify(words);\r",
-									"\r",
-									"const payload = JSON.parse(textString);\r",
-									"pm.globals.set(\"USER_ID\", payload.userId);"
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"username\" : \"pangolino\",\r\n    \"password\": \"12345\" \r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://{{paymentsHost}}:{{paymentsPort}}/user/login",
-							"protocol": "http",
-							"host": [
-								"{{paymentsHost}}"
-							],
-							"port": "{{paymentsPort}}",
-							"path": [
-								"user",
-								"login"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "addCredit",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						}
-					],
-					"request": {
-						"method": "PATCH",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{BEARER_TOKEN}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"amount\": 10\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://{{paymentsHost}}:{{paymentsPort}}/user/{{USER_ID}}/credit",
-							"protocol": "http",
-							"host": [
-								"{{paymentsHost}}"
-							],
-							"port": "{{paymentsPort}}",
-							"path": [
-								"user",
-								"{{USER_ID}}",
-								"credit"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
 			"name": "Transits",
 			"item": [
 				{
@@ -123,6 +19,10 @@
 									"listen": "test",
 									"script": {
 										"exec": [
+											"pm.test(\"Response body should not be null\", function () {",
+											"    var responseText = pm.response.text();",
+											"    pm.expect(responseText).to.not.equal(\"null\");",
+											"});",
 											""
 										],
 										"type": "text/javascript",
@@ -141,7 +41,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n         \"location\": \"Location\"\n}",
+									"raw": "{\n    \"id\": 6,\n    \"location\": \"Location \"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -149,15 +49,14 @@
 									}
 								},
 								"url": {
-									"raw": "http://{{transitsHost}}:{{transitsPort}}/gate/{{USER_ID}}",
+									"raw": "http://{{transitsHost}}:{{transitsPort}}/gate",
 									"protocol": "http",
 									"host": [
 										"{{transitsHost}}"
 									],
 									"port": "{{transitsPort}}",
 									"path": [
-										"gate",
-										"{{USER_ID}}"
+										"gate"
 									]
 								}
 							},
@@ -175,15 +74,14 @@
 									}
 								],
 								"url": {
-									"raw": "http://{{transitsHost}}:{{transitsPort}}/gate/{{USER_ID}}",
+									"raw": "http://{{transitsHost}}:{{transitsPort}}/gate",
 									"protocol": "http",
 									"host": [
 										"{{transitsHost}}"
 									],
 									"port": "{{transitsPort}}",
 									"path": [
-										"gate",
-										"{{USER_ID}}"
+										"gate"
 									]
 								}
 							},
@@ -201,20 +99,19 @@
 									}
 								],
 								"url": {
-									"raw": "http://{{transitsHost}}:{{transitsPort}}/gate/{{USER_ID}}?gateId=2",
+									"raw": "http://{{transitsHost}}:{{transitsPort}}/gate?gateId=3",
 									"protocol": "http",
 									"host": [
 										"{{transitsHost}}"
 									],
 									"port": "{{transitsPort}}",
 									"path": [
-										"gate",
-										"{{USER_ID}}"
+										"gate"
 									],
 									"query": [
 										{
 											"key": "gateId",
-											"value": "2"
+											"value": "3"
 										}
 									]
 								}
@@ -242,7 +139,7 @@
 									}
 								},
 								"url": {
-									"raw": "http://{{transitsHost}}:{{transitsPort}}/gate/{{USER_ID}}/3",
+									"raw": "http://{{transitsHost}}:{{transitsPort}}/gate/3",
 									"protocol": "http",
 									"host": [
 										"{{transitsHost}}"
@@ -250,7 +147,6 @@
 									"port": "{{transitsPort}}",
 									"path": [
 										"gate",
-										"{{USER_ID}}",
 										"3"
 									]
 								}
@@ -269,7 +165,7 @@
 									}
 								],
 								"url": {
-									"raw": "http://{{transitsHost}}:{{transitsPort}}/gate/{{USER_ID}}/3",
+									"raw": "http://{{transitsHost}}:{{transitsPort}}/gate/1",
 									"protocol": "http",
 									"host": [
 										"{{transitsHost}}"
@@ -277,8 +173,7 @@
 									"port": "{{transitsPort}}",
 									"path": [
 										"gate",
-										"{{USER_ID}}",
-										"3"
+										"1"
 									]
 								}
 							},

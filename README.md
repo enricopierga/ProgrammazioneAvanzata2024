@@ -57,12 +57,59 @@ Il sistema supporta tre ruoli distinti:
 
 ### Diagramma ER
 
-![Class Diagram](./er_diagram.png)
+ <p align="center">
+     <img src="./er_diagram.png" alt="der_diagramT" width="700" height="750">
+  </p>
 
 ### Pattern Utilizzati
 
 - **MVC (Model-View-Controller)**: Il pattern MVC è stato scelto per separare la logica di business dalla presentazione e dalla gestione delle richieste. Questo permette di mantenere il codice modulare e facilmente manutenibile. Occore tuttavia fare una precisazione: ai fini del progetto la componente **View** non viene applicata non essendoci una vista vera e propria.
-- **Repository Pattern**: Il Repository Pattern è stato utilizzato per astrarre la logica di accesso ai dati, fornendo una chiara separazione tra la logica di business e la logica di accesso ai dati. Questo rende il codice più testabile e manutenibile. L'interazione con il database avviene tramite Sequelize.
+- **Repository Pattern**: Il Repository Pattern è stato utilizzato per astrarre la logica di accesso ai dati, fornendo una chiara separazione tra la logica di business e la logica di accesso ai dati. Questo rende il codice più testabile e manutenibile. L'interazione con il database avviene tramite Sequelize. Un esempio di Repository viene mostrato di seguito:
+
+  ```javascript
+   import Gate from "../models/GateModel"; // Import the Gate model
+   import Route from "../models/RouteModel"; // Import the Route model
+
+   class GateRepository {
+      // Method to create a new gate
+      async create(data: any): Promise<Gate> {
+         return await Gate.create(data);
+      }
+
+      // Method to retrieve all gates
+      async getAll(): Promise<Gate[]> {
+         return await Gate.findAll();
+      }
+
+      // Method to retrieve a gate by its ID
+      async getById(gateId: number): Promise<Gate | null> {
+         return await Gate.findByPk(gateId);
+      }
+
+      // Method to update a gate by its ID
+      async update(id: number, data: any): Promise<number> {
+         const [updated] = await Gate.update(data, {
+            where: { id },
+         });
+         return updated;
+      }
+
+      // Method to delete a gate by its ID
+      async delete(id: number): Promise<number> {
+         // Check for dependencies in routes
+         const routeDependency = await Route.findOne({ where: { startGateId: id } })
+                                    || await Route.findOne({ where: { endGateId: id } });
+         if (routeDependency) {
+            throw new Error('Cannot delete gate: it has associated routes.');
+         }
+
+         return await Gate.destroy({ where: { id: id } });
+      }
+   }
+
+   export default new GateRepository(); // Export an instance of GateRepository
+
+  ```
 
 ## Avviare il Progetto
 
@@ -95,8 +142,8 @@ Il sistema supporta tre ruoli distinti:
     ```
 
 4. Accedere ai servizi:
-    - Backend Transiti: `http://localhost:3000`
-    - Backend Pagamenti: `http://localhost:3001`
+    - Backend Pagamenti: `http://localhost:3000`
+    - Backend Transiti: `http://localhost:3001`
 
 ## Test del Progetto
 
@@ -148,7 +195,7 @@ Il sistema supporta tre ruoli distinti:
   ```
 
 ### Rotta protetta (decodeJWT)
-- **/protectedRout**
+- **/protectedRoute**
   
   Questo esempio raffigura il comportamento in caso di accesso ad una rotta protetta, il meccanismo che si innesca è descritto dal sequente diagramma:
   <p align="center">
@@ -159,17 +206,17 @@ Il sistema supporta tre ruoli distinti:
   ```json
      status: 403 FORBIDDEN
      {
-       "message": "Frobidden"
+       "message": "Forbidden"
      }
   ```
   In caso di token errato, il messaggio è il seguente:
   ```json
-     status: 401 UNAUThORIZED
+     status: 401 UNAUTHORIZED
      {   
         "message": "Unauthorized"
      }
   ```
-
+  
 ### CRUD per la Gestione dei Varchi
 - **POST /gate**
   
@@ -592,7 +639,7 @@ Il sistema supporta tre ruoli distinti:
   ```
 
 ### Aggiungere il credito ad un utente
-- **PATCH /<user_id>/credit**
+- **PATCH /:id/credit**
   Per poter ottenere una risposta, il corpo delle richieste dovrà seguire il seguente modello:
   
   ```json
@@ -633,17 +680,69 @@ Il sistema supporta tre ruoli distinti:
   ```
 
 
-#### Scaricare Bollettino di Pagamento
-- **GET /payments/:id/pdf**
-  
+
 #### Effettuare un Pagamento
 - **POST /payments**
+  Per poter ottenere una risposta, il corpo della richiesta dovrà essere il seguente:
   ```json
     {
-      "paymentUuid": "6836178f-0c79-4c10-88ec-75bae54fd6a4",
+      "paymentUuid": "UUID_PAYMENT",
     }
   ```
 
-### Conclusione
+  In caso di UUID corretto e di credito sufficiente, verrà restituito l'oggetto Infraction corrispondente, ed il suo stato di "paid" passerà a true:
 
-Questo progetto implementa un sistema completo per la gestione delle multe autostradali con ruoli differenziati, utilizzando pattern architetturali solidi e tecnologie moderne. Seguire le istruzioni per avviare e testare il sistema e garantire la corretta configurazione delle variabili d'ambiente e dei servizi Docker.
+  ```json
+    {
+        "id": 2,
+        "vehicleId": 2,
+        "routeId": 2,
+        "userId": 2,
+        "speed": 198,
+        "limit": 80,
+        "weather": "rainy",
+        "amount": 150,
+        "timestamp": "2024-07-18T11:09:30.044Z",
+        "uuid": "6836178f-0c79-4c10-88ec-75bae54fd6a4",
+        "paid": true,
+        "createdAt": "2024-07-18T11:09:30.045Z",
+        "updatedAt": "2024-07-18T11:09:30.045Z"
+    }
+  ```
+  In caso di UUID corretto e di credito insufficiente, verrà restituito il seguente messaggio di errore:
+
+  ```json
+    status: 402 PAYMENT_REQUIRED
+    {
+       "message": "Insufficient Balance"
+    }
+  ```
+
+  In questo caso, l'utente dovrà contattare l'Admin del sistema in modo da poter ricaricare il suo credito e poter effettuare il pagamento delle sue Infractions.
+
+  Nel caso in cui il formato dell'UUID inserito non sia corretto, verrà restituito il seguente messaggio di errore:
+
+  ```json
+    status: 400 BAD_REQUEST
+    {
+       "message": "Invalid uuid format"
+    }  
+  ```
+
+  Se il formato è corretto ma l'UUID non appartiene a nessuna Infraction, allora verrà restituito il seguente messaggio di errore:
+
+  ```json
+    status: 404 NOT_FOUND
+    {
+       "message": "Not found"
+    }
+  ```
+
+
+#### Scaricare Bollettino di Pagamento
+- **GET /payments/:id/pdf**
+
+  
+### Autori
+- Enrico Piergallini
+- Davide De Grazia
