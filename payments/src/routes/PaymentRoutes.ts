@@ -7,7 +7,7 @@ const router = Router();
 
 // Route to pay an infraction by UUID, accessible only to users with "Automobilista" and "Operatore" roles
 router.post(
-  "/paga",
+  "/payInfraction",
   requireAuthentication(["Automobilista", "Operatore"]), // Authentication middleware checking for roles
   PaymentController.payInfractionByUuid // Calls the payInfractionByUuid method of PaymentController
 );
