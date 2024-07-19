@@ -23,6 +23,7 @@
         - [Aggiungere il credito ad un utente](#aggiungere-il-credito-ad-un-utente)
         - [Scaricare Bollettino di Pagamento](#scaricare-bollettino-di-pagamento)
         - [Effettuare un Pagamento](#effettuare-un-pagamento)
+        - [Scaricare Bollettino di Pagamento](#scaricare-bollettino-di-pagamento)
 
 ## Obiettivo del Progetto
 
