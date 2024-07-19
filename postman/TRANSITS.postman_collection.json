@@ -1,0 +1,757 @@
+{
+	"info": {
+		"_postman_id": "11d4d352-fd5a-4701-bba3-757134db22b8",
+		"name": "PROGETTO_PA_2024",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "36820638"
+	},
+	"item": [
+		{
+			"name": "Transits",
+			"item": [
+				{
+					"name": "Gates",
+					"item": [
+						{
+							"name": "createGate",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response body should not be null\", function () {",
+											"    var responseText = pm.response.text();",
+											"    pm.expect(responseText).to.not.equal(\"null\");",
+											"});",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{BEARER_TOKEN}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": 1,\n    \"location\": \"Location \"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{transitsHost}}:{{transitsPort}}/gate",
+									"protocol": "http",
+									"host": [
+										"{{transitsHost}}"
+									],
+									"port": "{{transitsPort}}",
+									"path": [
+										"gate"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getAllGates",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{BEARER_TOKEN}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://{{transitsHost}}:{{transitsPort}}/gate",
+									"protocol": "http",
+									"host": [
+										"{{transitsHost}}"
+									],
+									"port": "{{transitsPort}}",
+									"path": [
+										"gate"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getGateById",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{BEARER_TOKEN}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://{{transitsHost}}:{{transitsPort}}/gate?gateId=3",
+									"protocol": "http",
+									"host": [
+										"{{transitsHost}}"
+									],
+									"port": "{{transitsPort}}",
+									"path": [
+										"gate"
+									],
+									"query": [
+										{
+											"key": "gateId",
+											"value": "3"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "updateGateById",
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{BEARER_TOKEN}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n   \"location\": \"Updated Location\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{transitsHost}}:{{transitsPort}}/gate/3",
+									"protocol": "http",
+									"host": [
+										"{{transitsHost}}"
+									],
+									"port": "{{transitsPort}}",
+									"path": [
+										"gate",
+										"3"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "deleteGateById",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{BEARER_TOKEN}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://{{transitsHost}}:{{transitsPort}}/gate/1",
+									"protocol": "http",
+									"host": [
+										"{{transitsHost}}"
+									],
+									"port": "{{transitsPort}}",
+									"path": [
+										"gate",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Route",
+					"item": [
+						{
+							"name": "createRoute",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{BEARER_TOKEN}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": 3,\n    \"startGateId\": 3,\n    \"endGateId\": 4,\n    \"distance\": 1600\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{transitsHost}}:{{transitsPort}}/route",
+									"protocol": "http",
+									"host": [
+										"{{transitsHost}}"
+									],
+									"port": "{{transitsPort}}",
+									"path": [
+										"route"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getAllRoutes",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{BEARER_TOKEN}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://{{transitsHost}}:{{transitsPort}}/route",
+									"protocol": "http",
+									"host": [
+										"{{transitsHost}}"
+									],
+									"port": "{{transitsPort}}",
+									"path": [
+										"route"
+									],
+									"query": [
+										{
+											"key": "",
+											"value": "",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getRouteById",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{BEARER_TOKEN}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://{{transitsHost}}:{{transitsPort}}/route/?routeId=1",
+									"protocol": "http",
+									"host": [
+										"{{transitsHost}}"
+									],
+									"port": "{{transitsPort}}",
+									"path": [
+										"route",
+										""
+									],
+									"query": [
+										{
+											"key": "routeId",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "updateRouteById",
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{BEARER_TOKEN}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n      \"startGateId\": 1,\n      \"endGateId\": 2,\n      \"distance\": 1111\n    }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{transitsHost}}:{{transitsPort}}/route/1",
+									"protocol": "http",
+									"host": [
+										"{{transitsHost}}"
+									],
+									"port": "{{transitsPort}}",
+									"path": [
+										"route",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "deleteRouteById",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{BEARER_TOKEN}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://{{transitsHost}}:{{transitsPort}}/route/2",
+									"protocol": "http",
+									"host": [
+										"{{transitsHost}}"
+									],
+									"port": "{{transitsPort}}",
+									"path": [
+										"route",
+										"2"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Vehicle",
+					"item": [
+						{
+							"name": "createVehicle",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{BEARER_TOKEN}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"licensePlate\": \"AB124AC\",\n    \"type\": \"Truck\",\n    \"userId\": 1\n    \n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{transitsHost}}:{{transitsPort}}/vehicle",
+									"protocol": "http",
+									"host": [
+										"{{transitsHost}}"
+									],
+									"port": "{{transitsPort}}",
+									"path": [
+										"vehicle"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getAllVechicles",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{BEARER_TOKEN}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://{{transitsHost}}:{{transitsPort}}/vehicle",
+									"protocol": "http",
+									"host": [
+										"{{transitsHost}}"
+									],
+									"port": "{{transitsPort}}",
+									"path": [
+										"vehicle"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getVehicleById",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{BEARER_TOKEN}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://{{transitsHost}}:{{transitsPort}}/vehicle?vehicleId=1",
+									"protocol": "http",
+									"host": [
+										"{{transitsHost}}"
+									],
+									"port": "{{transitsPort}}",
+									"path": [
+										"vehicle"
+									],
+									"query": [
+										{
+											"key": "vehicleId",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "updateVehicleById",
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{BEARER_TOKEN}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n      \"licensePlate\": \"XYZ789\",\n      \"type\": \"truck\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{transitsHost}}:{{transitsPort}}/vehicle/1",
+									"protocol": "http",
+									"host": [
+										"{{transitsHost}}"
+									],
+									"port": "{{transitsPort}}",
+									"path": [
+										"vehicle",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "deleteVehicleById",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{BEARER_TOKEN}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://{{transitsHost}}:{{transitsPort}}/vehicle/1",
+									"protocol": "http",
+									"host": [
+										"{{transitsHost}}"
+									],
+									"port": "{{transitsPort}}",
+									"path": [
+										"vehicle",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Transit",
+					"item": [
+						{
+							"name": "createTransit(andInfraction)",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{BEARER_TOKEN}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": " {\n    \"id\": 5,\n    \"licensePlate\": \"AA123BB\",\n    \"routeId\": 1,\n    \"travelTime\": 50,\n    \"weather\": \"Rainy\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{transitsHost}}:{{transitsPort}}/transit",
+									"protocol": "http",
+									"host": [
+										"{{transitsHost}}"
+									],
+									"port": "{{transitsPort}}",
+									"path": [
+										"transit"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getAllTransits",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{BEARER_TOKEN}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://{{transitsHost}}:{{transitsPort}}/transit",
+									"protocol": "http",
+									"host": [
+										"{{transitsHost}}"
+									],
+									"port": "{{transitsPort}}",
+									"path": [
+										"transit"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getTransitById",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{BEARER_TOKEN}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://{{transitsHost}}:{{transitsPort}}/transit/?transitId=2",
+									"protocol": "http",
+									"host": [
+										"{{transitsHost}}"
+									],
+									"port": "{{transitsPort}}",
+									"path": [
+										"transit",
+										""
+									],
+									"query": [
+										{
+											"key": "transitId",
+											"value": "2"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "updateTransitById",
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{BEARER_TOKEN}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"licensePlate\": \"AA123BB\",\n    \"travelTime\": 22\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{transitsHost}}:{{transitsPort}}/transit/1",
+									"protocol": "http",
+									"host": [
+										"{{transitsHost}}"
+									],
+									"port": "{{transitsPort}}",
+									"path": [
+										"transit",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "deleteTransitById",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{BEARER_TOKEN}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://{{transitsHost}}:{{transitsPort}}/transit/2",
+									"protocol": "http",
+									"host": [
+										"{{transitsHost}}"
+									],
+									"port": "{{transitsPort}}",
+									"path": [
+										"transit",
+										"2"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Infraction",
+					"item": [
+						{
+							"name": "getInfractionsByPlatesAndPeriod",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{BEARER_TOKEN}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{ \n    \"plates\": [\"AA123BB\", \"BB123CC\"],\n    \"startDate\": \"2023-01-01\", \n    \"endDate\": \"2024-12-01\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{transitsHost}}:{{transitsPort}}/infraction",
+									"protocol": "http",
+									"host": [
+										"{{transitsHost}}"
+									],
+									"port": "{{transitsPort}}",
+									"path": [
+										"infraction"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "loginbyOperatore",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json();\r",
+									"pm.globals.set(\"BEARER_TOKEN\", response.accessToken);\r",
+									"\r",
+									"let CryptoJs = require('crypto-js');\r",
+									"\r",
+									"a = response.accessToken.split('.');\r",
+									"var words = CryptoJs.enc.Base64.parse(a[1]);\r",
+									"var textString = CryptoJs.enc.Utf8.stringify(words);\r",
+									"\r",
+									"const payload = JSON.parse(textString);\r",
+									"pm.globals.set(\"USER_ID\", payload.userId);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\" : \"pangolino\",\r\n    \"password\": \"12345\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{transitsHost}}:{{transitsPort}}/user/login",
+							"protocol": "http",
+							"host": [
+								"{{transitsHost}}"
+							],
+							"port": "{{transitsPort}}",
+							"path": [
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
