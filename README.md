@@ -169,7 +169,7 @@ Il sistema supporta tre ruoli distinti:
 
 È possibile testare il progetto utilizzando Postman. Forniamo una collection Postman che contiene tutte le richieste necessarie per testare le API. Importare la collection in Postman e seguire le istruzioni per testare le diverse rotte.
 
-[Scarica la Collection Postman](path_to_postman_collection.json)
+[Scarica la Collection Postman](./postman/PROGETTO_PA_2024.postman_collection.json)
 
 ### Esempi di Richieste
 ### Login nel sistema
