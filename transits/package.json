@@ -5,7 +5,8 @@
   "main": "app.js",
   "scripts": {
     "start": "ts-node src/app.ts",
-    "dev": "ts-node-dev --respawn --watch src --transpile-only src/app.ts"
+    "dev": "ts-node-dev --respawn --watch src --transpile-only src/app.ts",
+    "build": "tsc"
   },
   "dependencies": {
     "dotenv": "^16.4.5",
