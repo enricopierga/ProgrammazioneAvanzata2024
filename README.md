@@ -179,7 +179,7 @@ Importare la collection in Postman e seguire le istruzioni per testare le divers
 [Scarica le variabili d'ambiente Postman](./postman/PROGETTO_PA_2024.postman_environment.json)
 
 ### Esempi di Richieste
-### Login nel sistema
+### Popolazione del Database con il Seed
 - **POST /seeds/populate**
   La seguente rotta permette di popolare il database con i dati inclusi del seed. Occorre effettuare questa rotta prima procedere con le altre, in quanto nel seed sono anche        inclusi i dati degli user. In caso venga effettuata correttamente la richiesta, verrà visualizzato il seguente messaggio di corretta popolazione del database.
   ```json
@@ -189,7 +189,7 @@ Importare la collection in Postman e seguire le istruzioni per testare le divers
      }
   ```
   
-
+### Login nel sistema
 - **POST /login**
 
   Per poter ottenere una risposta, il corpo delle richieste dovrà seguire il seguente modello:
