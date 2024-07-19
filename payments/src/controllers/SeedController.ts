@@ -9,7 +9,7 @@ class SeedController {
       return;
     }
     await seed();
-    res.status(StatusCodes.OK).send();
+    res.status(StatusCodes.OK).json({message: "Database popolato"}).send();
   };
 }
 export default new SeedController(); // Export an instance of UserController
