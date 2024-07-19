@@ -1,5 +1,5 @@
 import { Router } from "express";
-import TransitController from "../controllers/TransitController";
+import TransitController from "../controllers/_transitController";
 import { requireAuthentication } from "../middleware/authenticationMiddleware";
 
 const router = Router();

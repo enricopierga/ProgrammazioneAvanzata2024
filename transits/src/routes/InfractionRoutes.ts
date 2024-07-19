@@ -1,5 +1,5 @@
 import { Router } from "express";
-import InfractionController from "../controllers/InfractionController";
+import InfractionController from "../controllers/_infractionController";
 import { requireAuthentication } from "../middleware/authenticationMiddleware";
 
 const router = Router();

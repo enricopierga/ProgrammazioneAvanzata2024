@@ -1,5 +1,5 @@
 import { Router } from "express";
-import VehicleController from "../controllers/VehicleController";
+import VehicleController from "../controllers/_vehicleController";
 import { requireAuthentication } from "../middleware/authenticationMiddleware";
 
 const router = Router();
