@@ -754,8 +754,20 @@
 				{
 					"name": "populateDb",
 					"request": {
-						"method": "GET",
-						"header": []
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://{{transitsHost}}:{{transitsPort}}/seeds/populate",
+							"protocol": "http",
+							"host": [
+								"{{transitsHost}}"
+							],
+							"port": "{{transitsPort}}",
+							"path": [
+								"seeds",
+								"populate"
+							]
+						}
 					},
 					"response": []
 				}
@@ -765,7 +777,7 @@
 			"name": "Payments",
 			"item": [
 				{
-					"name": "popolateDb",
+					"name": "populateDb",
 					"event": [
 						{
 							"listen": "test",
@@ -791,14 +803,15 @@
 							}
 						},
 						"url": {
-							"raw": "http://{{paymentsHost}}:{{paymentsPort}}/popola",
+							"raw": "http://{{paymentsHost}}:{{paymentsPort}}/seeds/populate",
 							"protocol": "http",
 							"host": [
 								"{{paymentsHost}}"
 							],
 							"port": "{{paymentsPort}}",
 							"path": [
-								"popola"
+								"seeds",
+								"populate"
 							]
 						}
 					},
