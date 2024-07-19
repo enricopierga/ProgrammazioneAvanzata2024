@@ -170,6 +170,8 @@ Il sistema supporta quattro ruoli distinti:
 Se le operazioni precedenti sono state eseguite correttamente, i tre container (postgres, transits, payments) saranno in esecuzione.
 Nella versione attuale (DEMO version) è possibile testare entrambi i due applicativi e le relative rotte.
 
+**NOTA**: Prima di testare i due applicativi, assicurarsi di aver popolato correttamente il database, attraverso le rotte  ```/seeds/populate``` all'interno della collection. Una volta testate le rotte di un backend, stoppare e riavviare il container per poter testare il secondo backend.
+
 ### Postman
 
 È possibile testare il progetto utilizzando Postman. Forniamo una collection Postman che contiene tutte le richieste necessarie per testare le API, e le relative variabili d'ambiente. 
