@@ -32,6 +32,7 @@ class InfractionRepository {
     });
   }
 
+  // Method to fetch infractions by license plates and date period
   async getByPlatesAndPeriod(
     plates: string[],
     startDate: string,
@@ -39,14 +40,17 @@ class InfractionRepository {
     isOperator: boolean,
     userId: number
   ): Promise<InfractionResult[]> {
+    // Constructing the where clause for the query
     const whereClause: any = {
       timestamp: { [Op.between]: [new Date(startDate), new Date(endDate)] },
     }; // = WHERE timestamp BETWEEN startDate AND endDate
 
+    // If the user is not an operator, add a userId filter to the where clause
     if (!isOperator) {
       whereClause.userId = userId;
     }
 
+    // Fetch infractions from the database with the specified filters
     const infractions = await Infraction.findAll({
       where: whereClause,
       include: [
@@ -68,8 +72,10 @@ class InfractionRepository {
       ],
     });
 
+    // Transform the infractions data to match the InfractionResult interface
     return infractions.map((infraction: any) => ({
       plate: infraction.vehicle.licensePlate,
+      userId: infraction.userId,
       type: infraction.vehicle.type,
       route: {
         inGate: infraction.route.startGate.location,
@@ -80,7 +86,9 @@ class InfractionRepository {
       limitSpeed: infraction.limit,
       speedDelta: infraction.speed - infraction.limit,
       weather: infraction.weather,
+      status: infraction.paid,
       amount: infraction.amount,
+      uuid: infraction.uuid,
       datetime: infraction.timestamp,
     }));
   }

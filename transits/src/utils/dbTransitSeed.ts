@@ -1,6 +1,6 @@
 import User from "../models/UserModel";
 
-// Creation of users for transits backend
+// Populate with data for DEMO
 export async function seed() {
   await User.create({
     id: 1,

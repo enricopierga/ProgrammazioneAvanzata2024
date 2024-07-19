@@ -7,7 +7,7 @@ import Infraction from "../models/InfractionModel";
 
 
 export async function seed() {
-
+// Populate with data for DEMO
 	await User.create({
 		id: 1,
 		username: "pangolino",
