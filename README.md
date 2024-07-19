@@ -159,8 +159,8 @@ Il sistema supporta tre ruoli distinti:
    ```bash
     ./build.sh
    ```
-   NOTA: In caso si utilizzi MacOS va utilizzato prima il seguente comando: ```bash  chmod +x build.sh```
-5. Scaricare la collection e l'environment di Postman per procedere con i test
+   NOTA: In caso si utilizzi MacOS va utilizzato prima il seguente comando: ``` chmod +x build.sh```
+5. Scaricare la collection e le variabili di environment di Postman per procedere con i test.
 
 ## Test del Progetto
 
