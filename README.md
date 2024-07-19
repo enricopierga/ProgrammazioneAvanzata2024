@@ -129,7 +129,7 @@ Il sistema supporta tre ruoli distinti:
 2. Configurare le variabili d'ambiente:
     Creare due file ```.env``` all'interno delle directory ```payments``` e ```transits```, configurandoli con le seguenti variabili d'ambiente:
 
-    - File ```payments/.env```
+    - File: ```payments/.env```
       ```
       DB_NAME=defaultDb
       DB_USER=dbUser
