@@ -53,7 +53,7 @@ Il sistema supporta tre ruoli distinti:
 
 ### Diagramma dei Casi d'Uso
 
-![Use Case Diagram](./diagrams/use_cases_diagram.png)
+![Use Case Diagram](../diagrams/use_cases_diagram.png)
 
 ### Diagramma ER
 
