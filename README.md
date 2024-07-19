@@ -127,7 +127,7 @@ Il sistema supporta tre ruoli distinti:
     ```
 
 2. Configurare le variabili d'ambiente:
-    Creare un file `.env` nella radice del progetto e configurare le seguenti variabili:
+    Creare due file ```.env``` all'interno delle directory ```payments``` e ```transits```, configurandoili con le seguenti variabili d'ambiente:
     ```
     DB_NAME=defaultDb
     DB_USER=dbUser
