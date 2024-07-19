@@ -231,20 +231,20 @@
 									}
 								],
 								"url": {
-									"raw": "http://{{transitsHost}}:{{transitsPort}}/route/{{USER_ID}}?routeId=1",
+									"raw": "http://{{transitsHost}}:{{transitsPort}}/route",
 									"protocol": "http",
 									"host": [
 										"{{transitsHost}}"
 									],
 									"port": "{{transitsPort}}",
 									"path": [
-										"route",
-										"{{USER_ID}}"
+										"route"
 									],
 									"query": [
 										{
-											"key": "routeId",
-											"value": "1"
+											"key": "",
+											"value": "",
+											"disabled": true
 										}
 									]
 								}
@@ -263,7 +263,7 @@
 									}
 								],
 								"url": {
-									"raw": "http://{{transitsHost}}:{{transitsPort}}/route/{{USER_ID}}?routeId=1",
+									"raw": "http://{{transitsHost}}:{{transitsPort}}/route/?routeId=1",
 									"protocol": "http",
 									"host": [
 										"{{transitsHost}}"
@@ -271,7 +271,7 @@
 									"port": "{{transitsPort}}",
 									"path": [
 										"route",
-										"{{USER_ID}}"
+										""
 									],
 									"query": [
 										{
@@ -296,7 +296,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n      \"startGateId\": 2,\n      \"endGateId\": 3,\n      \"distance\": 1000.0\n    }",
+									"raw": "{\n      \"startGateId\": 1,\n      \"endGateId\": 2,\n      \"distance\": 1111\n    }",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -304,7 +304,7 @@
 									}
 								},
 								"url": {
-									"raw": "http://{{transitsHost}}:{{transitsPort}}/route/{{USER_ID}}/1",
+									"raw": "http://{{transitsHost}}:{{transitsPort}}/route/1",
 									"protocol": "http",
 									"host": [
 										"{{transitsHost}}"
@@ -312,7 +312,6 @@
 									"port": "{{transitsPort}}",
 									"path": [
 										"route",
-										"{{USER_ID}}",
 										"1"
 									]
 								}
@@ -331,7 +330,7 @@
 									}
 								],
 								"url": {
-									"raw": "http://{{transitsHost}}:{{transitsPort}}/route/{{USER_ID}}/1",
+									"raw": "http://{{transitsHost}}:{{transitsPort}}/route/2",
 									"protocol": "http",
 									"host": [
 										"{{transitsHost}}"
@@ -339,8 +338,7 @@
 									"port": "{{transitsPort}}",
 									"path": [
 										"route",
-										"{{USER_ID}}",
-										"1"
+										"2"
 									]
 								}
 							},
@@ -364,7 +362,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"licensePlate\": \"ABC123\",\n    \"type\": \"car\"\n}",
+									"raw": "{\n    \"licensePlate\": \"AB124AC\",\n    \"type\": \"Truck\",\n    \"userId\": 1\n    \n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -372,15 +370,14 @@
 									}
 								},
 								"url": {
-									"raw": "http://{{transitsHost}}:{{transitsPort}}/vehicle/{{USER_ID}}",
+									"raw": "http://{{transitsHost}}:{{transitsPort}}/vehicle",
 									"protocol": "http",
 									"host": [
 										"{{transitsHost}}"
 									],
 									"port": "{{transitsPort}}",
 									"path": [
-										"vehicle",
-										"{{USER_ID}}"
+										"vehicle"
 									]
 								}
 							},
@@ -398,21 +395,14 @@
 									}
 								],
 								"url": {
-									"raw": "http://{{transitsHost}}:{{transitsPort}}/route/{{USER_ID}}?routeId=1",
+									"raw": "http://{{transitsHost}}:{{transitsPort}}/vehicle",
 									"protocol": "http",
 									"host": [
 										"{{transitsHost}}"
 									],
 									"port": "{{transitsPort}}",
 									"path": [
-										"route",
-										"{{USER_ID}}"
-									],
-									"query": [
-										{
-											"key": "routeId",
-											"value": "1"
-										}
+										"vehicle"
 									]
 								}
 							},
@@ -430,15 +420,14 @@
 									}
 								],
 								"url": {
-									"raw": "http://{{transitsHost}}:{{transitsPort}}/vehicle/{{USER_ID}}?vehicleId=1",
+									"raw": "http://{{transitsHost}}:{{transitsPort}}/vehicle?vehicleId=1",
 									"protocol": "http",
 									"host": [
 										"{{transitsHost}}"
 									],
 									"port": "{{transitsPort}}",
 									"path": [
-										"vehicle",
-										"{{USER_ID}}"
+										"vehicle"
 									],
 									"query": [
 										{
@@ -463,7 +452,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n      \"startGateId\": 2,\n      \"endGateId\": 3,\n      \"distance\": 1000.0\n    }",
+									"raw": "{\n      \"licensePlate\": \"XYZ789\",\n      \"type\": \"truck\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -471,15 +460,14 @@
 									}
 								},
 								"url": {
-									"raw": "http://{{transitsHost}}:{{transitsPort}}/route/{{USER_ID}}/1",
+									"raw": "http://{{transitsHost}}:{{transitsPort}}/vehicle/1",
 									"protocol": "http",
 									"host": [
 										"{{transitsHost}}"
 									],
 									"port": "{{transitsPort}}",
 									"path": [
-										"route",
-										"{{USER_ID}}",
+										"vehicle",
 										"1"
 									]
 								}
@@ -498,15 +486,14 @@
 									}
 								],
 								"url": {
-									"raw": "http://{{transitsHost}}:{{transitsPort}}/route/{{USER_ID}}/1",
+									"raw": "http://{{transitsHost}}:{{transitsPort}}/vehicle/1",
 									"protocol": "http",
 									"host": [
 										"{{transitsHost}}"
 									],
 									"port": "{{transitsPort}}",
 									"path": [
-										"route",
-										"{{USER_ID}}",
+										"vehicle",
 										"1"
 									]
 								}
@@ -531,7 +518,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"licensePlate\": \"ABC123\",\n    \"type\": \"car\"\n}",
+									"raw": " {\n    \"id\": 5,\n    \"licensePlate\": \"AA123BB\",\n    \"routeId\": 1,\n    \"travelTime\": 50,\n    \"weather\": \"Rainy\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -539,15 +526,14 @@
 									}
 								},
 								"url": {
-									"raw": "http://{{transitsHost}}:{{transitsPort}}/vehicle/{{USER_ID}}",
+									"raw": "http://{{transitsHost}}:{{transitsPort}}/transit",
 									"protocol": "http",
 									"host": [
 										"{{transitsHost}}"
 									],
 									"port": "{{transitsPort}}",
 									"path": [
-										"vehicle",
-										"{{USER_ID}}"
+										"transit"
 									]
 								}
 							},
@@ -630,7 +616,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"travelTime\": 30,\n    \"weather\": \"clear\"\n}",
+									"raw": "{\n    \"licensePlate\": \"AA123BB\",\n    \"travelTime\": 22\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -638,7 +624,7 @@
 									}
 								},
 								"url": {
-									"raw": "http://{{transitsHost}}:{{transitsPort}}/transit/{{USER_ID}}/1",
+									"raw": "http://{{transitsHost}}:{{transitsPort}}/transit/1",
 									"protocol": "http",
 									"host": [
 										"{{transitsHost}}"
@@ -646,7 +632,6 @@
 									"port": "{{transitsPort}}",
 									"path": [
 										"transit",
-										"{{USER_ID}}",
 										"1"
 									]
 								}
