@@ -53,12 +53,12 @@ Il sistema supporta tre ruoli distinti:
 
 ### Diagramma dei Casi d'Uso
 
-![Use Case Diagram](./use_cases_diagram.png)
+![Use Case Diagram](./diagrams/use_cases_diagram.png)
 
 ### Diagramma ER
 
  <p align="center">
-     <img src="./er_diagram.png" alt="der_diagramT" width="700" height="750">
+     <img src="./diagrams/er_diagram.png" alt="der_diagramT" width="700" height="750">
   </p>
 
 ### Pattern Utilizzati
@@ -168,7 +168,7 @@ Il sistema supporta tre ruoli distinti:
      }
   ```
   Il meccanismo che si innesca all'atto della chiamata è descritto dal seguente diagramma:
-  ![login](./sequenceDiagrams/login.png)
+  ![login](./diagrams/sequenceDiagrams/login.png)
 
   Se la richiesta viene effettuata correttamente viene restituito il seguente messaggio:
 
@@ -199,7 +199,7 @@ Il sistema supporta tre ruoli distinti:
   
   Questo esempio raffigura il comportamento in caso di accesso ad una rotta protetta, il meccanismo che si innesca è descritto dal sequente diagramma:
   <p align="center">
-     <img src="./sequenceDiagrams/decodeJWT.png" alt="decodeJWT" width="600" height="800">
+     <img src="./diagrams/sequenceDiagrams/decodeJWT.png" alt="decodeJWT" width="600" height="800">
   </p>
 
   In caso di accesso alla rotta da parte di un utente non autorizzato, il messaggio è il seguente:
@@ -468,7 +468,7 @@ Il sistema supporta tre ruoli distinti:
     }
     ```
   Il meccanismo che si innesca all'atto della chiamata è descritto dal seguente diagramma delle sequenze:
-  ![transit_post](./sequenceDiagrams/transit-post.png)
+  ![transit_post](./diagrams/sequenceDiagrams/transit-post.png)
 
   Se la richiesta viene effettuata correttamente, viene restituito il seguente messaggio nel caso in cui la velocità media del transito non superi la velocità limite:
   ```json
@@ -536,7 +536,7 @@ Il sistema supporta tre ruoli distinti:
     }]
   ```
   Il meccanismo che si innesca all'atto della chiamata è descritto dal seguente diagramma delle sequenze:
-  ![transit_get](./sequenceDiagrams/transit-get.png)
+  ![transit_get](./diagrams/sequenceDiagrams/transit-get.png)
 
 - **PATCH /transit/:transitId**
 
@@ -554,7 +554,7 @@ Il sistema supporta tre ruoli distinti:
     }
   ```
   Il meccanismo che si innesca all'atto della chiamata è descritto dal seguente diagramma delle sequenze:
-  ![transit_update](./sequenceDiagrams/transit-update.png)
+  ![transit_update](./diagrams/sequenceDiagrams/transit-update.png)
 
 - **DELETE /transit/:transitId**
 
@@ -566,7 +566,7 @@ Il sistema supporta tre ruoli distinti:
     }
   ```
   Il meccanismo che si innesca all'atto della chiamata è descritto dal seguente diagramma delle sequenze:
-  ![transit_delete](./sequenceDiagrams/transit-delete.png)
+  ![transit_delete](./diagrams/sequenceDiagrams/transit-delete.png)
 
 ### Richiesta Multe per Targa e Periodo
 - **GET /infraction**
@@ -580,7 +580,7 @@ Il sistema supporta tre ruoli distinti:
       }
     ```
     Il meccanismo che si innesca all'atto della chiamata è descritto dal seguente diagramma delle sequenze:
-    ![infraction_get_by](./sequenceDiagrams/infraction-get-by.png)
+    ![infraction_get_by](./diagrams/sequenceDiagrams/infraction-get-by.png)
 
     Se la richiesta viene effettuata correttamente, verrà restituito il seguente messaggio:
     ```json
@@ -648,7 +648,7 @@ Il sistema supporta tre ruoli distinti:
      }
   ```
   Il meccanismo che si innesca all'atto della chiamata è descritto dal seguente diagramma:
-  ![add_Credit](./sequenceDiagrams/addCredit.png)
+  ![add_Credit](./diagrams/sequenceDiagrams/addCredit.png)
 
   **NOTA:** l'accesso a questa rotta è garantito solamente all'utente di tipo Admin.
 
