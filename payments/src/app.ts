@@ -14,7 +14,7 @@ import { setupSwagger } from "./config/swagger";
 // Routes
 import userRoutes from "./routes/UserRoutes";
 import paymentRoutes from "./routes/PaymentRoutes";
-import { seed as dbSeed } from "./utils/dbPaymentsSeed";
+import SeedRoutes from "./routes/SeedRoutes";
 
 // Initialize Express application
 const app = express();
@@ -32,20 +32,18 @@ app.use(errorHandler);
 // Define routes
 app.use("/user", userRoutes); // User-related routes
 app.use("/payments", paymentRoutes); // Payment-related routes
+app.use("/seeds", SeedRoutes);
 
 const initializeDb = process.env.CLEAN_DB === "true";
 
 // Prepare db and start listener
 sequelize
-	.sync({ force: initializeDb }) // Usa force: true solo in sviluppo, cancella e ricrea le tabelle
-	.then(async () => {
-		await dbSeed();
-
-		console.log("Database synced");
-		app.listen(port, () => {
-			console.log(`Server is running on port ${port}`);
-		});
-	})
-	.catch((error) => {
-		console.error("Unable to connect to the database:", error);
-	});
+  .sync({ force: initializeDb }) // Usa force: true solo in sviluppo, cancella e ricrea le tabelle
+  .then(async () => {
+    app.listen(port, () => {
+      console.log(`Server is running on port ${port}`);
+    });
+  })
+  .catch((error) => {
+    console.error("Unable to connect to the database:", error);
+  });

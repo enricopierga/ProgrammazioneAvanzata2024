@@ -6,6 +6,8 @@ services:
       POSTGRES_USER: dbUser
       POSTGRES_PASSWORD: mySecretPassword
       POSTGRES_DB: defaultDb
+     
+
     networks:
       - application-network
     healthcheck:
@@ -27,6 +29,7 @@ services:
       PORT: 3001
       JWT_PRIVATE_KEY: pippotransits
       DB_PORT: 5432
+      IS_DEMO: true
 
     networks:
       - application-network
@@ -51,10 +54,10 @@ services:
       DB_USER: dbUser
       DB_PASS: mySecretPassword
       DB_NAME: defaultDb
-      CLEAN_DB: true
       PORT: 3000
       JWT_PRIVATE_KEY: pippopayments
       DB_PORT: 5432
+      IS_DEMO: true
 
     networks:
       - application-network

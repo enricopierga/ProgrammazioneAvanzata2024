@@ -7,7 +7,6 @@ import Infraction from "../models/InfractionModel";
 
 
 export async function seed() {
-	if (process.env.CLEAN_DB !== "true") return;
 
 	await User.create({
 		id: 1,
