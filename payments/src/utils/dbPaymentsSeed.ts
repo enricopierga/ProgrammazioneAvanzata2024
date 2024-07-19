@@ -23,7 +23,7 @@ export async function seed() {
 		username: "filippo",
 		email: "filippochampagne@gmail.com",
 		password: "12345",
-		credit: 1500,
+		credit: 100,
 		role: "Automobilista",
 	});
 

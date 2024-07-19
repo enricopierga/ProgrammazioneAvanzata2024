@@ -16,7 +16,7 @@ router.get(
   UserController.getCredit // Calls the getCredit method of UserController
 );
 
-// Route to add credit to a specific user, accessible only to Admins
+// Route to add credit to a specific user, accessible only to Admin
 router.patch(
   "/:id/credit",
   requireAuthentication(["Admin"]), // Authentication middleware checking for Admin role
