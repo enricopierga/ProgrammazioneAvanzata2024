@@ -4,11 +4,7 @@ import SeedController from "../controllers/SeedController"; // Import the SeedCo
 // Create an instance of the Express router
 const router = Router();
 
-
-router.post(
-  "/popola",
-  SeedController.popolate 
-);
-
+//Populate the database
+router.post("/populate", SeedController.populate);
 
 export default router;

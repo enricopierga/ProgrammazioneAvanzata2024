@@ -42,17 +42,14 @@ app.use("/transit", transitRoutes); // Transit-related routes
 app.use("/infraction", infractionRoutes); // Infraction-related routes
 
 app.use("/user", userRoutes); // User-related routes
-app.use("/seeds", SeedRoutes);
+app.use("/seeds", SeedRoutes); // Seed related routes
 
 const initializeDb = process.env.CLEAN_DB === "true";
 
 // Prepare db and start listener
 sequelize
   .sync({ force: initializeDb }) // Usa force: true solo in sviluppo, cancella e ricrea le tabelle
-  .then(() => {
-    if (initializeDb) seed();
-
-    console.log("Database synced");
+  .then(async () => {
     app.listen(port, () => {
       console.log(`Server is running on port ${port}`);
     });
