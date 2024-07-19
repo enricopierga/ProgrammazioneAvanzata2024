@@ -1,13 +1,11 @@
 import Gate from "../models/GateModel";
-import Infraction from "../models/InfractionModel";
 import Route from "../models/RouteModel";
-import Transit from "../models/TransitModel";
 import User from "../models/UserModel";
 import Vehicle from "../models/VehicleModel";
+import Transit from "../models/TransitModel";
+import Infraction from "../models/InfractionModel";
 
 export async function seed() {
-  if (process.env.CLEAN_DB !== "true") return;
-
   await User.create({
     id: 1,
     username: "pangolino",
@@ -22,7 +20,7 @@ export async function seed() {
     username: "filippo",
     email: "filippochampagne@gmail.com",
     password: "12345",
-    credit: 1500,
+    credit: 100,
     role: "Automobilista",
   });
 
@@ -137,33 +135,5 @@ export async function seed() {
     timestamp: new Date(),
     amount: 150,
     uuid: "6836178f-0c79-4c10-88ec-75bae54fd6a4",
-  });
-
-  await Infraction.create({
-    paid: false,
-    id: 3,
-    vehicleId: 2,
-    routeId: 2,
-    userId: 2,
-    speed: 198,
-    limit: 80,
-    weather: "Rainy",
-    timestamp: new Date(),
-    amount: 150,
-    uuid: "6836178f-0c80-4c10-88ec-75bae54fd6a4",
-  });
-
-  await Infraction.create({
-    paid: false,
-    id: 4,
-    vehicleId: 2,
-    routeId: 2,
-    userId: 2,
-    speed: 198,
-    limit: 80,
-    weather: "Rainy",
-    timestamp: new Date(),
-    amount: 150,
-    uuid: "6836178f-0c81-4c10-88ec-75bae54fd6a4",
   });
 }

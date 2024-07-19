@@ -19,6 +19,7 @@ import transitRoutes from "./routes/TransitRoutes";
 import vehicleRoutes from "./routes/VehicleRoutes";
 import { seed as dbSeed, seed } from "./utils/dbTransitSeed";
 import userRoutes from "./routes/UserRoutes";
+import SeedRoutes from "./routes/SeedRoutes";
 
 // Initialize Express application
 const app = express();
@@ -41,6 +42,7 @@ app.use("/transit", transitRoutes); // Transit-related routes
 app.use("/infraction", infractionRoutes); // Infraction-related routes
 
 app.use("/user", userRoutes); // User-related routes
+app.use("/seeds", SeedRoutes);
 
 const initializeDb = process.env.CLEAN_DB === "true";
 
