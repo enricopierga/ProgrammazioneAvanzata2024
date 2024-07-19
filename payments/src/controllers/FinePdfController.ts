@@ -35,7 +35,7 @@ class PdfController {
     const infractionId = parseInt(req.params.id, 10);
 
     if (isNaN(infractionId)) {
-      res
+      return res
         .status(StatusCodes.BAD_REQUEST)
         .json({ message: "Invalid Id format" });
     }
@@ -44,7 +44,7 @@ class PdfController {
     const infraction = await InfractionRepository.getById(infractionId); // Retrieve infraction details from the repository
 
     if (!infraction) {
-      res
+      return res
         .status(StatusCodes.NOT_FOUND)
         .json({ message: "Infraction not found" });
     }
