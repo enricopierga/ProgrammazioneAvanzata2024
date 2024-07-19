@@ -155,14 +155,11 @@ Il sistema supporta tre ruoli distinti:
       IS_DEMO=true
       ```
 
-4. Avviare i servizi con Docker Compose:
+4. Avviare i servizi attraverso il file di configurazione:
     ```bash
-    docker-compose up --build
+    ./build.sh
     ```
-
-5. Accedere ai servizi:
-    - Backend Pagamenti: `http://localhost:3000`
-    - Backend Transiti: `http://localhost:3001`
+5. Scaricare la collection e l'environment di Postman per procedere con i test
 
 ## Test del Progetto
 
