@@ -127,21 +127,39 @@ Il sistema supporta tre ruoli distinti:
     ```
 
 2. Configurare le variabili d'ambiente:
-    Creare due file ```.env``` all'interno delle directory ```payments``` e ```transits```, configurandoili con le seguenti variabili d'ambiente:
+    Creare due file ```.env``` all'interno delle directory ```payments``` e ```transits```, configurandoli con le seguenti variabili d'ambiente:
+   file: ```payments/.env```
     ```
     DB_NAME=defaultDb
     DB_USER=dbUser
     DB_PASS=mySecretPassword
     DB_HOST=localhost
     DB_PORT=5432
+    CLEAN_DB=true
+    PORT=3000
+    JWT_PRIVATE_KEY=pippopayments
+    IS_DEMO=true
     ```
 
-3. Avviare i servizi con Docker Compose:
+    file: ```transits/.env```
+    ```
+    DB_NAME=defaultDb
+    DB_USER=dbUser
+    DB_PASS=mySecretPassword
+    DB_HOST=localhost
+    DB_PORT=5432
+    CLEAN_DB=true
+    PORT=3001
+    JWT_PRIVATE_KEY=pippotransits
+    IS_DEMO=true
+    ```
+
+4. Avviare i servizi con Docker Compose:
     ```bash
     docker-compose up --build
     ```
 
-4. Accedere ai servizi:
+5. Accedere ai servizi:
     - Backend Pagamenti: `http://localhost:3000`
     - Backend Transiti: `http://localhost:3001`
 
