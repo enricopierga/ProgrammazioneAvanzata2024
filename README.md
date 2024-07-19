@@ -127,32 +127,56 @@ Il sistema supporta tre ruoli distinti:
     ```
 
 2. Configurare le variabili d'ambiente:
-    Creare un file `.env` nella radice del progetto e configurare le seguenti variabili:
-    ```
-    DB_NAME=defaultDb
-    DB_USER=dbUser
-    DB_PASS=mySecretPassword
-    DB_HOST=localhost
-    DB_PORT=5432
-    ```
+    Creare due file ```.env``` all'interno delle directory ```payments``` e ```transits```, configurandoli con le seguenti variabili d'ambiente:
 
-3. Avviare i servizi con Docker Compose:
-    ```bash
-    docker-compose up --build
-    ```
+    - File: ```payments/.env```
+      ```
+      DB_NAME=defaultDb
+      DB_USER=dbUser
+      DB_PASS=mySecretPassword
+      DB_HOST=localhost
+      DB_PORT=5432
+      CLEAN_DB=true
+      PORT=3000
+      JWT_PRIVATE_KEY=pippopayments
+      IS_DEMO=true
+      ```
 
-4. Accedere ai servizi:
-    - Backend Pagamenti: `http://localhost:3000`
-    - Backend Transiti: `http://localhost:3001`
+    - File: ```transits/.env```
+      ```
+      DB_NAME=defaultDb
+      DB_USER=dbUser
+      DB_PASS=mySecretPassword
+      DB_HOST=localhost
+      DB_PORT=5432
+      CLEAN_DB=true
+      PORT=3001
+      JWT_PRIVATE_KEY=pippotransits
+      IS_DEMO=true
+      ```
+
+4. Posizionarsi sulla radice del progetto e lanciare da terminale il seguente comando:
+   ```bash
+    ./build.sh
+   ```
+   Il seguente file di configurazione contiene tutti comandi per l'installazione delle dipendenze e per la build (docker compose).
+
+   NOTA: In caso si utilizzi MacOS va utilizzato prima il seguente comando: ``` chmod +x build.sh```
+6. Scaricare la collection e le variabili di environment di Postman per procedere con i test.
 
 ## Test del Progetto
-
+Se le operazioni precedenti sono state eseguite correttamente, i tre container (postgres, transits, payments) saranno in esecuzione.
+Nella versione attuale (DEMO version) è possibile testare entrambi i due applicativi e le relative rotte.
 
 ### Postman
 
-È possibile testare il progetto utilizzando Postman. Forniamo una collection Postman che contiene tutte le richieste necessarie per testare le API. Importare la collection in Postman e seguire le istruzioni per testare le diverse rotte.
+È possibile testare il progetto utilizzando Postman. Forniamo una collection Postman che contiene tutte le richieste necessarie per testare le API, e le relative variabili d'ambiente. 
 
-[Scarica la Collection Postman](path_to_postman_collection.json)
+Importare la collection in Postman e seguire le istruzioni per testare le diverse rotte.
+
+[Scarica la Collection Postman](./postman/PROGETTO_PA_2024.postman_collection.json)
+
+[Scarica le variabili d'ambiente Postman](./postman/PROGETTO_PA_2024.postman_environment.json)
 
 ### Esempi di Richieste
 ### Login nel sistema
