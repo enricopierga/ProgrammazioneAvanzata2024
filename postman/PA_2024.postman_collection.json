@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "11d4d352-fd5a-4701-bba3-757134db22b8",
+		"_postman_id": "31e6261b-fcfd-4603-b16c-f0cb384d216a",
 		"name": "PROGETTO_PA_2024",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "36820638"
+		"_exporter_id": "34370426"
 	},
 	"item": [
 		{
@@ -701,7 +701,27 @@
 					]
 				},
 				{
-					"name": "loginbyOperatore",
+					"name": "populateDbTransits",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://{{transitsHost}}:{{transitsPort}}/seeds/populate",
+							"protocol": "http",
+							"host": [
+								"{{transitsHost}}"
+							],
+							"port": "{{transitsPort}}",
+							"path": [
+								"seeds",
+								"populate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
 					"event": [
 						{
 							"listen": "test",
@@ -750,26 +770,6 @@
 						}
 					},
 					"response": []
-				},
-				{
-					"name": "populateDb",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"url": {
-							"raw": "http://{{transitsHost}}:{{transitsPort}}/seeds/populate",
-							"protocol": "http",
-							"host": [
-								"{{transitsHost}}"
-							],
-							"port": "{{transitsPort}}",
-							"path": [
-								"seeds",
-								"populate"
-							]
-						}
-					},
-					"response": []
 				}
 			]
 		},
@@ -777,7 +777,7 @@
 			"name": "Payments",
 			"item": [
 				{
-					"name": "populateDb",
+					"name": "populateDbPayments",
 					"event": [
 						{
 							"listen": "test",
@@ -846,7 +846,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\" : \"filippo\",\r\n    \"password\": \"12345\" \r\n}",
+							"raw": "{\r\n    \"username\" : \"nevio\",\r\n    \"password\": \"stirato\" \r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1003,7 +1003,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://{{paymentsHost}}:{{paymentsPort}}/payments/paga",
+							"raw": "http://{{paymentsHost}}:{{paymentsPort}}/payments/payInfraction",
 							"protocol": "http",
 							"host": [
 								"{{paymentsHost}}"
@@ -1011,7 +1011,7 @@
 							"port": "{{paymentsPort}}",
 							"path": [
 								"payments",
-								"paga"
+								"payInfraction"
 							]
 						}
 					},
