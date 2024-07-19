@@ -17,7 +17,6 @@ import infractionRoutes from "./routes/InfractionRoutes";
 import routeRoutes from "./routes/RouteRoutes";
 import transitRoutes from "./routes/TransitRoutes";
 import vehicleRoutes from "./routes/VehicleRoutes";
-import { seed as dbSeed, seed } from "./utils/dbTransitSeed";
 import userRoutes from "./routes/UserRoutes";
 import SeedRoutes from "./routes/SeedRoutes";
 
