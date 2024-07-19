@@ -129,31 +129,31 @@ Il sistema supporta tre ruoli distinti:
 2. Configurare le variabili d'ambiente:
     Creare due file ```.env``` all'interno delle directory ```payments``` e ```transits```, configurandoli con le seguenti variabili d'ambiente:
 
-    - File ``payments/.env```
-    ```
-    DB_NAME=defaultDb
-    DB_USER=dbUser
-    DB_PASS=mySecretPassword
-    DB_HOST=localhost
-    DB_PORT=5432
-    CLEAN_DB=true
-    PORT=3000
-    JWT_PRIVATE_KEY=pippopayments
-    IS_DEMO=true
-    ```
+    - File ```payments/.env```
+      ```
+      DB_NAME=defaultDb
+      DB_USER=dbUser
+      DB_PASS=mySecretPassword
+      DB_HOST=localhost
+      DB_PORT=5432
+      CLEAN_DB=true
+      PORT=3000
+      JWT_PRIVATE_KEY=pippopayments
+      IS_DEMO=true
+      ```
 
     - File: ```transits/.env```
-    ```
-    DB_NAME=defaultDb
-    DB_USER=dbUser
-    DB_PASS=mySecretPassword
-    DB_HOST=localhost
-    DB_PORT=5432
-    CLEAN_DB=true
-    PORT=3001
-    JWT_PRIVATE_KEY=pippotransits
-    IS_DEMO=true
-    ```
+      ```
+      DB_NAME=defaultDb
+      DB_USER=dbUser
+      DB_PASS=mySecretPassword
+      DB_HOST=localhost
+      DB_PORT=5432
+      CLEAN_DB=true
+      PORT=3001
+      JWT_PRIVATE_KEY=pippotransits
+      IS_DEMO=true
+      ```
 
 4. Avviare i servizi con Docker Compose:
     ```bash
