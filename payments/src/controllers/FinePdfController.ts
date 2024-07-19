@@ -32,8 +32,22 @@ class PdfController {
 
   // Function to handle PDF generation request
   getPdf = async (req: Request, res: Response) => {
-    const infractionId = parseInt(req.params.id, 10); // Parse the infraction ID from the request parameters
+    const infractionId = parseInt(req.params.id, 10);
+
+    if (isNaN(infractionId)) {
+      res
+        .status(StatusCodes.BAD_REQUEST)
+        .json({ message: "Invalid Id format" });
+    }
+
+    // Parse the infraction ID from the request parameters
     const infraction = await InfractionRepository.getById(infractionId); // Retrieve infraction details from the repository
+
+    if (!infraction) {
+      res
+        .status(StatusCodes.NOT_FOUND)
+        .json({ message: "Infraction not found" });
+    }
     const user = await UserRepository.getById(req.user!.userId); // Retrieve user details from the repository
 
     const vehicle = await VehicleRepository.getById(infraction?.vehicleId!); // Retrieve vehicle details from the repository
