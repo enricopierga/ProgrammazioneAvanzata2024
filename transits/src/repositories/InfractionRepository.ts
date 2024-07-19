@@ -75,6 +75,7 @@ class InfractionRepository {
     // Transform the infractions data to match the InfractionResult interface
     return infractions.map((infraction: any) => ({
       plate: infraction.vehicle.licensePlate,
+      userId: infraction.userId,
       type: infraction.vehicle.type,
       route: {
         inGate: infraction.route.startGate.location,
@@ -85,6 +86,7 @@ class InfractionRepository {
       limitSpeed: infraction.limit,
       speedDelta: infraction.speed - infraction.limit,
       weather: infraction.weather,
+      status: infraction.paid,
       amount: infraction.amount,
       uuid: infraction.uuid,
       datetime: infraction.timestamp,
