@@ -155,10 +155,11 @@ Il sistema supporta tre ruoli distinti:
       IS_DEMO=true
       ```
 
-4. Avviare i servizi attraverso il file di configurazione:
-    ```bash
+4. Posizionarsi sulla radice del progetto e lanciare da terminale il seguente comando:
+   ```bash
     ./build.sh
-    ```
+   ```
+   NOTA: In caso si utilizzi MacOS va utilizzato prima il seguente comando: ```bash  chmod +x build.sh```
 5. Scaricare la collection e l'environment di Postman per procedere con i test
 
 ## Test del Progetto
