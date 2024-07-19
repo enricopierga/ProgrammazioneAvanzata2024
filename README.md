@@ -165,11 +165,14 @@ Il sistema supporta tre ruoli distinti:
 6. Scaricare la collection e le variabili di environment di Postman per procedere con i test.
 
 ## Test del Progetto
-
+Se le operazioni precedenti sono state eseguite correttamente, i tre container (postgres, transits, payments) saranno in esecuzione.
+Nella versione attuale (DEMO version) è possibile testare entrambi i due applicativi e le relative rotte.
 
 ### Postman
 
-È possibile testare il progetto utilizzando Postman. Forniamo una collection Postman che contiene tutte le richieste necessarie per testare le API, e le relative variabili d'ambiente. Importare la collection in Postman e seguire le istruzioni per testare le diverse rotte.
+È possibile testare il progetto utilizzando Postman. Forniamo una collection Postman che contiene tutte le richieste necessarie per testare le API, e le relative variabili d'ambiente. 
+
+Importare la collection in Postman e seguire le istruzioni per testare le diverse rotte.
 
 [Scarica la Collection Postman](./postman/PROGETTO_PA_2024.postman_collection.json)
 
