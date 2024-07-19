@@ -58,7 +58,7 @@ Il sistema supporta tre ruoli distinti:
 ### Diagramma ER
 
  <p align="center">
-     <img src="./er_diagram.png" alt="der_diagramT" width="600" height="800">
+     <img src="./er_diagram.png" alt="der_diagramT" width="700" height="750">
   </p>
 
 ### Pattern Utilizzati
@@ -66,50 +66,50 @@ Il sistema supporta tre ruoli distinti:
 - **MVC (Model-View-Controller)**: Il pattern MVC è stato scelto per separare la logica di business dalla presentazione e dalla gestione delle richieste. Questo permette di mantenere il codice modulare e facilmente manutenibile. Occore tuttavia fare una precisazione: ai fini del progetto la componente **View** non viene applicata non essendoci una vista vera e propria.
 - **Repository Pattern**: Il Repository Pattern è stato utilizzato per astrarre la logica di accesso ai dati, fornendo una chiara separazione tra la logica di business e la logica di accesso ai dati. Questo rende il codice più testabile e manutenibile. L'interazione con il database avviene tramite Sequelize. Un esempio di Repository viene mostrato di seguito:
 
-```javascript
-import Gate from "../models/GateModel"; // Import the Gate model
-import Route from "../models/RouteModel"; // Import the Route model
+  ```javascript
+   import Gate from "../models/GateModel"; // Import the Gate model
+   import Route from "../models/RouteModel"; // Import the Route model
 
-class GateRepository {
-  // Method to create a new gate
-  async create(data: any): Promise<Gate> {
-    return await Gate.create(data);
-  }
+   class GateRepository {
+      // Method to create a new gate
+      async create(data: any): Promise<Gate> {
+         return await Gate.create(data);
+      }
 
-  // Method to retrieve all gates
-  async getAll(): Promise<Gate[]> {
-    return await Gate.findAll();
-  }
+      // Method to retrieve all gates
+      async getAll(): Promise<Gate[]> {
+         return await Gate.findAll();
+      }
 
-  // Method to retrieve a gate by its ID
-  async getById(gateId: number): Promise<Gate | null> {
-    return await Gate.findByPk(gateId);
-  }
+      // Method to retrieve a gate by its ID
+      async getById(gateId: number): Promise<Gate | null> {
+         return await Gate.findByPk(gateId);
+      }
 
-  // Method to update a gate by its ID
-  async update(id: number, data: any): Promise<number> {
-    const [updated] = await Gate.update(data, {
-      where: { id },
-    });
-    return updated;
-  }
+      // Method to update a gate by its ID
+      async update(id: number, data: any): Promise<number> {
+         const [updated] = await Gate.update(data, {
+            where: { id },
+         });
+         return updated;
+      }
 
-  // Method to delete a gate by its ID
-  async delete(id: number): Promise<number> {
-    // Check for dependencies in routes
-    const routeDependency = await Route.findOne({ where: { startGateId: id } })
-                                 || await Route.findOne({ where: { endGateId: id } });
-    if (routeDependency) {
-      throw new Error('Cannot delete gate: it has associated routes.');
-    }
+      // Method to delete a gate by its ID
+      async delete(id: number): Promise<number> {
+         // Check for dependencies in routes
+         const routeDependency = await Route.findOne({ where: { startGateId: id } })
+                                    || await Route.findOne({ where: { endGateId: id } });
+         if (routeDependency) {
+            throw new Error('Cannot delete gate: it has associated routes.');
+         }
 
-    return await Gate.destroy({ where: { id: id } });
-  }
-}
+         return await Gate.destroy({ where: { id: id } });
+      }
+   }
 
-export default new GateRepository(); // Export an instance of GateRepository
+   export default new GateRepository(); // Export an instance of GateRepository
 
-```
+  ```
 
 ## Avviare il Progetto
 
@@ -142,8 +142,8 @@ export default new GateRepository(); // Export an instance of GateRepository
     ```
 
 4. Accedere ai servizi:
-    - Backend Transiti: `http://localhost:3000`
-    - Backend Pagamenti: `http://localhost:3001`
+    - Backend Pagamenti: `http://localhost:3000`
+    - Backend Transiti: `http://localhost:3001`
 
 ## Test del Progetto
 
@@ -211,7 +211,7 @@ export default new GateRepository(); // Export an instance of GateRepository
   ```
   In caso di token errato, il messaggio è il seguente:
   ```json
-     status: 401 UNAUThORIZED
+     status: 401 UNAUTHORIZED
      {   
         "message": "Unauthorized"
      }
@@ -639,7 +639,7 @@ export default new GateRepository(); // Export an instance of GateRepository
   ```
 
 ### Aggiungere il credito ad un utente
-- **PATCH /<user_id>/credit**
+- **PATCH /:id/credit**
   Per poter ottenere una risposta, il corpo delle richieste dovrà seguire il seguente modello:
   
   ```json
@@ -708,41 +708,41 @@ export default new GateRepository(); // Export an instance of GateRepository
         "createdAt": "2024-07-18T11:09:30.045Z",
         "updatedAt": "2024-07-18T11:09:30.045Z"
     }
-```
-In caso di UUID corretto e di credito insufficiente, verrà restituito il seguente messaggio di errore:
+  ```
+  In caso di UUID corretto e di credito insufficiente, verrà restituito il seguente messaggio di errore:
 
-```json
-     status: 402 PAYMENT_REQUIRED
-     {
-    "message": "Insufficient Balance"
-     }
-```
+  ```json
+    status: 402 PAYMENT_REQUIRED
+    {
+       "message": "Insufficient Balance"
+    }
+  ```
 
-In questo caso, l'utente dovrà contattare l'Admin del sistema in modo da poter ricaricare il suo credito e poter effettuare il pagamento delle sue Infractions.
+  In questo caso, l'utente dovrà contattare l'Admin del sistema in modo da poter ricaricare il suo credito e poter effettuare il pagamento delle sue Infractions.
 
-Nel caso in cui il formato dell'UUID inserito non sia corretto, verrà restituito il seguente messaggio di errore:
+  Nel caso in cui il formato dell'UUID inserito non sia corretto, verrà restituito il seguente messaggio di errore:
 
-```json
-     status: 400 BAD_REQUEST
-     {
-    "message": "Invalid uuid format"
-     }
-```
+  ```json
+    status: 400 BAD_REQUEST
+    {
+       "message": "Invalid uuid format"
+    }  
+  ```
 
-Se il formato è corretto ma l'UUID non appartiene a nessuna Infraction, allora verrà restituito il seguente messaggio di errore:
+  Se il formato è corretto ma l'UUID non appartiene a nessuna Infraction, allora verrà restituito il seguente messaggio di errore:
 
-```json
-     status: 404 NOT_FOUND
-     {
-    "message": "Not found"
-     }
-```
+  ```json
+    status: 404 NOT_FOUND
+    {
+       "message": "Not found"
+    }
+  ```
 
 
 #### Scaricare Bollettino di Pagamento
 - **GET /payments/:id/pdf**
 
   
-### Conclusione
-
-Questo progetto implementa un sistema completo per la gestione delle multe autostradali con ruoli differenziati, utilizzando pattern architetturali solidi e tecnologie moderne. Seguire le istruzioni per avviare e testare il sistema e garantire la corretta configurazione delle variabili d'ambiente e dei servizi Docker.
+### Autori
+- Enrico Piergallini
+- Davide De Grazia
