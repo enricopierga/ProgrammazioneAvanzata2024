@@ -159,6 +159,7 @@ Il sistema supporta tre ruoli distinti:
    ```bash
     ./build.sh
    ```
+   Il seguente file di configurazione contiene tutti comandi per l'installazione delle dipendenze e per la build (docker compose).
    NOTA: In caso si utilizzi MacOS va utilizzato prima il seguente comando: ``` chmod +x build.sh```
 5. Scaricare la collection e le variabili di environment di Postman per procedere con i test.
 
