@@ -776,6 +776,7 @@ Importare la collection in Postman e seguire le istruzioni per testare le divers
 #### Scaricare Bollettino di Pagamento
 - **GET /user/:id/pdf**
   La seguente rotta permette di scaricare in formato pdf una multa relativa allo user autenticato; in caso di parametro ```:id ``` errato, viene restituito:
+  
   ```json
     status: 404 NOT_FOUND
     {
@@ -783,6 +784,7 @@ Importare la collection in Postman e seguire le istruzioni per testare le divers
     }
    ```
    In caso di parametri della richiesta corretti, viene generato il file  ```infraction_<infractionId>.pdf ``` relativo alla multa.
+  
    [Qui un esempio di file .pdf generato](./diagrams/infraction_2.pdf)
 
   
