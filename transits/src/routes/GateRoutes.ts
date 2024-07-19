@@ -1,5 +1,5 @@
 import { Router } from "express";
-import GateController from "../controllers/_gateController";
+import GateController from "../controllers/GateController";
 import { requireAuthentication } from "../middleware/authenticationMiddleware";
 
 const router = Router();
