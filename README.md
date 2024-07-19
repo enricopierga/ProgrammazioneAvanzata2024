@@ -43,8 +43,9 @@ Il progetto ha l'obiettivo di sviluppare un sistema per la gestione delle multe 
 7. **Generazione di bollettini di pagamento:** Creazione di bollettini di pagamento in formato PDF, includendo un QR-code con informazioni dettagliate sulla multa.
 8. **Gestione dei pagamenti:** Gestione del credito degli utenti e pagamento delle multe attraverso un backend separato, con funzioni per verificare e/o verificare il creditoo.
 
-Il sistema supporta tre ruoli distinti:
+Il sistema supporta quattro ruoli distinti:
 
+- **Admin** Può solamente ricaricare il credito di un utente.
 - **Operatore:** Ha pieno accesso alle operazioni di CRUD per varchi, tratte e veicoli, e può registrare transiti.
 - **Varco:** Può registrare transiti.
 - **Automobilista:** Può visualizzare (e pagare) solo le multe associate ai propri veicoli.
