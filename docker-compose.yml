@@ -30,7 +30,7 @@ services:
       JWT_PRIVATE_KEY: pippotransits
       DB_PORT: 5432
       IS_DEMO: true
-      CLEAN_DB: false
+      CLEAN_DB: true
     networks:
       - application-network
     ports:
