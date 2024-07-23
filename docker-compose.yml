@@ -8,6 +8,8 @@ services:
       POSTGRES_DB: defaultDb
     networks:
       - application-network
+    ports:
+      - "5432:5432"
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U dbUser"]
       interval: 30s
